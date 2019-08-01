@@ -1,7 +1,8 @@
 #' Compute spatially explicit watershed land use percentages
 #' @description Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
-#' @param metric A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.
+#' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.
 #' @param landuse Pointer(s) to land use rasters for which the land use metrics should be computed.
+#' @param fields A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names. 
 #' @param sites Pointer to a shapefile of sites.
 #' @param elevation A filled (flow-corrected) digital elevation model.
 #' @param flow_dir A 'Deterministic 8' (D8) flow direction grid derived from \code{elevation}.
@@ -10,8 +11,9 @@
 #' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics. 
 #' @export
 compute_metrics <- function(
-  metric = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
+  metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
+  fields = paste(metric, landuse, sep = "_"),
   sites,
   elevation,
   flow_dir,
