@@ -1,0 +1,9 @@
+Package: rdwplus
+Title: An open-source implementation of IDW-PLUS (inverse distance weighted percent land use for streams)
+Version: 0.0.0.9000
+Authors@R: person("Alan", "Pearse", email = "apearse9@gmail.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+Depends: R (>= 3.5.0), RSAGA
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
