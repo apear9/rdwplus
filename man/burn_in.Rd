@@ -4,18 +4,16 @@
 \alias{burn_in}
 \title{Burn in streams to a digital elevation model}
 \usage{
-burn_in(dem, stream, burn = 10, out, ...)
+burn_in(dem, stream, burn = 10, out)
 }
 \arguments{
-\item{dem}{A RasterLayer object containing the digital elevation model.}
+\item{dem}{A RasterLayer object containing the digital elevation model. This can also be the file path to a raster.}
 
-\item{stream}{A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0.}
+\item{stream}{A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0. This can also be the file path to a raster.}
 
 \item{burn}{The magnitude of the drainage reinforcement (in elevation units). Defaults to \code{10}.}
 
 \item{out}{An optional string giving the basename of the raster to be written to file. If missing, then no file will be written.}
-
-\item{...}{Other arguments to \code{writeRaster}.}
 }
 \value{
 A RasterLayer containing the burned digital elevation model.
