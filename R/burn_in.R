@@ -27,7 +27,7 @@ burn_in <- function(dem, stream, burn = 10, out){
   
   # Write raster to file
   tmp_out <- paste0(tempdir(), "/", out, ".tif")
-  writeRaster(burned, tmp_out)
+  writeRaster(burned, tmp_out, overwrite = TRUE)
   
   # Convert written file to SGRD format
   fin_out <- paste0(getwd(), "/", out, ".sdat")
