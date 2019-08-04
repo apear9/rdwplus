@@ -2,4 +2,5 @@
 
 export(burn_in)
 export(compute_metrics)
+export(convert_to_sgrd)
 export(get_watershed)
