@@ -4,10 +4,9 @@
 #' @param stream A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0.
 #' @param burn The magnitude of the drainage reinforcement (in elevation units). Defaults to \code{10}.
 #' @param out An optional string giving the basename of the raster to be written to file. If missing, then no file will be written.
-#' @param ... Other arguments to \code{writeRaster}.
 #' @return A RasterLayer containing the burned digital elevation model.
 #' @export 
-burn_in <- function(dem, stream, burn = 10, out, ...){
+burn_in <- function(dem, stream, burn = 10, out){
   
   # Input checking
   check_dem <- is_raster_layer(dem)
@@ -19,11 +18,18 @@ burn_in <- function(dem, stream, burn = 10, out, ...){
   check_stm <- is_binary_raster(stream)
   if(!check_stm) stop("stream is not a binary raster.")
   
-  # Burn in the stream and return
+  # Burn in the stream
   burned <- dem - burn * stream
-  if(!missing(out)){
-    writeRaster(burned, paste0(out, ".sgrd"), format = "SAGA", ...)
-  }
-  burned
-    
+  
+  # Write raster to file
+  tmp_out <- paste0(tempdir(), "/", out, ".tif")
+  writeRaster(burned, tmp_out)
+  
+  # Convert written file to SGRD format
+  fin_out <- paste0(getwd(), "/", out, ".sdat")
+  convert_to_sgrd(tmp_out, fin_out)
+  
+  # Return nothing
+  invisible()
+  
 }
