@@ -1,6 +1,6 @@
 # rdwplus
 
-An open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). The original implementation was a Python-based ArcGIS toolbox for ArcGIS version 10.3.1. 
+An open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). IDW-PLUS itself is a toolset that calculates the spatially explicit landscape representation metrics previously developed and used in Peterson et al. (2011). It is a Python-based ArcGIS toolbox, originally developed for ArcGIS version 10.3.1. This implementation uses R as the scripting language, with calls to modules and tools from GDAL (Geospatial Data Abstraction Library) and SAGA (System for Automated Geoscientific Analyses) to do the heavy lifting. 
 
 ## References
 
