@@ -6,7 +6,26 @@
 #' @return Nothing. A file with the name and location \code{out_file} will be created. 
 get_distance <- function(background, target, out_file){
   
+  # What happens if inputs are file names?
+  if(is.character(background)) background <- raster(background)
+  if(is.character(target)) target <- raster(target)
   
+  # Check if inputs are now raster layers
+  check_back <- is_raster_layer(background)
+  check_targ <- is_raster_layer(target)
+  if(!check_back) stop("The argument background is not a Raster* object")
+  if(!check_targ) stop("The argument target is not a Raster* object")
+  
+  # Compute distance raster
+  dist_raster <- distance(target, background)
+  
+  # Write distance raster to temporary file 
+  tmp_out <- paste0(tempdir(), "/", out, ".tif")
+  writeRaster(dist_raster, tmp_out)
+  
+  # Convert to SAGA format
+  fin_out <- paste0(getwd(), "/", out, ".sdat")
+  convert_to_sgrd(tmp_out, fin_out)
   
   # Return nothing
   invisible()
