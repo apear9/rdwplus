@@ -13,7 +13,7 @@ burn_in(dem, stream, burn = 10, out)
 
 \item{burn}{The magnitude of the drainage reinforcement (in elevation units). Defaults to \code{10}.}
 
-\item{out}{An optional string giving the basename of the raster to be written to file. If missing, then no file will be written.}
+\item{out}{An string giving the basename of the raster to be written to file. If missing, then no file will be written.}
 }
 \value{
 A RasterLayer containing the burned digital elevation model.
