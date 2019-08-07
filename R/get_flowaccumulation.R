@@ -1,3 +1,3 @@
 get_flowaccumulation <- function(){
-  invisible
+  invisible()
 }
