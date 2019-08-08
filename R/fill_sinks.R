@@ -4,6 +4,7 @@
 #' @param out Name of the file to be written out, INCLUDING a .sgrd extension. This will be the filled DEM.
 #' @param ... Optional additional parameters to \code{rsaga.fill.sinks}. Note that the \code{method} is hard-coded to \code{'xxl.wang.liu.2006'}.
 #' @return  Nothing. A file with the name \code{out} will be created in the current working directory.
+#' @export
 fill_sinks <- function(dem, out, ...){
   
   # Check that input dem file exists
