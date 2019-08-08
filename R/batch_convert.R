@@ -4,7 +4,7 @@
 #' @return Nothing. Files with the same name as the inputs (but with different file extensions) will be available in the current working directory.
 #' @export
 batch_convert <- function(signature){
-  in_files <- dir("./", signature, full.names = TRUE)
+  in_files <- dir(getwd(), signature, full.names = TRUE)
   out_files <- gsub(signature, ".sdat", in_files)
   convert_to_sgrd(in_files, out_files)
   invisible()
