@@ -11,5 +11,4 @@ search_for_grass <- function(){
   }
   dirs <- file.info(potential)$isdir
   potential[dirs]
-  
 }
