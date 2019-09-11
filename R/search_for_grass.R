@@ -4,9 +4,12 @@
 #' @export
 search_for_grass <- function(){
   
-  potential <- dir("C:/", "GRASS GIS", include.dirs = T, full.names = T, recursive = T)
+  if(.Platform$OS.type == 'windows') {
+    potential <- dir("C:/", "GRASS GIS", include.dirs = T, full.names = T, recursive = T)
+  } else {
+    potential <- dir("/usr", "grass", include.dirs = T, full.names = T, recursive = T)
+  }
   dirs <- file.info(potential)$isdir
   potential[dirs]
-  
   
 }
