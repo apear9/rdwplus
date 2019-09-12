@@ -1,8 +1,18 @@
 # rdwplus
 
-An open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). IDW-PLUS itself is a toolset that calculates the spatially explicit landscape representation metrics previously developed and used in Peterson et al. (2011). It is a Python-based ArcGIS toolbox, originally developed for ArcGIS version 10.3.1. This implementation uses R as the scripting language, with calls to modules and tools from GDAL (Geospatial Data Abstraction Library) and SAGA (System for Automated Geoscientific Analyses) to do the heavy lifting. 
+An open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). IDW-PLUS itself is a toolset that calculates the spatially explicit landscape representation metrics previously developed and used in Peterson et al. (2011). It is a Python-based ArcGIS toolbox, originally developed for ArcGIS version 10.3.1. This fully open-source implementation uses R as the scripting language, with calls to modules and tools from GRASS GIS (GRASS Development Team, 2019) to do the heavy lifting. 
+
+## Installation
+
+At present, `rdwplus` is available on GitHub only. Install the package `rdwplus` by using the command `devtools::install_github("apear9/rdwplus")`. Note that the package `devtools` must be installed in order for this command to run. 
+
+## Setting up a GRASS session
+
+## Using rdwplus
 
 ## References
+
+GRASS Development Team. (2019). Geographic Resources Analysis Support System (GRASS) Software, Version 7.6. Open Source Geospatial Foundation. https://grass.osgeo.org
 
 Peterson, E.E. and Pearse, A.R. (2017). IDW-PLUS: an ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. *Journal of the American Water Resources Association*, *53*(5), 1241-1249. doi: 10.1111/1752-1688.12558
 
