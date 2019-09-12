@@ -2,6 +2,7 @@
 
 export(batch_convert)
 export(burn_in)
+export(check_running)
 export(compute_metrics)
 export(convert_to_sgrd)
 export(fill_sinks)
@@ -11,3 +12,4 @@ export(plot_layer)
 export(reclassify_streams)
 export(rwd_to_swd)
 export(search_for_grass)
+export(set_envir)
