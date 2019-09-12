@@ -19,13 +19,9 @@ get_distance <- function(background, target, out_file){
   # Compute distance raster
   dist_raster <- distance(target, background)
   
-  # Write distance raster to temporary file 
-  tmp_out <- paste0(tempdir(), "/", out, ".tif")
-  writeRaster(dist_raster, tmp_out)
-  
-  # Convert to SAGA format
-  fin_out <- paste0(getwd(), "/", out, ".sdat")
-  convert_to_sgrd(tmp_out, fin_out)
+  # Write distance raster 
+  out_file <- paste0(out, ".tif")
+  writeRaster(dist_raster, out_file)
   
   # Return nothing
   invisible()
