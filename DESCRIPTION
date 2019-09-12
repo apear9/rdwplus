@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: person("Alan", "Pearse", email = "apearse9@gmail.com", role = c("aut", "cre"))
 Author: Alan Pearse <apearse9@gmail.com>
 Maintainer: Alan Pearse <apearse9@gmail.com>
-Description: This packages uses R to call the hydrological toolboxes and functions in GRASS GIS to compute spatially explicit land-use metrics for stream survey sites. The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) Freshwater Biology, 56(3), 590-610. 
+Description: Use R to call the hydrological toolboxes and functions in GRASS GIS to compute spatially explicit land-use metrics for stream survey sites. The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) Freshwater Biology, 56(3), 590-610. 
 Depends: R (>= 3.5.0), raster, rgrass7
 License: GPL-3
 Encoding: UTF-8
