@@ -20,7 +20,7 @@ get_distance <- function(background, target, out_file){
   dist_raster <- distance(target, background)
   
   # Write distance raster 
-  out_file <- paste0(out, ".tif")
+  out_file <- paste0(out_file, ".tif")
   writeRaster(dist_raster, out_file)
   
   # Return nothing
