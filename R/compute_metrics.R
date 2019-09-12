@@ -13,7 +13,7 @@
 compute_metrics <- function(
   metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
-  fields = paste(metric, landuse, sep = "_"),
+  fields = paste(metrics, landuse, sep = "_"),
   sites,
   elevation,
   flow_dir,

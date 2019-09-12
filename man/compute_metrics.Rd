@@ -5,8 +5,8 @@
 \title{Compute spatially explicit watershed land use percentages}
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
-  fields = paste(metric, landuse, sep = "_"), sites, elevation, flow_dir,
-  flow_acc, streams)
+  fields = paste(metrics, landuse, sep = "_"), sites, elevation,
+  flow_dir, flow_acc, streams)
 }
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.}
