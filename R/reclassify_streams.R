@@ -28,10 +28,9 @@ reclassify_streams <- function(stream, out, out_type = "binary"){
     stream[!ind] <- NA
   }
   
-  # Create new file in SAGA format
-  in_file <- paste0(tempdir(), "/", out, ".tif")
-  writeRaster(stream, in_file, overwrite = TRUE)
-  convert_to_sgrd(in_file, paste0(out, ".sdat"))
+  # Create new file
+  out_file <- paste0(out, ".tif")
+  writeRaster(stream, out_file, overwrite = TRUE)
   
   # Return nothing 
   invisible()

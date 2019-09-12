@@ -11,17 +11,8 @@ get_flowaccumulation <- function(dem, out, ...){
   dem_exists <- file.exists(dem)
   if(!dem_exists) stop(paste0("The file ", dem, " appears not to exist at that location. Please check, then try again."))
   
-  # Call the SAGA geoprocessor
-  rsaga.geoprocessor(
-    lib = "ta_hydrology",
-    module = 0, # top-down flow accumulation tool
-    param = list(
-      ELEVATION = dem,
-      FLOW = out,
-      METHOD = 0 # D8 algorithm
-    ),
-    ...
-  )
+
+  
   
   # Return nothing
   invisible()

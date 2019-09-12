@@ -11,13 +11,7 @@ fill_sinks <- function(dem, out, ...){
   dem_exist <- file.exists(dem)
   if(!dem_exist) stop(paste0("It appears that no file called ", dem, " exists.")) 
   
-  # If that's all good, we can proceed to call the geoprocessor
-  rsaga.fill.sinks(
-    in.dem = dem,
-    out.dem = out,
-    method = "xxl.wang.liu.2006",
-    ...
-  )
+  
   
   # Return nothing
   invisible()

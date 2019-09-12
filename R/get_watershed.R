@@ -8,30 +8,5 @@
 #' @return A SAGA raster with basename \code{out}. Possibly also a \code{RasterLayer} object. 
 #' @export
 get_watershed <- function(sites, i, dem, out, R = TRUE){
-  
-  # Site coordinates
-  coords <- sites@coords
-  xi <- coords[i, 1]
-  yi <- coords[i, 2]
-  # Watershed processor
-  rsaga.geoprocessor(
-    "ta_hydrology", 
-    4, 
-    param = list(
-      # Assumes the pour point is EXACT
-      TARGET_PT_X = xi,
-      TARGET_PT_Y = yi,
-      ELEVATION = dem,
-      AREA = paste0(out, ".sgrd"),
-      METHOD = "Deterministic 8"
-    )
-  )
-  
-  # Return if needed
-  if(R){
-    raster(paste0(out, ".sdat"))
-  } else {
-    invisible()
-  }
-  
+  invisible() 
 }
