@@ -4,6 +4,7 @@
 #' @param stream A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0. This can also be the file path to a raster. 
 #' @param out The filename of the raster to be written out. It will also be imported into the current GRASS mapset with the name \code{basename(out)}. 
 #' @param burn The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.
+#' @param overwrite A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.
 #' @return Nothing.
 #' @export 
 burn_in <- function(dem, stream, out, burn = 10, overwrite = FALSE){

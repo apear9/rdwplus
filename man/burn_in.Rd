@@ -14,6 +14,8 @@ burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
 \item{out}{The filename of the raster to be written out. It will also be imported into the current GRASS mapset with the name \code{basename(out)}.}
 
 \item{burn}{The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.}
+
+\item{overwrite}{A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.}
 }
 \value{
 Nothing.
