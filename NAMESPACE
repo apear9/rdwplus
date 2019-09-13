@@ -3,6 +3,7 @@
 export(burn_in)
 export(check_running)
 export(compute_metrics)
+export(derive_flow)
 export(fill_sinks)
 export(get_flow_accumulation)
 export(get_watershed)
