@@ -6,6 +6,8 @@ An open source implementation of IDW-PLUS (inverse distance weighted percent lan
 
 At present, `rdwplus` is available on GitHub only. Install the package `rdwplus` by using the command `devtools::install_github("apear9/rdwplus")`. Note that the package `devtools` must be installed in order for this command to run. 
 
+Note that `rdwplus` calls GRASS GIS, so the user may also have to install GRASS GIS. The software is available at https://grass.osgeo.org/download/ or, for Windows users, as part of the OSGeo4W bundle at https://trac.osgeo.org/osgeo4w/.
+
 ## Setting up a GRASS session
 
 ## Using rdwplus
