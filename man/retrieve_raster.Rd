@@ -9,7 +9,7 @@ retrieve_raster(layer, out_layer)
 \arguments{
 \item{layer}{The name of the raster in the GRASS mapset that is to be written out.}
 
-\item{out_layer}{The name of the file to be created. If this is a filename only (i.e. no folder is specified in the file path), it will be written to the current working directory.}
+\item{out_layer}{The name of the file to be created, with the relevant file extension.}
 }
 \value{
 Nothing.
