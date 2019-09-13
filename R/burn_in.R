@@ -2,11 +2,11 @@
 #' @description Burning-in streams (also called 'drainage reinforcement') ensures flow direction and accumulation grids based on the digital elevation model will correctly identify the stream path.
 #' @param dem A RasterLayer object containing the digital elevation model. This can also be the file path to a raster. 
 #' @param stream A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0. This can also be the file path to a raster. 
-#' @param burn The magnitude of the drainage reinforcement (in elevation units). Defaults to \code{10}.
-#' @param out An string giving the basename of the raster to be written to file. If missing, then no file will be written.
+#' @param out The filename of the raster to be written out. It will also be imported into the current GRASS mapset with the name \code{basename(out)}. 
+#' @param burn The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.
 #' @return A RasterLayer containing the burned digital elevation model.
 #' @export 
-burn_in <- function(dem, stream, burn = 10, out, overwrite = FALSE){
+burn_in <- function(dem, stream, out, burn = 10, overwrite = FALSE){
   
   # If dem and stream are file paths, then import them as rasters
   if(is.character(dem)) dem <- raster(dem)
@@ -26,7 +26,8 @@ burn_in <- function(dem, stream, burn = 10, out, overwrite = FALSE){
   burned <- dem - burn * stream
   
   # Write raster to file
-  raster_to_mapset(burned, overwrite = overwrite)
+  writeRaster(burned, out, overwrite = overwrite)
+  raster_to_mapset(out, overwrite = overwrite)
 
   # Return nothing
   invisible()
