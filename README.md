@@ -10,6 +10,29 @@ At present, `rdwplus` is available on GitHub only. Install the package `rdwplus`
 
 ## Using rdwplus
 
+Load `rdwplus` after it has been installed. 
+
+```
+library(rdwplus)
+```
+
+Set up a GRASS session.
+
+
+Check it is running correctly.
+
+```
+check_running()
+```
+
+Set up the GRASS environment. 
+
+```
+set_envir()
+```
+
+
+
 ## References
 
 GRASS Development Team. (2019). Geographic Resources Analysis Support System (GRASS) Software, Version 7.6. Open Source Geospatial Foundation. https://grass.osgeo.org
