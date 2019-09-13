@@ -10,8 +10,8 @@ retrieve_raster <- function(layer, out_layer){
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
   # Check that both input lengths the same
-  n_layers <- length(layers)
-  n_outs   <- length(out_layers)
+  n_layers <- length(layer)
+  n_outs   <- length(out_layer)
   if(n_layers != n_outs) stop("Number of inputs and outputs must be the same.")
   
   # Loop over in/out
