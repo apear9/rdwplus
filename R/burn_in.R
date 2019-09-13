@@ -6,7 +6,7 @@
 #' @param out An string giving the basename of the raster to be written to file. If missing, then no file will be written.
 #' @return A RasterLayer containing the burned digital elevation model.
 #' @export 
-burn_in <- function(dem, stream, burn = 10, out){
+burn_in <- function(dem, stream, burn = 10, out, overwrite = FALSE){
   
   # If dem and stream are file paths, then import them as rasters
   if(is.character(dem)) dem <- raster(dem)
@@ -26,9 +26,8 @@ burn_in <- function(dem, stream, burn = 10, out){
   burned <- dem - burn * stream
   
   # Write raster to file
-  out_file <- paste0(out, ".tif")
-  writeRaster(burned, out_file, overwrite = TRUE)
-  
+  raster_to_mapset(burned, overwrite = overwrite)
+
   # Return nothing
   invisible()
   
