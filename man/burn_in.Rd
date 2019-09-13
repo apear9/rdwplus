@@ -16,7 +16,7 @@ burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
 \item{burn}{The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.}
 }
 \value{
-A RasterLayer containing the burned digital elevation model.
+Nothing.
 }
 \description{
 Burning-in streams (also called 'drainage reinforcement') ensures flow direction and accumulation grids based on the digital elevation model will correctly identify the stream path.
