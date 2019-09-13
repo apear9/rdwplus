@@ -4,18 +4,30 @@
 \alias{fill_sinks}
 \title{Fill sinks in a digital elevation model (DEM)}
 \usage{
-fill_sinks(dem, out, ...)
+fill_sinks(dem, out, flags, ...)
 }
 \arguments{
-\item{dem}{File path to a digital elevation model, in SAGA format (.sgrd extension)}
+\item{dem}{The name of a DEM in the current GRASS mapset.}
 
-\item{out}{Name of the file to be written out, INCLUDING a .sgrd extension. This will be the filled DEM.}
+\item{out}{Name of the output, which is a hydrologically corrected (sink-filled) DEM.}
 
-\item{...}{Optional additional parameters to \code{rsaga.fill.sinks}. Note that the \code{method} is hard-coded to \code{'xxl.wang.liu.2006'}.}
+\item{flags}{Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.}
+
+\item{...}{Optional additional parameters to \code{r.hydrodem}.}
 }
 \value{
-Nothing. A file with the name \code{out} will be created in the current working directory.
+Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
 }
 \description{
-A sink is a depression in a DEM. Water flows into these depressions but not out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions. This function removes depressions (sinks) in a DEM.
+A sink is a depression in a DEM. Water flows into these depressions but not out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions. This function removes depressions (sinks) in a DEM. Note that this function calls \code{r.hydrodem}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+}
+\details{
+The following flags may be supplied (as strings):
+
+\itemize{
+    \item "a" The nuclear option. Vigorously remove all sinks.
+    \item "overwrite" The output files may overwrite existing ones.
+    \item "verbose" Lots of module output.
+    \item "quiet" Barely any module output.
+}
 }
