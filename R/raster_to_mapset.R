@@ -1,9 +1,10 @@
 #' Import rasters into GRASS mapset
 #' @description GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external rasters and imports them into the current GRASS mapset.
 #' @param rasters A character vector of filenames of rasters to import.
-#' @return Nothing.
+#' @param overwrite A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.
+#' @return A vector of raster layer names in the GRASS mapset.
 #' @export
-raster_to_mapset <- function(rasters){
+raster_to_mapset <- function(rasters, overwrite = FALSE){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -12,19 +13,32 @@ raster_to_mapset <- function(rasters){
   n_raster <- length(rasters)
   
   # Loop over rasters
+  outs <- c()
   for(i in 1:n_raster){
     cur_name <- rasters[i]
-    out_name <- basename(cur_name)
-    execGRASS(
-      "r.import",
-      parameters = list(
-        input = cur_name,
-        output = out_name
+    outs[i] <- out_name <- basename(cur_name)
+    if(overwrite){
+      execGRASS(
+        "r.import",
+        flags = "overwrite",
+        parameters = list(
+          input = cur_name,
+          output = out_name
+        )
       )
-    )
+    } else {
+      execGRASS(
+        "r.import",
+        parameters = list(
+          input = cur_name,
+          output = out_name
+        )
+      )
+    }
+    
   }
   
   # Return nothing
-  invisible()
+  outs
   
 }

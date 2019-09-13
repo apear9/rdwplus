@@ -4,13 +4,15 @@
 \alias{raster_to_mapset}
 \title{Import rasters into GRASS mapset}
 \usage{
-raster_to_mapset(rasters)
+raster_to_mapset(rasters, overwrite = FALSE)
 }
 \arguments{
 \item{rasters}{A character vector of filenames of rasters to import.}
+
+\item{overwrite}{A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.}
 }
 \value{
-Nothing.
+A vector of raster layer names in the GRASS mapset.
 }
 \description{
 GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external rasters and imports them into the current GRASS mapset.
