@@ -15,11 +15,12 @@ get_raster_attr <- function(x){
   
   # return as list
   list(
-    res = c(xrs, yrs),
-    u = up__,
-    d = down,
-    l = left,
-    r = rite
+    nsres = as.character(yrs),
+    ewres = as.character(xrs),
+    n = as.character(up__),
+    s = as.character(down),
+    e = as.character(rite),
+    w = as.character(left)
   )
   
 }
