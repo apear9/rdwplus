@@ -4,7 +4,10 @@
 \alias{search_for_grass}
 \title{Find GRASS installations}
 \usage{
-search_for_grass()
+search_for_grass(guide)
+}
+\arguments{
+\item{guide}{An optional guide folder to search.}
 }
 \value{
 A vector of file paths to potential GRASS installations.
