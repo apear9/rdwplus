@@ -5,7 +5,7 @@
 #' @param ... Optional arguments to \code{rsaga.geoprocessor}.
 #' @return Nothing. A file with the name \code{out} will be written to SAGA's current workspace.
 #' @export
-get_flowaccumulation <- function(dem, out, ...){
+get_flow_accumulation <- function(dem, out, ...){
   
   # Check inputs
   dem_exists <- file.exists(dem)
