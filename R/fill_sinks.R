@@ -19,10 +19,6 @@
 #' @export
 fill_sinks <- function(dem, out, flags, ...){
   
-  # Check that input dem file exists
-  dem_exist <- file.exists(dem)
-  if(!dem_exist) stop(paste0("It appears that no file called ", dem, " exists.")) 
-  
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
