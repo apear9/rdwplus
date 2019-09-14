@@ -4,7 +4,7 @@
 \alias{snap_sites}
 \title{A function to snap sites in a shapefile to a stream network}
 \usage{
-snap_sites(sites, streams, max_move, out, overwrite = FALSE)
+snap_sites(sites, streams, max_move, out, overwrite = FALSE, ...)
 }
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites or a \code{SpatialPoints*} object representing the same thing.}
@@ -16,6 +16,8 @@ snap_sites(sites, streams, max_move, out, overwrite = FALSE)
 \item{out}{The output file path.}
 
 \item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
+
+\item{...}{Additional arguments to \code{v.import}.}
 }
 \value{
 Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.

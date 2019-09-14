@@ -4,12 +4,14 @@
 \alias{raster_to_mapset}
 \title{Import rasters into GRASS mapset}
 \usage{
-raster_to_mapset(rasters, overwrite = FALSE)
+raster_to_mapset(rasters, overwrite = FALSE, ...)
 }
 \arguments{
 \item{rasters}{A character vector of filenames of rasters to import.}
 
 \item{overwrite}{A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.}
+
+\item{...}{Additional arguments to \code{r.import}.}
 }
 \value{
 A vector of raster layer names in the GRASS mapset.

@@ -5,9 +5,10 @@
 #' @param max_move The maximum distance in map units that any site can be moved to snap it to the streams.
 #' @param out The output file path. 
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
+#' @param ... Additional arguments to \code{v.import}.
 #' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 #' @export 
-snap_sites <- function(sites, streams, max_move, out, overwrite = FALSE){
+snap_sites <- function(sites, streams, max_move, out, overwrite = FALSE, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -18,7 +19,14 @@ snap_sites <- function(sites, streams, max_move, out, overwrite = FALSE){
   # Check if streams is spatial lines
   if(!is_splines(streams)) streams <- shapefile(streams)
   
-
+  # Snap sites to streams shapefile
+  snapped <- snapPointsToLines(sites, streams, maxDist = max_move, withAttrs = TRUE)
+  
+  # Write out to file
+  shapefile(snapped, filename = out, overwrite = overwrite)
+  
+  # Import to mapset
+  vector_to_mapset(out, overwrite, ...)
   
   # Return nothing
   invisible()
