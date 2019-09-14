@@ -8,5 +8,18 @@
 #' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 #' @export 
 snap_sites <- function(sites, streams, max_move, out, overwrite = FALSE){
+  
+  # Check if a GRASS session exists
+  if(!check_running()) stop("There is no valid GRASS session. Program halted.")
+  
+  # Check if sites is spatial points
+  if(!is_sppoints(sites)) sites <- shapefile(sites)
+  
+  # Check if streams is spatial lines
+  if(!is_splines(streams)) streams <- shapefile(streams)
+  
+
+  
+  # Return nothing
   invisible()
 }

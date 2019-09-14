@@ -6,5 +6,7 @@
 #' @name rdwplus
 #' @import raster
 #' @import rgrass7
+#' @importFrom maptools snapPointsToLines
+#' @importFrom methods is
 NULL
 ## NULL
