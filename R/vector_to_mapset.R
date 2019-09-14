@@ -18,6 +18,7 @@ vector_to_mapset <- function(vectors, overwrite = FALSE, ...){
   for(i in 1:n_vector){
     cur_name <- vectors[i]
     outs[i] <- out_name <- basename(cur_name)
+    out_name <- gsub(".shp", "", out_name)
     if(overwrite){
       execGRASS(
         "v.import",
