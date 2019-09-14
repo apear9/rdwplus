@@ -1,11 +1,12 @@
 #' Reclassify streams into the format required for the land use metric calculations.
 #' @description Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for non-stream cells and NoData for stream cells). 
 #' @param stream A streams raster as either a filepath to a raster or a Raster* object.
-#' @param out The base name of the output file.
+#' @param out The output file.
 #' @param out_type Either 'binary' or 'unary'. See the Description above.
-#' @return Nothing. A file with the name \code{out} will be written to the current working directory.
+#' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
+#' @return Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
 #' @export
-reclassify_streams <- function(stream, out, out_type = "binary"){
+reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){
   
   # Check out_type
   if(!out_type %in% c("binary", "unary")) stop("Invalid option for argument out_type. Must be either 'binary' or 'unary'.")
@@ -29,8 +30,8 @@ reclassify_streams <- function(stream, out, out_type = "binary"){
   }
   
   # Create new file
-  out_file <- paste0(out, ".tif")
-  writeRaster(stream, out_file, overwrite = TRUE)
+  writeRaster(stream, out, overwrite = overwrite)
+  raster_to_mapset(out, overwrite)
   
   # Return nothing 
   invisible()

@@ -4,17 +4,19 @@
 \alias{reclassify_streams}
 \title{Reclassify streams into the format required for the land use metric calculations.}
 \usage{
-reclassify_streams(stream, out, out_type = "binary")
+reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 }
 \arguments{
 \item{stream}{A streams raster as either a filepath to a raster or a Raster* object.}
 
-\item{out}{The base name of the output file.}
+\item{out}{The output file.}
 
 \item{out_type}{Either 'binary' or 'unary'. See the Description above.}
+
+\item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 }
 \value{
-Nothing. A file with the name \code{out} will be written to the current working directory.
+Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
 }
 \description{
 Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for non-stream cells and NoData for stream cells).
