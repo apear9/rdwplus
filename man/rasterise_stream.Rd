@@ -4,7 +4,7 @@
 \alias{rasterise_stream}
 \title{Turn a shapefile of stream edges into a raster}
 \usage{
-rasterise_stream(streams, reference_raster, method, out,
+rasterise_stream(streams, reference_raster, out, method = "binary",
   overwrite = FALSE)
 }
 \arguments{
@@ -12,9 +12,9 @@ rasterise_stream(streams, reference_raster, method, out,
 
 \item{reference_raster}{File path of a raster layer that defines the extent of the study area, as well as the cell resolution and snapping of the output raster. Can also be a \code{Raster*} object.}
 
-\item{method}{A string. The method that should be used to process the stream. The options are "binary" (stream cells = 1, others = 0) or "unary" (stream cells = NoData, others = 1)}
-
 \item{out}{The filename of the output.}
+
+\item{method}{A string. The method that should be used to process the stream. The options are "binary" (stream cells = 1, others = 0) or "unary" (stream cells = NoData, others = 1)}
 
 \item{overwrite}{A logical indicating whether the output is allowed to overwrite existing files. Defaults to \code{FALSE}.}
 }
