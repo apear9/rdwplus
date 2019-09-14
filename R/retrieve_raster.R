@@ -43,7 +43,6 @@ retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
     }
   }
   
-  
   # Return nothing
   invisible()
   
