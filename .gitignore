@@ -2,3 +2,7 @@
 junk
 
 *.tif
+
+.RData
+
+.Rhistory
