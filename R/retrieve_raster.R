@@ -2,9 +2,11 @@
 #' @description This function writes a GRASS mapset raster to file.
 #' @param layer The name of the raster in the GRASS mapset that is to be written out.
 #' @param out_layer The name of the file to be created, with the relevant file extension.
+#' @param overwrite A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
+#' @param ... Additional arguments to \code{r.out.gdal}.
 #' @return Nothing.
 #' @export
-retrieve_raster <- function(layer, out_layer){
+retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -15,15 +17,31 @@ retrieve_raster <- function(layer, out_layer){
   if(n_layers != n_outs) stop("Number of inputs and outputs must be the same.")
   
   # Loop over in/out
-  for(i in 1:n_layers){
-    execGRASS(
-      'r.out.gdal', 
-      parameters = list(
-        input = layer[i],
-        output = out_layer[i]
+  if(overwrite){
+    for(i in 1:n_layers){
+      execGRASS(
+        'r.out.gdal', 
+        flags = "overwrite",
+        parameters = list(
+          input = layer[i],
+          output = out_layer[i],
+          ...
+        )
       )
-    )
+    }
+  } else {
+    for(i in 1:n_layers){
+      execGRASS(
+        'r.out.gdal', 
+        parameters = list(
+          input = layer[i],
+          output = out_layer[i],
+          ...
+        )
+      )
+    }
   }
+  
   
   # Return nothing
   invisible()

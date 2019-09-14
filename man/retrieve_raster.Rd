@@ -4,12 +4,16 @@
 \alias{retrieve_raster}
 \title{Write a layer from a GRASS mapset to file}
 \usage{
-retrieve_raster(layer, out_layer)
+retrieve_raster(layer, out_layer, overwrite = FALSE, ...)
 }
 \arguments{
 \item{layer}{The name of the raster in the GRASS mapset that is to be written out.}
 
 \item{out_layer}{The name of the file to be created, with the relevant file extension.}
+
+\item{overwrite}{A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
+
+\item{...}{Additional arguments to \code{r.out.gdal}.}
 }
 \value{
 Nothing.
