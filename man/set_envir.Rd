@@ -7,10 +7,10 @@
 set_envir(layer)
 }
 \arguments{
-\item{layer}{File path to a GIS layer that should be used to set environment parameters such as cell size, extent, etc.}
+\item{layer}{A \code{Raster*} object or the file path to a GIS layer that should be used to set environment parameters such as cell size, extent, etc.}
 }
 \value{
-Nothing.
+Nothing. Displays current environment settings.
 }
 \description{
 This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent.
