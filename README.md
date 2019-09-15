@@ -8,8 +8,6 @@ At present, `rdwplus` is available on GitHub only. Install the package `rdwplus`
 
 Note that `rdwplus` calls GRASS GIS, so the user may also have to install GRASS GIS. The software is available at https://grass.osgeo.org/download/ or, for Windows users, as part of the OSGeo4W bundle at https://trac.osgeo.org/osgeo4w/.
 
-## Setting up a GRASS session
-
 ## Using rdwplus
 
 Load `rdwplus` after it has been installed. 
@@ -20,20 +18,38 @@ library(rdwplus)
 
 Set up a GRASS session.
 
+## Setting up a GRASS session
 
-Check it is running correctly.
+A GRASS session can very easily be set up through R. First, the user must find a folder containing their installation of GRASS GIS. If the user does not know where this folder is located, they can search for it by running
+
+```
+#  Note this may yield more than one directory, hence the [1]
+my_grass <- search_for_grass()[1]
+```
+
+Once the location of the user's GRASS installation is known, the function `initGRASS` can be called to set up the GRASS session.
+
+```
+initGRASS(my_grass)
+```
+
+At this stage it is possible to set other environment parameters but, for this demonstration, the above is fine.
+
+Now we can check that a GRASS session is running.
 
 ```
 check_running()
 ```
 
-Set up the GRASS environment. 
+We can then set up the GRASS environment. This means setting the extent, spatial resolution, coordinate system, etc., of the current GRASS mapset. This is done by giving the function `set_envir()` a file path to a raster file. 
 
 ```
 set_envir()
 ```
 
+## Data preprocessing
 
+## Compute watershed attributes
 
 ## References
 
