@@ -4,21 +4,24 @@
 \alias{get_watershed}
 \title{Delineate watershed for a survey site}
 \usage{
-get_watershed(sites, i, dem, out, R = TRUE)
+get_watershed(sites, i, flow_dir, out, write_file = FALSE,
+  overwrite = FALSE)
 }
 \arguments{
-\item{sites}{A \code{SpatialPoints*} object.}
+\item{sites}{A file path to a shapefile of points or a \code{SpatialPoints*} object.}
 
 \item{i}{An integer which indexes one row of the sites' attribute table.}
 
-\item{dem}{Pointer to a hydrologically-corrected digital elevation model.}
+\item{flow_dir}{The file name of a hydrologically-corrected digital elevation model in the current GRASS mapset.}
 
-\item{out}{The name of the output file, with NO file extension.}
+\item{out}{The name of the output raster. A raster with the name \code{basename(out)} will be imported into the GRASS mapset. If \code{write_file} is true, then a file with the name \code{out} will be written into the user's current working directory.}
 
-\item{R}{A logical indicating whether a RasterLayer should be returned in R. Defaults to \code{TRUE}.}
+\item{write_file}{A logical indicating whether the output file should be stored as a file in the user's current working directory. Defaults to \code{FALSE}.}
+
+\item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 }
 \value{
-A SAGA raster with basename \code{out}. Possibly also a \code{RasterLayer} object.
+Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset.
 }
 \description{
 This function delineates a watershed around the \code{i}th site from a set of survey sites.
