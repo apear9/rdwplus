@@ -12,7 +12,7 @@ get_watershed(sites, i, flow_dir, out, write_file = FALSE,
 
 \item{i}{An integer which indexes one row of the sites' attribute table.}
 
-\item{flow_dir}{The file name of a hydrologically-corrected digital elevation model in the current GRASS mapset.}
+\item{flow_dir}{The name of a flow direction grid in the current GRASS mapset.}
 
 \item{out}{The name of the output raster. A raster with the name \code{basename(out)} will be imported into the GRASS mapset. If \code{write_file} is true, then a file with the name \code{out} will be written into the user's current working directory.}
 
