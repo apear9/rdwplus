@@ -4,7 +4,14 @@ output:
     keep_md: true
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = FALSE, # switch to TRUE when compiling final documentation
+  message=FALSE,
+  warning=FALSE
+)
+```
 
 # rdwplus
 

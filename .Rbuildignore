@@ -4,3 +4,5 @@
 ^\.gitignore$
 ^\.git$
 ^LICENSE$
+^\.html
+^README\.Rmd
