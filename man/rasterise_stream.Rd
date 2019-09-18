@@ -4,12 +4,10 @@
 \alias{rasterise_stream}
 \title{Turn a shapefile of stream edges into a raster}
 \usage{
-rasterise_stream(streams, reference_raster, out, overwrite = FALSE, ...)
+rasterise_stream(streams, out, overwrite = FALSE, ...)
 }
 \arguments{
 \item{streams}{A file name for a shapefile of stream edges in the current GRASS mapset.}
-
-\item{reference_raster}{File path of a raster layer in the current GRASS mapset.}
 
 \item{out}{The filename of the output.}
 
@@ -21,5 +19,5 @@ rasterise_stream(streams, reference_raster, out, overwrite = FALSE, ...)
 Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
 }
 \description{
-Given a shapefile of lines representing the channels of a stream network, and a reference raster that defines cell resolution and snapping, this function will return a rasterised version of the shapefile.
+Given a shapefile of lines representing the channels of a stream network, this function will return a rasterised version of the shapefile. The raster will have the parameters of the current GRASS mapset.
 }

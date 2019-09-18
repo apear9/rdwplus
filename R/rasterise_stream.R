@@ -1,13 +1,12 @@
 #' Turn a shapefile of stream edges into a raster
-#' @description Given a shapefile of lines representing the channels of a stream network, and a reference raster that defines cell resolution and snapping, this function will return a rasterised version of the shapefile.
+#' @description Given a shapefile of lines representing the channels of a stream network, this function will return a rasterised version of the shapefile. The raster will have the parameters of the current GRASS mapset.
 #' @param streams A file name for a shapefile of stream edges in the current GRASS mapset.
-#' @param reference_raster File path of a raster layer in the current GRASS mapset.
 #' @param out The filename of the output. 
 #' @param overwrite A logical indicating whether the output is allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{v.to.rast}.
 #' @return Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
 #' @export
-rasterise_stream <- function(streams, reference_raster, out, overwrite = FALSE, ...){
+rasterise_stream <- function(streams, out, overwrite = FALSE, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -36,7 +35,7 @@ rasterise_stream <- function(streams, reference_raster, out, overwrite = FALSE, 
       flags = "overwrite",
       parameters = list(
         input = streams,
-        type = "lines",
+        type = "line",
         output = grass_out,
         use = "val",
         value = 1,
@@ -48,7 +47,7 @@ rasterise_stream <- function(streams, reference_raster, out, overwrite = FALSE, 
       "v.to.rast",
       parameters = list(
         input = streams,
-        type = "lines",
+        type = "line",
         output = grass_out,
         use = "val",
         value = 1,
