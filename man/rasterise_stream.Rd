@@ -4,19 +4,18 @@
 \alias{rasterise_stream}
 \title{Turn a shapefile of stream edges into a raster}
 \usage{
-rasterise_stream(streams, reference_raster, out, method = "binary",
-  overwrite = FALSE)
+rasterise_stream(streams, reference_raster, out, overwrite = FALSE, ...)
 }
 \arguments{
-\item{streams}{A file name for a shapefile of stream edges or a SpatialLines* object that represents the same thing.}
+\item{streams}{A file name for a shapefile of stream edges in the current GRASS mapset.}
 
-\item{reference_raster}{File path of a raster layer that defines the extent of the study area, as well as the cell resolution and snapping of the output raster. Can also be a \code{Raster*} object.}
+\item{reference_raster}{File path of a raster layer in the current GRASS mapset.}
 
 \item{out}{The filename of the output.}
 
-\item{method}{A string. The method that should be used to process the stream. The options are "binary" (stream cells = 1, others = 0) or "unary" (stream cells = NoData, others = 1)}
-
 \item{overwrite}{A logical indicating whether the output is allowed to overwrite existing files. Defaults to \code{FALSE}.}
+
+\item{...}{Additional arguments to \code{v.to.rast}.}
 }
 \value{
 Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
