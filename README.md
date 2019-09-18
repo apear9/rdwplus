@@ -16,7 +16,9 @@ Using rdwplus
 
 Load `rdwplus` after it has been installed.
 
-    library(rdwplus)
+``` r
+library(rdwplus)
+```
 
 Set up a GRASS session.
 
@@ -25,25 +27,43 @@ Setting up a GRASS session
 
 A GRASS session can very easily be set up through R. First, the user must find a folder containing their installation of GRASS GIS. If the user does not know where this folder is located, they can search for it by running
 
-    #  Note this may yield more than one directory, hence the [1]
-    my_grass <- search_for_grass()[1]
+``` r
+# Path to GRASS
+my_grass <- "C:/Program Files/GRASS GIS 7.6"
+# If you don't know where the GRASS installation sits on your
+# computer, use the following.
+# Note this may yield more than one directory, hence the [1]
+# my_grass <- search_for_grass()[1]
+```
 
 Once the location of the user's GRASS installation is known, the function `initGRASS` can be called to set up the GRASS session.
 
-    initGRASS(my_grass)
+``` r
+initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
+```
 
 At this stage it is possible to set other environment parameters but, for this demonstration, the above is fine.
 
 Now we can check that a GRASS session is running.
 
-    check_running()
+``` r
+check_running()
+```
 
 We can then set up the GRASS environment. This means setting the extent, spatial resolution, coordinate system, etc., of the current GRASS mapset. This is done by giving the function `set_envir()` a file path to a raster file.
 
-    set_envir()
+``` r
+set_envir()
+```
 
 Data preprocessing
 ------------------
+
+### The digital elevation model
+
+### The streams
+
+### The sites
 
 Compute watershed attributes
 ----------------------------
