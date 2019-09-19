@@ -13,27 +13,6 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, ...){
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
-  # Check if sites is spatial points
-  # if(!is_sppoints(sites)) sites <- shapefile(sites)
-  
-  # Check if streams is spatial lines
-  # if(!is_splines(streams)) streams <- shapefile(streams)
-  
-  # Record attributes of sites shapefile
-  shp_attr <- names(sites@data)
-  
-  # Snap sites to streams shapefile
-  # snapped <- snapPointsToLines(sites, streams, maxDist = max_move, withAttrs = TRUE)
-  
-  # Delete extra fields added by called to snap points
-  # snapped@data <- snapped@data[, shp_attr]
-  
-  # Write out to file
-  # shapefile(snapped, filename = out, overwrite = overwrite)
-  
-  # Import to mapset
-  # vector_to_mapset(out, overwrite, ...)
-  
   # Call GRASS function
   flags <- "quiet"
   if(overwrite) flags <- c(flags, "overwrite")
