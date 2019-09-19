@@ -4,14 +4,14 @@
 \alias{snap_sites}
 \title{A function to snap sites in a shapefile to a stream network}
 \usage{
-snap_sites(sites, streams, max_move, out, overwrite = FALSE, ...)
+snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
 }
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites or a \code{SpatialPoints*} object representing the same thing.}
 
-\item{streams}{File name for a shapefile containing the edges of the stream network or a \code{SpatialLines*} object representing the same thing.}
+\item{flow_acc}{File name for a flow accumulation raster in the current GRASS mapset.}
 
-\item{max_move}{The maximum distance in map units that any site can be moved to snap it to the streams.}
+\item{max_move}{The maximum distance in map units that any site can be moved to snap it to the flow accumulation grid.}
 
 \item{out}{The output file path.}
 
