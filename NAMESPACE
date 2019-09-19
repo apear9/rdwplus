@@ -3,6 +3,7 @@
 export(burn_in)
 export(check_running)
 export(compute_metrics)
+export(coord_to_raster)
 export(derive_flow)
 export(fill_sinks)
 export(get_flow_accumulation)

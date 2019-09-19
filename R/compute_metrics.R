@@ -68,14 +68,16 @@ compute_metrics <- function(
     # Compute iFLO weights
     if(any(c("HAiFLO", "iFLO") %in% metrics)){
       
+      # Get pour points / outlets as raster cells 
+      
       # Name for flow length raster
-      current_flowOut <- paste0("flowlenOut_", rowID, ".tif")
+      current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
       
       # Compute it
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = TRUE, overwrite = TRUE)
       
       # Compute iFLO weights for real
-      iFLO_weights_command <- paste0("wFLO = ( ", current_flowOut, " + 1)^", idwp)
+      iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)
       rast_calc(iFLO_weights_command)
       
     }
