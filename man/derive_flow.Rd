@@ -4,8 +4,7 @@
 \alias{derive_flow}
 \title{Obtain flow direction and accumulation over a digital elevation model (DEM)}
 \usage{
-derive_flow(dem, flow_dir, flow_acc, flow_tci, sinks, overwrite = FALSE,
-  ...)
+derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE, ...)
 }
 \arguments{
 \item{dem}{A digital elevation model that has been hydrologically corrected.}
@@ -14,13 +13,9 @@ derive_flow(dem, flow_dir, flow_acc, flow_tci, sinks, overwrite = FALSE,
 
 \item{flow_acc}{The name of the output flow accumulation file in the current GRASS mapset.}
 
-\item{flow_tci}{The name of the output terrain convergence indenx file in the current GRASS mapset.}
-
-\item{sinks}{The name of the output sink-watershed file in the current GRASS mapset.}
-
 \item{overwrite}{Whether any of the outputs should be allowed to overwrite existing files.}
 
-\item{...}{Additional arguments to \code{r.terraflow}.}
+\item{...}{Additional arguments to \code{r.watershed}.}
 }
 \value{
 Nothing. Files are written in the current GRASS mapset.

@@ -3,13 +3,11 @@
 #' @param dem A digital elevation model that has been hydrologically corrected.
 #' @param flow_dir The name of the output flow direction file in the current GRASS mapset.
 #' @param flow_acc The name of the output flow accumulation file in the current GRASS mapset.
-#' @param flow_tci The name of the output terrain convergence indenx file in the current GRASS mapset.
-#' @param sinks The name of the output sink-watershed file in the current GRASS mapset.
 #' @param overwrite Whether any of the outputs should be allowed to overwrite existing files.
-#' @param ... Additional arguments to \code{r.terraflow}. 
+#' @param ... Additional arguments to \code{r.watershed}. 
 #' @return Nothing. Files are written in the current GRASS mapset.
 #' @export
-derive_flow <- function(dem, flow_dir, flow_acc, flow_tci, sinks, overwrite = FALSE, ...){
+derive_flow <- function(dem, flow_dir, flow_acc, overwrite = FALSE, ...){
   
   # Check that grass is running
   running <- check_running()
