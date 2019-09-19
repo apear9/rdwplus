@@ -54,9 +54,23 @@ compute_metrics <- function(
     # Compute lumped metric if requested
     if(only(c("iEDO", "iEDS", "iFLO", "iFLS", "HAiFLO", "HAiFLS"), "lumped", metrics)){
       
-      # Yet to come
-      # Proper placement TBA
-      invisible()
+      # Compute stat in loop over land use
+      for(lu_idx in 1:length(landuse)){
+        
+        # Compute numbers of cells in and out of landuse
+        lumped_table <- paste0(tempdir(), "/lumped_table.csv")
+        zonal_table(current_watershed, landuse[lu_idx], lumped_table)
+        
+        # Import table
+        lumped_table <- read.csv(lumped_table)
+        
+        # Compute statistics
+        counts <- lumped_table$count
+        result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[1]/sum(counts)
+        
+      }
+      
+      
     }
     
     # Get pour points / outlets as raster cells 
