@@ -7,7 +7,7 @@
 get_distance(target, out, overwrite = FALSE)
 }
 \arguments{
-\item{target}{File name of the watershed outlet (as a raster) in the current GRASS mapset.}
+\item{target}{File name of the watershed outlet or streams (as a raster) in the current GRASS mapset.}
 
 \item{out}{File path for the result to be written.}
 

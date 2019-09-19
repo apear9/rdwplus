@@ -81,19 +81,46 @@ compute_metrics <- function(
       # Compute inverse distance weight
       iEDO_weights_command <- paste0("wEDO = ( ", iEDO_distance, " + 1)^", idwp)
       rast_calc(iEDO_weights_command)
+      
       # Compute iEDO metric
       iEDO_table <- paste0(tempdir(), "\\iEDO_table.csv")
-        zonal_table("wEDO", landuse, iEDO_table)
-        
-        # Get result table
-        iEDO_table <- read.csv(iEDO_table)
-        
-        # Extract out statistics
-        sums <- iEDO_table$sum
-        zone <- iEDO_table$zone
-        
-        # Insert iEDO metric for this row
-        result_metrics[[lu_idx]]$iEDO[rowID] <- 100*sums[1]/sum(sums)
+      zonal_table("wEDO", landuse, iEDO_table)
+      
+      # Get result table
+      iEDO_table <- read.csv(iEDO_table)
+      
+      # Extract out statistics
+      sums <- iEDO_table$sum
+      zone <- iEDO_table$zone
+      
+      # Insert iEDO metric for this row
+      result_metrics[[lu_idx]]$iEDO[rowID] <- 100*sums[1]/sum(sums)
+      
+    }
+    
+    if(any(metrics == "iEDS")){
+      
+      # Compute distance
+      iEDS_distance <- "iEDS_distance"
+      get_distance(streams, iEDS_distance, TRUE)
+      
+      # Compute inverse distance weight
+      iEDS_weights_command <- paste0("wEDO = ( ", iEDS_distance, " + 1)^", idwp)
+      rast_calc(iEDS_weights_command)
+      
+      # Compute iEDS metric
+      iEDS_table <- paste0(tempdir(), "\\iEDS_table.csv")
+      zonal_table("wEDO", landuse, iEDS_table)
+      
+      # Get result table
+      iEDS_table <- read.csv(iEDS_table)
+      
+      # Extract out statistics
+      sums <- iEDS_table$sum
+      zone <- iEDS_table$zone
+      
+      # Insert iEDS metric for this row
+      result_metrics[[lu_idx]]$iEDS[rowID] <- 100*sums[1]/sum(sums)
       
     }
     
@@ -176,5 +203,5 @@ compute_metrics <- function(
   
   # Only while testing, return list immediately
   return(result_metrics)
-
+  
 }
