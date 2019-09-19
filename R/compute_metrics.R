@@ -75,8 +75,8 @@ compute_metrics <- function(
     }
     
     # Get pour points / outlets as raster cells 
-    coords_i <- sites@coords[i, 1:2]
-    coords_i_out <- paste0("pour_point_", i, ".tif")
+    coords_i <- sites@coords[rowID, 1:2]
+    coords_i_out <- paste0("pour_point_", rowID, ".tif")
     coord_to_raster(coords_i, coords_i_out, TRUE)
     
     # Mask to this watershed for following operations
