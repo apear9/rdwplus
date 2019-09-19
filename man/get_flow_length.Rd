@@ -4,12 +4,17 @@
 \alias{get_flow_length}
 \title{Derive a flow length to streams and outlets}
 \usage{
-get_flow_length(dem, out, overwrite = FALSE)
+get_flow_length(str_rast, flow_dir, out, to_outlet = FALSE,
+  overwrite = FALSE)
 }
 \arguments{
-\item{dem}{A file path to the hydrologically corrected DEM, with .sgrd extension.}
+\item{str_rast}{Rasterized unary streams file.}
+
+\item{flow_dir}{Flow direction raster.}
 
 \item{out}{A file name for the output raster of flow lengths.}
+
+\item{to_outlet}{Calculate parameters for outlets flag. Defaults to \code{FALSE} for streams.}
 
 \item{overwrite}{Overwrite flag. Defaults to \code{FALSE}.}
 }
