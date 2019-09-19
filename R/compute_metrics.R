@@ -36,6 +36,7 @@ compute_metrics <- function(
   # Top level -- land use types [x length(landuse)]
   # Second level -- metrics [x length(metrics)]
   result_metrics <- vector("list", length(landuse))
+  names(result_metrics) <- basename(landuse)
   # Create lists for second level
   metrics_list <- vector("list", length(metrics))
   names(metrics_list) <- metrics
