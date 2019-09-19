@@ -154,7 +154,7 @@ compute_metrics <- function(
       current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
       
       # Compute it
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = TRUE, overwrite = TRUE)
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_out, to_outlet = TRUE, overwrite = TRUE)
       
       # Compute iFLO weights for real
       iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)

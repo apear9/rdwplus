@@ -20,19 +20,6 @@ derive_flow <- function(dem, flow_dir, flow_acc, overwrite = FALSE, ...){
   }
   
   # Otherwise proceed
-  # execGRASS(
-  #   "r.terraflow",
-  #   flags = flags,
-  #   parameters = list(
-  #     elevation = dem,
-  #     filled = paste("out", basename(dem), sep = "__"),
-  #     direction = flow_dir,
-  #     accumulation = flow_acc,
-  #     swatershed = sinks,
-  #     tci = flow_tci,
-  #     ...
-  #   )
-  # )
   execGRASS(
     "r.watershed",
     flags = flags,
