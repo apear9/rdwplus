@@ -23,7 +23,8 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, ...){
       input = sites,
       output = out,
       accumulation = flow_acc,
-      radius = max_move
+      radius = max_move,
+      ...
     )
   )
   
