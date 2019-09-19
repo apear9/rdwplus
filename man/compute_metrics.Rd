@@ -11,7 +11,7 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.}
 
-\item{landuse}{Pointer(s) to land use rasters for which the land use metrics should be computed.}
+\item{landuse}{Names of land use or land cover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
 
 \item{fields}{A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names.}
 

@@ -1,7 +1,7 @@
 #' Compute spatially explicit watershed land use percentages
 #' @description Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.
-#' @param landuse Pointer(s) to land use rasters for which the land use metrics should be computed.
+#' @param landuse Names of land use or land cover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.
 #' @param fields A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names. 
 #' @param sites Pointer to a shapefile of sites.
 #' @param elevation A filled (flow-corrected) digital elevation model.
@@ -28,29 +28,36 @@ compute_metrics <- function(
   is_stream <- length(grep("S", metrics)) > 0
   if(no_stream & is_stream) stop("You need to provide a stream raster in order to compute either of the iFLS and HAiFLS metrics.")
   
-  # Check sites 
+  # Check sites, import as shapefile if it is not one already 
   if(!is_sppoints(sites)){sites <- shapefile(sites)}
   
+  # Initialise empty list to store results
+  # List structure:
+  # Top level -- land use types [x length(landuse)]
+  # Second level -- metrics [x length(metrics)]
   result_metrics <- vector("list", length(landuse))
+  # Create lists for second level
+  metrics_list <- vector("list", length(metrics))
+  names(metrics_list) <- metrics
+  # Loop to insert
+  for(a in 1:length(result_metrics)){
+    result_metrics[[a]] <- metrics_list
+  }
   
+  # Temporarily hard-coded
   # lu_idx integer index
   lu_idx <- 1
   
-  names(result_metrics) <- metrics  
-  print(result_metrics)
-  
   for(rowID in 1:nrow(sites@data)){
     
+    # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    
     get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
     
-    execGRASS("r.mask", 
-              flags = c("overwrite"),
-              parameters = list(
-                raster = basename(current_watershed)
-              ))
+    # Mask to this watershed for following operations
+    set_mask(basename(current_watershed))
     
+    # Compute iFLO weights
     if(any(c("HAiFLO", "iFLO") %in% metrics)){
       current_flowOut <- paste0("flowlenOut_", rowID, ".tif")
       
@@ -58,39 +65,41 @@ compute_metrics <- function(
       
       rast_calc(paste0("wFLO = ( ", current_flowOut, " + 1)^", idwp))
       
-      
-      
     }
+    
+    # Compute iFLS weights
     if(any(c("HAiFLS", "iFLS") %in% metrics)){
+      
       current_flowStr <- paste0("flowlenOut_", rowID, ".tif")
       
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = F, overwrite = T)
+    
     }
     
+    # Compute HAiFLO weights if needed
     if(any(metrics == "HAiFLO")){
       
+      # Compute hydrologically active weights
       rast_calc(paste0("HA_iFLO = ( ", flow_acc, " + 1 )*wFLO"))
       
+      # Compute zonal stats as table
       HA_iFLO_table <- paste0(tempdir(), "\\HA_iFLO_table.csv")
-      
       zonal_table("HA_iFLO", landuse, HA_iFLO_table)
       
-      print(HA_iFLO_table)
-      
+      # Get result table
       HA_iFLO_table <- read.csv(HA_iFLO_table)
       
-      print(head(HA_iFLO_table))
+      # Extract out statistics
+      sums <- HA_iFLO_table$sum
+      zone <- HA_iFLO_table$zone
       
-      print(100*HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"]/
-              (HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"] + HA_iFLO_table[HA_iFLO_table$zone == "0", "sum"]))
-      
-      result_metrics$HAiFLO[rowID] <- 100*HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"]/
-        (HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"] + HA_iFLO_table[HA_iFLO_table$zone == "0", "sum"])
-      
-      print(result_metrics)
+      # Insert HAiFLO metric for this row
+      result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*sums[1]/sum(sums)
       
     }
     
+    # Remove mask
+    clear_mask()
     
   }
   return(result_metrics)
