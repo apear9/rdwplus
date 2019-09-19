@@ -16,18 +16,24 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, ...){
   # Call GRASS function
   flags <- "quiet"
   if(overwrite) flags <- c(flags, "overwrite")
+  grass_out <- basename(out)
+  grass_out <- gsub(".shp", "", grass_out)
   execGRASS(
     "r.stream.snap",
     flags = flags,
     parameters = list(
       input = sites,
-      output = out,
+      output = grass_out,
       accumulation = flow_acc,
       radius = max_move,
       ...
     )
   )
   
+  # Retrieve vector
+  retrieve_vector(grass_out, out, overwrite = overwrite)
+  
   # Return nothing
   invisible()
+
 }
