@@ -56,6 +56,7 @@ compute_metrics <- function(
     
     # Compute lumped metric if requested
     if(only(c("iEDO", "iEDS", "iFLO", "iFLS", "HAiFLO", "HAiFLS"), "lumped", metrics)){
+      
       # Yet to come
       # Proper placement TBA
       invisible()
@@ -66,21 +67,32 @@ compute_metrics <- function(
     
     # Compute iFLO weights
     if(any(c("HAiFLO", "iFLO") %in% metrics)){
+      
+      # Name for flow length raster
       current_flowOut <- paste0("flowlenOut_", rowID, ".tif")
       
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = T, overwrite = T)
+      # Compute it
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = TRUE, overwrite = TRUE)
       
-      rast_calc(paste0("wFLO = ( ", current_flowOut, " + 1)^", idwp))
+      # Compute iFLO weights for real
+      iFLO_weights_command <- paste0("wFLO = ( ", current_flowOut, " + 1)^", idwp)
+      rast_calc(iFLO_weights_command)
       
     }
     
     # Compute iFLS weights
     if(any(c("HAiFLS", "iFLS") %in% metrics)){
       
-      current_flowStr <- paste0("flowlenOut_", rowID, ".tif")
+      # Temporary file name
+      current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
       
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = F, overwrite = T)
-    
+      # Compute flow length
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = FALSE, overwrite = TRUE)
+      
+      # Compute iFLS weights for real
+      iFLS_weights_command <- paste0("wFLS = (", current_flow_str, " + 1)^", idwp)
+      rast_calc(iFLS_weights_command)
+      
     }
     
     # Compute HAiFLO weights if needed
@@ -109,5 +121,8 @@ compute_metrics <- function(
     clear_mask()
     
   }
+  
+  # Only while testing, return list immediately
   return(result_metrics)
+
 }
