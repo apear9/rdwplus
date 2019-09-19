@@ -23,7 +23,8 @@ point_to_raster <- function(
     parameters = list(
       input = outlets,
       output = out,
-      type = "point"
+      type = "point",
+      use = "cat"
     )
   )
   
