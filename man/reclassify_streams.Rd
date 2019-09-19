@@ -19,5 +19,5 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
 }
 \description{
-Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for non-stream cells and NoData for stream cells).
+Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells).
 }

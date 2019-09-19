@@ -1,5 +1,5 @@
 #' Reclassify streams into the format required for the land use metric calculations.
-#' @description Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for non-stream cells and NoData for stream cells). 
+#' @description Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). 
 #' @param stream A streams raster as either a filepath to a raster or a Raster* object.
 #' @param out The output file.
 #' @param out_type Either 'binary' or 'unary'. See the Description above.
@@ -22,8 +22,8 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
     # Zeros for non-stream
     stream[is.na(stream[])] <- 0
   } else {
-    ind <- is.na(stream[])
-    # Ones for non-stream
+    ind <- !is.na(stream[])
+    # Ones for stream
     stream[ind] <- 1
     # NoData otherwise
     stream[!ind] <- NA

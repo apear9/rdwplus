@@ -6,7 +6,7 @@
 #' @param ... Additional arguments to \code{v.out.ogr}.
 #' @return Nothing.
 #' @export
-retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
+retrieve_vector <- function(layer, out_layer, overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
