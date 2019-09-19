@@ -14,7 +14,7 @@ get_flow_length(dem, out, overwrite = FALSE)
 \item{overwrite}{Overwrite flag. Defaults to \code{FALSE}.}
 }
 \value{
-Nothing. A file with the name \code{out} will be written to SAGA's current workspace.
+Nothing. A file with the name \code{out} will be written to GRASS's current workspace.
 }
 \description{
 Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM.
