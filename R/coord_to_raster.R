@@ -11,23 +11,31 @@ coord_to_raster <- function(outlet, out, overwrite = FALSE){
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
   # Set flags
-  flags <- "quiet"
+  flags <- c("quiet")
   if(overwrite) flags <- c(flags, "overwrite")
   
   # Convert coords to text
-  text <- paste(outlet, collapse = ",")
+  text <- data.frame(x = outlet[1], y = outlet[2])
+  where_temp <- paste0(tempdir(), "/temp_hold_coord.csv")
+  write.csv(text, where_temp, row.names = FALSE)
   
   # Convert coords to point
   point <- paste0("point_", basename(out))
   execGRASS(
     "v.in.ascii",
-    flags = flags,
+    flags = c(flags, "n"),
     parameters = list(
-      input = text,
+      input = where_temp,
       output = point,
-      separator = ","
+      separator = ",",
+      format = "point",
+      skip = 1
     )
   )
+  
+  # Clean up temporary file
+  file.remove(where_temp)
+  
   # Convert point to raster
   execGRASS(
     "v.to.rast",

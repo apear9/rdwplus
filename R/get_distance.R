@@ -16,6 +16,7 @@ get_distance <- function(target, out, overwrite = FALSE){
   # Execute GRASS command
   execGRASS(
     "r.grow.distance",
+    flags = flags,
     parameters = list(
       input = target,
       distance = basename(out),

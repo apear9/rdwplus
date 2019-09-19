@@ -53,7 +53,7 @@ compute_metrics <- function(
     get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
     
     # Compute lumped metric if requested
-    if(only(c("iEDO", "iEDS", "iFLO", "iFLS", "HAiFLO", "HAiFLS"), "lumped", metrics)){
+    if(any(metrics == "lumped")){
       
       # Compute stat in loop over land use
       for(lu_idx in 1:length(landuse)){
@@ -66,8 +66,9 @@ compute_metrics <- function(
         lumped_table <- read.csv(lumped_table)
         
         # Compute statistics
-        counts <- lumped_table$count
-        result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[1]/sum(counts)
+        counts <- lumped_table$non_null_cells
+        zone <- lumped_table$zone
+        result_metrics[[lu_idx]]$lumped[rowID] <- 100 * (1 - counts[1]/sum(counts))
         
       }
       
@@ -76,7 +77,7 @@ compute_metrics <- function(
     
     # Get pour points / outlets as raster cells 
     coords_i <- sites@coords[rowID, 1:2]
-    coords_i_out <- paste0("pour_point_", rowID, ".tif")
+    coords_i_out <- paste0("pour_point_", rowID)
     coord_to_raster(coords_i, coords_i_out, TRUE)
     
     # Mask to this watershed for following operations
@@ -109,7 +110,7 @@ compute_metrics <- function(
         zone <- iEDO_table$zone
         
         # Insert iEDO metric for this row
-        result_metrics[[lu_idx]]$iEDO[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$iEDO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
@@ -140,7 +141,7 @@ compute_metrics <- function(
         zone <- iEDS_table$zone
         
         # Insert iEDS metric for this row
-        result_metrics[[lu_idx]]$iEDS[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$iEDS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
@@ -193,7 +194,7 @@ compute_metrics <- function(
         zone <- iFLO_table$zone
         
         # Insert HAiFLO metric for this row
-        result_metrics[[lu_idx]]$iFLO[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$iFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
@@ -217,7 +218,7 @@ compute_metrics <- function(
         zone <- iFLS_table$zone
         
         # Insert HAiFLS metric for this row
-        result_metrics[[lu_idx]]$iFLS[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$iFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
@@ -244,7 +245,7 @@ compute_metrics <- function(
         zone <- HA_iFLO_table$zone
         
         # Insert HAiFLO metric for this row
-        result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
@@ -271,7 +272,7 @@ compute_metrics <- function(
         zone <- HA_iFLS_table$zone
         
         # Insert HAiFLS metric for this row
-        result_metrics[[lu_idx]]$HAiFLS[rowID] <- 100*sums[1]/sum(sums)
+        result_metrics[[lu_idx]]$HAiFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
       
