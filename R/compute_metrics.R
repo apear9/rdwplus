@@ -97,7 +97,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table of statistics
-        iEDO_table <- paste0(tempdir(), "\\iEDO_table.csv")
+        iEDO_table <- paste0(tempdir(), "/iEDO_table.csv")
         zonal_table("wEDO", landuse, iEDO_table)
         
         # Get result table
@@ -128,7 +128,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Get table of statistics
-        iEDS_table <- paste0(tempdir(), "\\iEDS_table.csv")
+        iEDS_table <- paste0(tempdir(), "/iEDS_table.csv")
         zonal_table("wEDO", landuse[lu_idx], iEDS_table)
         
         # Get result table
@@ -181,7 +181,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLO_table <- paste0(tempdir(), "\\iFLO_table.csv")
+        iFLO_table <- paste0(tempdir(), "/iFLO_table.csv")
         zonal_table("iFLO", landuse[lu_idx], iFLO_table)
         
         # Get result table
@@ -205,7 +205,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLS_table <- paste0(tempdir(), "\\iFLS_table.csv")
+        iFLS_table <- paste0(tempdir(), "/iFLS_table.csv")
         zonal_table("iFLS", landuse[lu_idx], iFLS_table)
         
         # Get result table
@@ -232,7 +232,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLO_table <- paste0(tempdir(), "\\HA_iFLO_table.csv")
+        HA_iFLO_table <- paste0(tempdir(), "/HA_iFLO_table.csv")
         zonal_table("HA_iFLO", landuse[lu_idx], HA_iFLO_table)
         
         # Get result table
@@ -244,6 +244,33 @@ compute_metrics <- function(
         
         # Insert HAiFLO metric for this row
         result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*sums[1]/sum(sums)
+        
+      }
+      
+    }
+    
+    # Compute HAiFLS weights if needed
+    if(any(metrics == "HAiFLS")){
+      
+      # Compute hydrologically active weights
+      rast_calc(paste0("HA_iFLS = ( ", flow_acc, " + 1 )*wFLS"))
+      
+      # Loop through land use rasters to compute HAiFLS metrics
+      for(lu_idx in 1:length(landuse)){
+        
+        # Compute zonal stats as table
+        HA_iFLS_table <- paste0(tempdir(), "/HA_iFLS_table.csv")
+        zonal_table("HA_iFLS", landuse[lu_idx], HA_iFLS_table)
+        
+        # Get result table
+        HA_iFLS_table <- read.csv(HA_iFLS_table)
+        
+        # Extract out statistics
+        sums <- HA_iFLS_table$sum
+        zone <- HA_iFLS_table$zone
+        
+        # Insert HAiFLS metric for this row
+        result_metrics[[lu_idx]]$HAiFLS[rowID] <- 100*sums[1]/sum(sums)
         
       }
       
