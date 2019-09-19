@@ -3,7 +3,7 @@
 #' @param dem A file path to the hydrologically corrected DEM, with .sgrd extension.
 #' @param out A file name for the output raster of flow lengths.
 #' @param overwrite Overwrite flag. Defaults to \code{FALSE}.
-#' @return Nothing. A file with the name \code{out} will be written to SAGA's current workspace.
+#' @return Nothing. A file with the name \code{out} will be written to GRASS's current workspace.
 #' @export
 get_flow_length <- function(dem, out, overwrite = FALSE){
   
