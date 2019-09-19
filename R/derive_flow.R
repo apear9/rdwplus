@@ -15,8 +15,8 @@ derive_flow <- function(dem, flow_dir, flow_acc, flow_tci, sinks, overwrite = FA
   running <- check_running()
   if(!running) stop("No active GRASS session. Program halted.")
   
-  # Use the following flags
-  flags <- "s"
+  # Use the following flags 
+  flags <- "s" 
   if(overwrite){
     flags <- c(flags, "overwrite")
   }
