@@ -7,6 +7,9 @@
 #' @export
 coord_to_raster <- function(outlet, out, overwrite = FALSE){
   
+  # Check grass running
+  if(!check_running()) stop("There is no valid GRASS session. Program halted.")
+  
   # Set flags
   flags <- "quiet"
   if(overwrite) flags <- c(flags, "overwrite")
@@ -38,4 +41,5 @@ coord_to_raster <- function(outlet, out, overwrite = FALSE){
   
   # Return nothing
   invisible()
+  
 }

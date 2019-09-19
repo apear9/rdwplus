@@ -4,17 +4,17 @@
 \alias{get_distance}
 \title{Compute Euclidean distance to a survey site or stream line within a watershed}
 \usage{
-get_distance(background, target, out_file)
+get_distance(target, out, overwrite = FALSE)
 }
 \arguments{
-\item{background}{A raster of the watershed outline. This can also be a file path to an existing raster.}
+\item{target}{File name of the watershed outlet (as a raster) in the current GRASS mapset.}
 
-\item{target}{A raster of the survey site or stream lines. This can also be a file path to an existing raster.}
+\item{out}{File path for the result to be written.}
 
-\item{out_file}{File path for the result to be written.}
+\item{overwrite}{A logical indicating whether the outputs of this function should be allowed to overwrite existing files.}
 }
 \value{
-Nothing. A file with the name and location \code{out_file} will be created.
+Nothing. A file with the name and location \code{out} will be created.
 }
 \description{
 This function is needed to compute Euclidean distance from a feature of interest in a watershed raster.
