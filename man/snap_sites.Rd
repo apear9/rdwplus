@@ -11,7 +11,7 @@ snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
 
 \item{flow_acc}{File name for a flow accumulation raster in the current GRASS mapset.}
 
-\item{max_move}{The maximum distance in map units that any site can be moved to snap it to the flow accumulation grid.}
+\item{max_move}{The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.}
 
 \item{out}{The output file path.}
 

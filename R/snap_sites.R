@@ -2,7 +2,7 @@
 #' @description This function takes a set of survey site locations and makes sure that they are coincident with the stream network dataset.
 #' @param sites File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.
 #' @param flow_acc File name for a flow accumulation raster in the current GRASS mapset.
-#' @param max_move The maximum distance in map units that any site can be moved to snap it to the flow accumulation grid.
+#' @param max_move The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.
 #' @param out The output file path. 
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{r.stream.snap}.
