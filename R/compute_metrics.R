@@ -28,9 +28,16 @@ compute_metrics <- function(
   is_stream <- length(grep("S", metrics)) > 0
   if(no_stream & is_stream) stop("You need to provide a stream raster in order to compute either of the iFLS and HAiFLS metrics.")
   
-  result_metrics <- vector("list",length(landuse))
+  # Check sites 
+  if(!is_sppoints(sites)){sites <- shapefile(sites)}
+  
+  result_metrics <- vector("list", length(landuse))
+  
   # lu_idx integer index
   lu_idx <- 1
+  
+  names(result_metrics) <- metrics  
+  print(result_metrics)
   
   for(rowID in 1:nrow(sites@data)){
     
@@ -38,52 +45,51 @@ compute_metrics <- function(
     
     get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
     
+    execGRASS("r.mask", 
+              flags = c("overwrite"),
+              parameters = list(
+                raster = basename(current_watershed)
+              ))
+    
     if(any(c("HAiFLO", "iFLO") %in% metrics)){
       current_flowOut <- paste0("flowlenOut_", rowID, ".tif")
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = T)
       
-      execGRASS("r.mapcalc", 
-                flags = flags,
-                parameters = list(
-                  expression = "wFLO = (current_flowOut + 1)^idwp"
-                )
-      )
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowOut, to_outlet = T, overwrite = T)
+      
+      rast_calc(paste0("wFLO = ( ", current_flowOut, " + 1)^", idwp))
+      
+      
+      
     }
     if(any(c("HAiFLS", "iFLS") %in% metrics)){
       current_flowStr <- paste0("flowlenOut_", rowID, ".tif")
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = F)
+      
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = F, overwrite = T)
     }
     
     if(any(metrics == "HAiFLO")){
-      execGRASS("r.mapcalc", 
-                flags = flags,
-                parameters = list(
-                  expression = "HA_iFLO = (flow_acc + 1)*wFLO"
-                )
-      )
       
-      HA_iFLO_table <- "HA_iFLO_table.csv"
+      rast_calc(paste0("HA_iFLO = ( ", flow_acc, " + 1 )*wFLO"))
       
-      execGRASS("r.univar",
-                flags = flags,
-                parameters = list(
-                  map = "HA_iFLO", 
-                  zones = landuse, 
-                  output = HA_iFLO_table, 
-                  separator = "comma"
-                )
-      )
+      HA_iFLO_table <- paste0(tempdir(), "\\HA_iFLO_table.csv")
+      
+      zonal_table("HA_iFLO", landuse, HA_iFLO_table)
+      
+      print(HA_iFLO_table)
       
       HA_iFLO_table <- read.csv(HA_iFLO_table)
       
-      result_metrics[[lu_idx]]$HA_iFLO[rowID] <- 100*HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"]/
+      print(head(HA_iFLO_table))
+      
+      print(100*HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"]/
+              (HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"] + HA_iFLO_table[HA_iFLO_table$zone == "0", "sum"]))
+      
+      result_metrics$HAiFLO[rowID] <- 100*HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"]/
         (HA_iFLO_table[HA_iFLO_table$zone == "1", "sum"] + HA_iFLO_table[HA_iFLO_table$zone == "0", "sum"])
       
-      
+      print(result_metrics)
       
     }
-    
-    
     
     
   }

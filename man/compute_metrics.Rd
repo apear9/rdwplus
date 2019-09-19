@@ -6,7 +6,7 @@
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
   fields = paste(metrics, landuse, sep = "_"), sites, elevation,
-  flow_dir, flow_acc, streams)
+  flow_dir, flow_acc, streams, idwp = -1)
 }
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.}
@@ -24,6 +24,8 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \item{flow_acc}{A flow accumulation grid derived from \code{flow_dir}.}
 
 \item{streams}{A pointer to a streams raster where non-stream cells are coded as 1 and stream cells are coded as NA / NoData. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
+
+\item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
 }
 \value{
 A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
