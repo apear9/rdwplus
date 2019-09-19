@@ -123,7 +123,7 @@ compute_metrics <- function(
       get_distance(streams, iEDS_distance, TRUE)
       
       # Compute inverse distance weight
-      iEDS_weights_command <- paste0("wEDO = ( ", iEDS_distance, " + 1)^", idwp)
+      iEDS_weights_command <- paste0("wEDS = ( ", iEDS_distance, " + 1)^", idwp)
       rast_calc(iEDS_weights_command)
       
       # Compute iEDS metric by looping over landuse rasters
@@ -131,7 +131,7 @@ compute_metrics <- function(
         
         # Get table of statistics
         iEDS_table <- paste0(tempdir(), "/iEDS_table.csv")
-        zonal_table("wEDO", landuse[lu_idx], iEDS_table)
+        zonal_table("wEDS", landuse[lu_idx], iEDS_table)
         
         # Get result table
         iEDS_table <- read.csv(iEDS_table)
@@ -154,7 +154,7 @@ compute_metrics <- function(
       current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
       
       # Compute it
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_out, to_outlet = TRUE, overwrite = TRUE)
+      get_flow_length(str_rast = coords_i_out, flow_dir = flow_dir, out = current_flow_out, to_outlet = TRUE, overwrite = TRUE)
       
       # Compute iFLO weights for real
       iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)
@@ -184,7 +184,7 @@ compute_metrics <- function(
         
         # Compute table
         iFLO_table <- paste0(tempdir(), "/iFLO_table.csv")
-        zonal_table("iFLO", landuse[lu_idx], iFLO_table)
+        zonal_table("wFLO", landuse[lu_idx], iFLO_table)
         
         # Get result table
         iFLO_table <- read.csv(iFLO_table)
@@ -208,7 +208,7 @@ compute_metrics <- function(
         
         # Compute table
         iFLS_table <- paste0(tempdir(), "/iFLS_table.csv")
-        zonal_table("iFLS", landuse[lu_idx], iFLS_table)
+        zonal_table("wFLS", landuse[lu_idx], iFLS_table)
         
         # Get result table
         iFLS_table <- read.csv(iFLS_table)
