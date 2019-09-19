@@ -11,19 +11,19 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.}
 
-\item{landuse}{Names of land use or land cover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
+\item{landuse}{Names of landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
 
 \item{fields}{A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names.}
 
-\item{sites}{Pointer to a shapefile of sites.}
+\item{sites}{A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.}
 
-\item{elevation}{A filled (flow-corrected) digital elevation model.}
+\item{elevation}{File name of a filled (hydrologically-conditioned) digital elevation model in the current GRASS mapset.}
 
-\item{flow_dir}{A 'Deterministic 8' (D8) flow direction grid derived from \code{elevation}.}
+\item{flow_dir}{A 'Deterministic 8' (D8) flow direction grid derived from \code{derive_flow}.}
 
-\item{flow_acc}{A flow accumulation grid derived from \code{flow_dir}.}
+\item{flow_acc}{File name of a flow accumulation grid derived from \code{derive_flow} in the current GRASS mapset.}
 
-\item{streams}{A pointer to a streams raster where non-stream cells are coded as 1 and stream cells are coded as NA / NoData. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
+\item{streams}{File name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
 
 \item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
 }
