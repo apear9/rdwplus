@@ -62,13 +62,44 @@ compute_metrics <- function(
       invisible()
     }
     
+    # Get pour points / outlets as raster cells 
+    coords_i <- sites@coords[i, 1:2]
+    coords_i_out <- paste0("pour_point_", i, ".tif")
+    coord_to_raster(coords_i, coords_i_out, TRUE)
+    
     # Mask to this watershed for following operations
     set_mask(basename(current_watershed))
+    
+    # Compute iEDO weights
+    
+    if(any(metrics == "iEDO")){
+      
+      # Compute distance
+      iEDO_distance <- "iEDO_distance"
+      get_distance(coords_i_out, iEDO_distance, TRUE)
+      
+      # Compute inverse distance weight
+      iEDO_weights_command <- paste0("wEDO = ( ", iEDO_distance, " + 1)^", idwp)
+      rast_calc(iEDO_weights_command)
+      # Compute iEDO metric
+      iEDO_table <- paste0(tempdir(), "\\iEDO_table.csv")
+        zonal_table("wEDO", landuse, iEDO_table)
+        
+        # Get result table
+        iEDO_table <- read.csv(iEDO_table)
+        
+        # Extract out statistics
+        sums <- iEDO_table$sum
+        zone <- iEDO_table$zone
+        
+        # Insert iEDO metric for this row
+        result_metrics[[lu_idx]]$iEDO[rowID] <- 100*sums[1]/sum(sums)
+      
+    }
     
     # Compute iFLO weights
     if(any(c("HAiFLO", "iFLO") %in% metrics)){
       
-      # Get pour points / outlets as raster cells 
       
       # Name for flow length raster
       current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
