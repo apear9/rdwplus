@@ -1,4 +1,4 @@
-#' Compute spatially explicit watershed land use percentages
+#' Compute spatially explicit watershed attributes
 #' @description Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
 #' @param landuse Names of landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.
@@ -92,6 +92,25 @@ compute_metrics <- function(
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (", current_flow_str, " + 1)^", idwp)
       rast_calc(iFLS_weights_command)
+      
+    }
+    
+    # Compute iFLO metric in full if needed
+    if(any(metrics == "iFLO")){
+      
+      # Compute table
+      iFLO_table <- paste0(tempdir(), "\\iFLO_table.csv")
+      zonal_table("iFLO", landuse, iFLO_table)
+      
+      # Get result table
+      iFLO_table <- read.csv(iFLO_table)
+      
+      # Extract out statistics
+      sums <- iFLO_table$sum
+      zone <- iFLO_table$zone
+      
+      # Insert HAiFLO metric for this row
+      result_metrics[[lu_idx]]$iFLO[rowID] <- 100*sums[1]/sum(sums)
       
     }
     

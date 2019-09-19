@@ -2,14 +2,14 @@
 % Please edit documentation in R/compute_metrics.R
 \name{compute_metrics}
 \alias{compute_metrics}
-\title{Compute spatially explicit watershed land use percentages}
+\title{Compute spatially explicit watershed attributes}
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
   fields = paste(metrics, landuse, sep = "_"), sites, elevation,
   flow_dir, flow_acc, streams, idwp = -1)
 }
 \arguments{
-\item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for iEDO and iEDS.}
+\item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}
 
 \item{landuse}{Names of landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
 
