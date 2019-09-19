@@ -14,7 +14,7 @@ get_distance(target, out, overwrite = FALSE)
 \item{overwrite}{A logical indicating whether the outputs of this function should be allowed to overwrite existing files.}
 }
 \value{
-Nothing. A file with the name and location \code{out} will be created.
+Nothing. A file with the name \code{basename(out)} will be created in the current GRASS mapset.
 }
 \description{
 This function is needed to compute Euclidean distance from a feature of interest in a watershed raster.

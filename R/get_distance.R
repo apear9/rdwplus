@@ -3,7 +3,7 @@
 #' @param target File name of the watershed outlet (as a raster) in the current GRASS mapset.
 #' @param out File path for the result to be written.
 #' @param overwrite A logical indicating whether the outputs of this function should be allowed to overwrite existing files.
-#' @return Nothing. A file with the name and location \code{out} will be created. 
+#' @return Nothing. A file with the name \code{basename(out)} will be created in the current GRASS mapset. 
 get_distance <- function(target, out, overwrite = FALSE){
   
   # Check grass is running
