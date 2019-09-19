@@ -7,7 +7,7 @@
 snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
 }
 \arguments{
-\item{sites}{File name for a shapefile containing the locations of the survey sites or a \code{SpatialPoints*} object representing the same thing.}
+\item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}
 
 \item{flow_acc}{File name for a flow accumulation raster in the current GRASS mapset.}
 
@@ -17,7 +17,7 @@ snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
 
 \item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 
-\item{...}{Additional arguments to \code{v.import}.}
+\item{...}{Additional arguments to \code{r.stream.snap}.}
 }
 \value{
 Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.

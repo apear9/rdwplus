@@ -1,9 +1,9 @@
-#' Write a raster layer from the current GRASS mapset to file
-#' @description This function writes a GRASS mapset raster to file.
-#' @param layer The name of the raster in the GRASS mapset that is to be written out.
-#' @param out_layer The name of the file to be created, with the relevant file extension.
+#' Write a vector layer from the current GRASS mapset to file
+#' @description This function writes a GRASS mapset vector layer (like a shapefile) to file.
+#' @param layer The name of the vector layer in the GRASS mapset that is to be written out.
+#' @param out_layer The name of the shapefile to be created (with .shp file extension).
 #' @param overwrite A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
-#' @param ... Additional arguments to \code{r.out.gdal}.
+#' @param ... Additional arguments to \code{v.out.ogr}.
 #' @return Nothing.
 #' @export
 retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
@@ -20,11 +20,12 @@ retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
   if(overwrite){
     for(i in 1:n_layers){
       execGRASS(
-        'r.out.gdal', 
+        'v.out.ogr', 
         flags = c("overwrite", "quiet"),
         parameters = list(
           input = layer[i],
           output = out_layer[i],
+          format = "ESRI_Shapefile",
           ...
         )
       )
@@ -32,11 +33,12 @@ retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
   } else {
     for(i in 1:n_layers){
       execGRASS(
-        'r.out.gdal', 
+        'v.out.ogr', 
         flags = c("quiet"),
         parameters = list(
           input = layer[i],
           output = out_layer[i],
+          format = "ESRI_Shapefile",
           ...
         )
       )
