@@ -168,7 +168,16 @@ compute_metrics <- function(
       # Temporary file name
       current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
       
+      # reclassify_streams(paste0(wd , "/ExampleData/example/stream_rast.tif"), 
+      #                    paste0(wd , "/ExampleData/example/stream_2N.tif"), 
+      #                    "unary", TRUE)
+      # 
+      # raster_to_mapset("/ExampleData/example/stream_2N.tif")
+      # 
+      # rast_calc("fdir_mask = fdir.tif * stream_2N.tif")
+      
       # Compute flow length
+      # get_flow_length(str_rast = streams, flow_dir = "fdir_mask", out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
       
       # Compute iFLS weights for real
@@ -283,7 +292,11 @@ compute_metrics <- function(
     
   }
   
-  # Only while testing, return list immediately
-  return(result_metrics)
+  for(metric_name in metrics){
+    sites@data[ ,metric_name] <- result_metrics[[lu_idx]][metric_name]
+  }
+  
+  # Only while testing, return sites with metrics immediately
+  return(sites)
   
 }
