@@ -167,21 +167,22 @@ compute_metrics <- function(
       
       # Temporary file name
       current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
+      only_streams <- paste0("only_streams.tif")
+      no_streams <- paste0("no_streams.tif")
+      retrieve_raster(streams, streams)
       
-      # reclassify_streams(paste0(wd , "/ExampleData/example/stream_rast.tif"), 
-      #                    paste0(wd , "/ExampleData/example/stream_2N.tif"), 
-      #                    "unary", TRUE)
-      # 
-      # raster_to_mapset("/ExampleData/example/stream_2N.tif")
-      # 
-      # rast_calc("fdir_mask = fdir.tif * stream_2N.tif")
+      reclassify_streams(streams, only_streams, "unary", overwrite = TRUE) ## 1 for stream, NA elsewhere
+      reclassify_streams(streams, no_streams, "none", overwrite = TRUE) ## NA for stream, 1 elsewhere
+      
+      raster_to_mapset(only_streams)
       
       # Compute flow length
-      # get_flow_length(str_rast = streams, flow_dir = "fdir_mask", out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
+      get_flow_length(str_rast = only_streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
+      
+      rast_calc(paste0("current_flow_str2 =", current_flow_str, " * ", no_streams))
       
       # Compute iFLS weights for real
-      iFLS_weights_command <- paste0("wFLS = (", current_flow_str, " + 1)^", idwp)
+      iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
       rast_calc(iFLS_weights_command)
       
     }
@@ -192,7 +193,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLO_table <- paste0(tempdir(), "/iFLO_table.csv")
+        iFLO_table <- paste0(tempdir(), "\\iFLO_table.csv")
         zonal_table("wFLO", landuse[lu_idx], iFLO_table)
         
         # Get result table
@@ -216,11 +217,12 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLS_table <- paste0(tempdir(), "/iFLS_table.csv")
+        iFLS_table <- paste0(tempdir(), "\\iFLS_table.csv")
         zonal_table("wFLS", landuse[lu_idx], iFLS_table)
-        
+        print(iFLS_table)
         # Get result table
         iFLS_table <- read.csv(iFLS_table)
+        print(iFLS_table)
         
         # Extract out statistics
         sums <- iFLS_table$sum
@@ -243,7 +245,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLO_table <- paste0(tempdir(), "/HA_iFLO_table.csv")
+        HA_iFLO_table <- paste0(tempdir(), "\\HA_iFLO_table.csv")
         zonal_table("HA_iFLO", landuse[lu_idx], HA_iFLO_table)
         
         # Get result table
@@ -270,7 +272,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLS_table <- paste0(tempdir(), "/HA_iFLS_table.csv")
+        HA_iFLS_table <- paste0(tempdir(), "\\HA_iFLS_table.csv")
         zonal_table("HA_iFLS", landuse[lu_idx], HA_iFLS_table)
         
         # Get result table

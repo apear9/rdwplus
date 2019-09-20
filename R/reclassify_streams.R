@@ -9,7 +9,7 @@
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){
   
   # Check out_type
-  if(!out_type %in% c("binary", "unary")) stop("Invalid option for argument out_type. Must be either 'binary' or 'unary'.")
+  if(!out_type %in% c("binary", "unary","none")) stop("Invalid option for argument out_type. Must be either 'binary' or 'unary'.")
   # Check whether input for stream is a string
   if(is.character(stream)) stream <- raster(stream)
   # Otherwise check that it is a Raster* object
@@ -21,7 +21,15 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
     stream[!is.na(stream[])] <- 1
     # Zeros for non-stream
     stream[is.na(stream[])] <- 0
-  } else {
+  } 
+  if(out_type == "none"){
+    ind <- !is.na(stream[])
+    # Ones for stream
+    stream[ind] <- NA
+    # NoData otherwise
+    stream[!ind] <- 1
+  }
+  if(out_type == "unary"){
     ind <- !is.na(stream[])
     # Ones for stream
     stream[ind] <- 1
