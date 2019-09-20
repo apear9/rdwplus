@@ -169,7 +169,7 @@ compute_metrics <- function(
       current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
       
       # Compute flow length
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flowStr, to_outlet = FALSE, overwrite = TRUE)
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
       
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (", current_flow_str, " + 1)^", idwp)
@@ -279,7 +279,7 @@ compute_metrics <- function(
     }
     
     # Remove mask
-    clear_mask()
+    clear_mask() 
     
   }
   
