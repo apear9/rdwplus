@@ -197,7 +197,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLO_table <- paste0(tempdir(), "\\iFLO_table.csv")
+        iFLO_table <- paste0(tempdir(), "/iFLO_table.csv")
         zonal_table("wFLO", landuse[lu_idx], iFLO_table)
         
         # Get result table
@@ -221,7 +221,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLS_table <- paste0(tempdir(), "\\iFLS_table.csv")
+        iFLS_table <- paste0(tempdir(), "/iFLS_table.csv")
         zonal_table("wFLS", landuse[lu_idx], iFLS_table)
         print(iFLS_table)
         # Get result table
@@ -249,7 +249,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLO_table <- paste0(tempdir(), "\\HA_iFLO_table.csv")
+        HA_iFLO_table <- paste0(tempdir(), "/HA_iFLO_table.csv")
         zonal_table("HA_iFLO", landuse[lu_idx], HA_iFLO_table)
         
         # Get result table
@@ -276,7 +276,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLS_table <- paste0(tempdir(), "\\HA_iFLS_table.csv")
+        HA_iFLS_table <- paste0(tempdir(), "/HA_iFLS_table.csv")
         zonal_table("HA_iFLS", landuse[lu_idx], HA_iFLS_table)
         
         # Get result table
