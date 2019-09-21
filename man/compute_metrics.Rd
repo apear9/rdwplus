@@ -5,15 +5,12 @@
 \title{Compute spatially explicit watershed attributes}
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
-  fields = paste(metrics, landuse, sep = "_"), sites, elevation,
-  flow_dir, flow_acc, streams, idwp = -1)
+  sites, elevation, flow_dir, flow_acc, streams, idwp = -1)
 }
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}
 
 \item{landuse}{Names of landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
-
-\item{fields}{A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names.}
 
 \item{sites}{A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.}
 

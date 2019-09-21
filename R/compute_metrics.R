@@ -2,7 +2,6 @@
 #' @description Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
 #' @param landuse Names of landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.
-#' @param fields A character vector giving the names of the new fields to be created in the sites' attribute table to store the land use metrics. The default is a combination of the metric names and land use raster names. 
 #' @param sites A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.
 #' @param elevation File name of a filled (hydrologically-conditioned) digital elevation model in the current GRASS mapset.
 #' @param flow_dir A 'Deterministic 8' (D8) flow direction grid derived from \code{derive_flow}.
@@ -14,7 +13,6 @@
 compute_metrics <- function(
   metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
-  fields = paste(metrics, landuse, sep = "_"),
   sites,
   elevation,
   flow_dir,
@@ -294,11 +292,18 @@ compute_metrics <- function(
     
   }
   
-  for(metric_name in metrics){
-    sites@data[ ,metric_name] <- result_metrics[[lu_idx]][metric_name]
+  # Create data frame with land use x metrics
+  full_data <- matrix(0, nrow(sites@data), 0)
+  for(lu_idx in 1:length(landuse)){
+    temp_data <- do.call(cbind, results_metrics[[lu_idx]])
+    column_nm <- colnames(temp_data)
+    to_attach <- delete_file_ext(landuse[lu_idx])
+    colnames(temp_data) <- paste(column_nm, to_attach, sep = "_")
+    full_data <- cbind(full_data, temp_data)
   }
+  full_data <- as.data.frame(full_data)
   
-  # Only while testing, return sites with metrics immediately
-  return(sites)
+  # Return data frame with site metrics immediately
+  return(full_data)
   
 }
