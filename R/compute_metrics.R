@@ -29,6 +29,16 @@ compute_metrics <- function(
   # Check sites, import as shapefile if it is not one already 
   if(!is_sppoints(sites)){sites <- shapefile(sites)}
   
+  # Derive null streams if any metrics require it
+  if(is_stream){
+    # Generate random name to minimise risk of overwriting anything important
+    rand_name <- paste(sample(letters, 10, T), collapse = "")
+    rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
+    # Create streams raster with null in stream
+    reclassify_streams(streams, rand_name, "none", TRUE)
+    rand_name <- basename(rand_name)
+  }
+  
   # Initialise empty list to store results
   # List structure:
   # Top level -- land use types [x length(landuse)]
@@ -165,14 +175,6 @@ compute_metrics <- function(
       
       # Temporary file name
       current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
-      # only_streams <- paste0("only_streams.tif")
-      # no_streams <- paste0("no_streams.tif")
-      # retrieve_raster(streams, streams)
-      # 
-      # reclassify_streams(streams, only_streams, "unary", overwrite = TRUE) ## 1 for stream, NA elsewhere
-      # reclassify_streams(streams, no_streams, "none", overwrite = TRUE) ## NA for stream, 1 elsewhere
-      # 
-      # raster_to_mapset(only_streams)
       
       # Compute flow length
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
