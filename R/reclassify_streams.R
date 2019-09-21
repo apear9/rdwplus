@@ -3,13 +3,13 @@
 #' @param stream A streams raster as either a filepath to a raster or a Raster* object.
 #' @param out The output file.
 #' @param out_type Either 'binary' or 'unary'. See the Description above.
-#' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
+#' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @return Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){
   
   # Check out_type
-  if(!out_type %in% c("binary", "unary","none")) stop("Invalid option for argument out_type. Must be either 'binary' or 'unary'.")
+  if(!out_type %in% c("binary", "unary","none")) stop("Invalid option for argument out_type. Must be either 'binary', 'unary', or 'none'.")
   # Check whether input for stream is a string
   if(is.character(stream)) stream <- raster(stream)
   # Otherwise check that it is a Raster* object
@@ -24,9 +24,9 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
   } 
   if(out_type == "none"){
     ind <- !is.na(stream[])
-    # Ones for stream
+    # NoData for stream
     stream[ind] <- NA
-    # NoData otherwise
+    # Ones otherwise
     stream[!ind] <- 1
   }
   if(out_type == "unary"){

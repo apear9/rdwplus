@@ -13,7 +13,7 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 
 \item{out_type}{Either 'binary' or 'unary'. See the Description above.}
 
-\item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
+\item{overwrite}{A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 }
 \value{
 Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.

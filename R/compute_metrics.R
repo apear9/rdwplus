@@ -165,17 +165,17 @@ compute_metrics <- function(
       
       # Temporary file name
       current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
-      only_streams <- paste0("only_streams.tif")
-      no_streams <- paste0("no_streams.tif")
-      retrieve_raster(streams, streams)
-      
-      reclassify_streams(streams, only_streams, "unary", overwrite = TRUE) ## 1 for stream, NA elsewhere
-      reclassify_streams(streams, no_streams, "none", overwrite = TRUE) ## NA for stream, 1 elsewhere
-      
-      raster_to_mapset(only_streams)
+      # only_streams <- paste0("only_streams.tif")
+      # no_streams <- paste0("no_streams.tif")
+      # retrieve_raster(streams, streams)
+      # 
+      # reclassify_streams(streams, only_streams, "unary", overwrite = TRUE) ## 1 for stream, NA elsewhere
+      # reclassify_streams(streams, no_streams, "none", overwrite = TRUE) ## NA for stream, 1 elsewhere
+      # 
+      # raster_to_mapset(only_streams)
       
       # Compute flow length
-      get_flow_length(str_rast = only_streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
       
       rast_calc(paste0("current_flow_str2 =", current_flow_str, " * ", no_streams))
       
