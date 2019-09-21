@@ -27,12 +27,12 @@ compute_metrics <- function(
   if(no_stream & is_stream) stop("You need to provide a stream raster in order to compute either of the iFLS and HAiFLS metrics.")
   
   # Check sites, import as shapefile if it is not one already 
-  if(!is_sppoints(sites)){sites <- shapefile(sites)}
+  if(!is_sppoints(sites)) sites <- shapefile(sites)
   
   # Derive null streams if any metrics require it
   if(is_stream){
     # Generate random name to minimise risk of overwriting anything important
-    rand_name <- paste(sample(letters, 5, T), sample(0:9, 5, T), collapse = "")
+    rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
     rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
     # Create streams raster with null in stream
     reclassify_streams(streams, rand_name, "none", TRUE)
@@ -301,7 +301,7 @@ compute_metrics <- function(
   # Create data frame with land use x metrics
   full_data <- matrix(0, nrow(sites@data), 0)
   for(lu_idx in 1:length(landuse)){
-    temp_data <- do.call(cbind, results_metrics[[lu_idx]])
+    temp_data <- do.call(cbind, result_metrics[[lu_idx]])
     column_nm <- colnames(temp_data)
     to_attach <- delete_file_ext(landuse[lu_idx])
     colnames(temp_data) <- paste(column_nm, to_attach, sep = "_")
