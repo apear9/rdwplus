@@ -32,7 +32,7 @@ compute_metrics <- function(
   # Derive null streams if any metrics require it
   if(is_stream){
     # Generate random name to minimise risk of overwriting anything important
-    rand_name <- paste(sample(letters, 10, T), collapse = "")
+    rand_name <- paste(sample(letters, 5, T), sample(0:9, 5, T), collapse = "")
     rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
     # Create streams raster with null in stream
     reclassify_streams(streams, rand_name, "none", TRUE)
@@ -130,8 +130,12 @@ compute_metrics <- function(
       iEDS_distance <- "iEDS_distance"
       get_distance(streams, iEDS_distance, TRUE)
       
+      # Take out the stream line
+      subtract_streams_command <- paste0("iEDS_distanc2 = ", iEDS_distance, " * ", rand_name)
+      rast_calc(subtract_streams_command)
+      
       # Compute inverse distance weight
-      iEDS_weights_command <- paste0("wEDS = ( ", iEDS_distance, " + 1)^", idwp)
+      iEDS_weights_command <- paste0("wEDS = (iEDS_distanc2 + 1)^", idwp)
       rast_calc(iEDS_weights_command)
       
       # Compute iEDS metric by looping over landuse rasters
@@ -174,12 +178,12 @@ compute_metrics <- function(
     if(any(c("HAiFLS", "iFLS") %in% metrics)){
       
       # Temporary file name
-      current_flow_str <- paste0("flowlenOut_", rowID, ".tif")
+      current_flow_str <- paste0("flow_str_", rowID, ".tif")
       
       # Compute flow length
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
-      
-      rast_calc(paste0("current_flow_str2 =", current_flow_str, " * ", no_streams))
+      subtract_streams_command <- paste0("current_flow_str2 = ", current_flow_str, " * ", rand_name)
+      rast_calc(subtract_streams_command)
       
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
