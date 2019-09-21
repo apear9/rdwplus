@@ -223,10 +223,9 @@ compute_metrics <- function(
         # Compute table
         iFLS_table <- paste0(tempdir(), "/iFLS_table.csv")
         zonal_table("wFLS", landuse[lu_idx], iFLS_table)
-        print(iFLS_table)
+        
         # Get result table
         iFLS_table <- read.csv(iFLS_table)
-        print(iFLS_table)
         
         # Extract out statistics
         sums <- iFLS_table$sum
@@ -299,7 +298,12 @@ compute_metrics <- function(
   }
   
   # Create data frame with land use x metrics
-  full_data <- matrix(0, nrow(sites@data), 0)
+  full_data <- matrix(
+    as.numeric(rownames(sites@data)), 
+    nrow(sites@data), 
+    1
+  )
+  colnames(full_data) <- "ID"
   for(lu_idx in 1:length(landuse)){
     temp_data <- do.call(cbind, result_metrics[[lu_idx]])
     column_nm <- colnames(temp_data)
