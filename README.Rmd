@@ -29,7 +29,9 @@ Load `rdwplus` after it has been installed.
 library(rdwplus)
 ```
 
-Set up a GRASS session.
+## Unpacking the example data
+
+TO COME
 
 ## Setting up a GRASS session
 
@@ -61,8 +63,21 @@ check_running()
 We can then set up the GRASS environment. This means setting the extent, spatial resolution, coordinate system, etc., of the current GRASS mapset. This is done by giving the function `set_envir()` a file path to a raster file. 
 
 ```{r}
+# Give this function a filepath for a raster
 set_envir()
 ```
+
+## Importing data into the mapset
+
+Now that we have set up and configured our GRASS session, we need to import raster and vector data into the GRASS mapset, which is a collection of layers that GRASS operations can refer to. For rasters, for example, our digital elevation model and landuse raster, this is done with
+```{r}
+raster_to_mapset(..., overwrite = TRUE)
+```
+Note that the function accepts vectors of file paths. For vector data, for example our shapefile of stream channels, we need to use
+```{r}
+vector_to_mapset(..., overwrite = TRUE)
+```
+Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. 
 
 ## Data preprocessing
 
