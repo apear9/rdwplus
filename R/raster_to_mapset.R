@@ -13,35 +13,27 @@ raster_to_mapset <- function(rasters, overwrite = FALSE, ...){
   # Check how many rasters
   n_raster <- length(rasters)
   
+  # Check ovewrite setting
+  flags <- "quiet"
+  if(overwrite) flags <- c(flags, "overwrite")
+  
   # Loop over rasters
   outs <- c()
   for(i in 1:n_raster){
     cur_name <- rasters[i]
     outs[i] <- out_name <- basename(cur_name)
-    if(overwrite){
-      execGRASS(
-        "r.import",
-        flags = "overwrite",
-        parameters = list(
-          input = cur_name,
-          output = out_name,
-          ...
-        )
+    execGRASS(
+      "r.import",
+      flags = flags,
+      parameters = list(
+        input = cur_name,
+        output = out_name,
+        ...
       )
-    } else {
-      execGRASS(
-        "r.import",
-        parameters = list(
-          input = cur_name,
-          output = out_name,
-          ...
-        )
-      )
-    }
-    
+    )
   }
   
-  # Return nothing
+  # Return names of mapset objects
   outs
   
 }
