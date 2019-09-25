@@ -4,7 +4,7 @@
 \alias{fill_sinks}
 \title{Fill sinks in a digital elevation model (DEM)}
 \usage{
-fill_sinks(dem, out, flags, ...)
+fill_sinks(dem, out, flags, overwrite = FALSE, ...)
 }
 \arguments{
 \item{dem}{The name of a DEM in the current GRASS mapset.}
@@ -12,6 +12,8 @@ fill_sinks(dem, out, flags, ...)
 \item{out}{Name of the output, which is a hydrologically corrected (sink-filled) DEM.}
 
 \item{flags}{Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.}
+
+\item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 
 \item{...}{Optional additional parameters to \code{r.hydrodem}.}
 }
@@ -26,7 +28,6 @@ The following flags may be supplied (as strings):
 
 \itemize{
     \item "a" The nuclear option. Vigorously remove all sinks.
-    \item "overwrite" The output files may overwrite existing ones.
     \item "verbose" Lots of module output.
     \item "quiet" Barely any module output.
 }

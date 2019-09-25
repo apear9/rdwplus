@@ -3,6 +3,7 @@
 #' @param dem The name of a DEM in the current GRASS mapset.
 #' @param out Name of the output, which is a hydrologically corrected (sink-filled) DEM.
 #' @param flags Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.
+#' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Optional additional parameters to \code{r.hydrodem}.
 #' @return  Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
 #' @details 
@@ -11,28 +12,40 @@
 #' 
 #' \itemize{
 #'     \item "a" The nuclear option. Vigorously remove all sinks.
-#'     \item "overwrite" The output files may overwrite existing ones.
 #'     \item "verbose" Lots of module output.
 #'     \item "quiet" Barely any module output.
 #' }
 #' 
 #' @export
-fill_sinks <- function(dem, out, flags, ...){
+fill_sinks <- function(dem, out, flags, overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
   # Run r.hydrodem
   if(missing(flags)){
-    execGRASS(
-      "r.hydrodem",
-      parameters = list(
-        input = dem,
-        output = out,
-        ...
+    if(overwrite){
+      execGRASS(
+        "r.hydrodem",
+        flags = "overwrite",
+        parameters = list(
+          input = dem,
+          output = out,
+          ...
+        )
       )
-    )
+    } else {
+      execGRASS(
+        "r.hydrodem",
+        parameters = list(
+          input = dem,
+          output = out,
+          ...
+        )
+      )
+    }
   } else {
+    if(overwrite) flags <- c(flags, "overwrite")
     execGRASS(
       "r.hydrodem",
       flags = flags,
