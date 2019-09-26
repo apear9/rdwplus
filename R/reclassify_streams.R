@@ -11,7 +11,9 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
   # Check out_type
   if(!out_type %in% c("binary", "unary","none")) stop("Invalid option for argument out_type. Must be either 'binary', 'unary', or 'none'.")
   # Check whether input for stream is a string
-  if(is.character(stream)) stream <- raster(stream)
+  # if(is.character(stream)) stream <- raster(stream)
+  retrieve_raster(stream, stream, overwrite = TRUE)
+  stream <- raster(stream)
   # Otherwise check that it is a Raster* object
   if(!is_raster_layer(stream)) stop("The argument stream must be a Raster* object.")
   

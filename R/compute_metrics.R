@@ -55,7 +55,7 @@ compute_metrics <- function(
   
   # Main loop for metric computation per site
   for(rowID in 1:nrow(sites@data)){
-    
+    print(paste0("rowID ", rowID))
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
     get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
@@ -188,7 +188,7 @@ compute_metrics <- function(
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
       rast_calc(iFLS_weights_command)
-      
+      # retrieve_raster("wFLS", "weight.tif") 
     }
     
     # Compute iFLO metric in full if needed
