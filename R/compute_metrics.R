@@ -60,6 +60,10 @@ compute_metrics <- function(
   # Main loop for metric computation per site
   for(rowID in 1:nrow(sites@data)){
     
+    # # Just to be safe. Like really really safe.
+    # # It can lead to problems if mask from last iteration still on. 
+    # clear_mask()
+    
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
     get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
