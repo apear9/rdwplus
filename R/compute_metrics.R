@@ -196,7 +196,7 @@ compute_metrics <- function(
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
       rast_calc(iFLS_weights_command)
-      # retrieve_raster("wFLS", "weight.tif") 
+      
     }
     
     # Compute iFLO metric in full if needed
