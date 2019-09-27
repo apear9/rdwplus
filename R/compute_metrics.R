@@ -116,7 +116,7 @@ compute_metrics <- function(
         
         # Compute table of statistics
         iEDO_table <- paste0(tempdir(), "/iEDO_table.csv")
-        zonal_table("wEDO", landuse, iEDO_table)
+        zonal_table("wEDO", landuse[lu_idx], iEDO_table)
         
         # Get result table
         iEDO_table <- read.csv(iEDO_table)
