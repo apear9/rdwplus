@@ -66,7 +66,7 @@ compute_metrics <- function(
     
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, TRUE, TRUE)
+    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE)
     
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
