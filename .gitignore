@@ -3,5 +3,6 @@ junk
 *.RData
 .Rhistory
 *.html
+*.tif
 
 
