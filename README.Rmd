@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 
 # rdwplus
 
-An open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). IDW-PLUS itself is a toolset that calculates the spatially explicit landscape representation metrics previously developed and used in Peterson et al. (2011). It is a Python-based ArcGIS toolbox, originally developed for ArcGIS version 10.3.1. This fully open-source implementation uses R as the scripting language, with calls to modules and tools from GRASS GIS (GRASS Development Team, 2019) to do the heavy lifting. 
+The package `rdwplus` is an open source implementation of IDW-PLUS (inverse distance weighted percent land use for streams) from Peterson &amp; Pearse (2017). IDW-PLUS itself is a toolset that calculates the spatially explicit landscape representation metrics previously developed and used in Peterson et al. (2011). It is a Python-based ArcGIS toolbox, originally developed for ArcGIS version 10.3.1. This fully open-source implementation uses R as the scripting language, with calls to modules and tools from GRASS GIS (GRASS Development Team, 2019) to do the heavy lifting. 
 
 ## Installation
 
@@ -29,9 +29,16 @@ Load `rdwplus` after it has been installed.
 library(rdwplus)
 ```
 
-## Unpacking the example data
+## Retrieving the example data
 
-TO COME
+`rdwplus` comes with a very small example dataset for illustrative purposes. We load and manipulate it using `rdwplus` functions below. But first, the following code needs to be run in order to access the example dataset files. 
+
+```{r}
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
+sts <- system.file("extdata", "site.shp", package = "rdwplus")
+stm <- system.file("extdata", "streams.shp", package = "rdwplus")
+```
 
 ## Setting up a GRASS session
 
@@ -64,18 +71,18 @@ We can then set up the GRASS environment. This means setting the extent, spatial
 
 ```{r}
 # Give this function a filepath for a raster
-set_envir()
+set_envir(dem)
 ```
 
 ## Importing data into the mapset
 
 Now that we have set up and configured our GRASS session, we need to import raster and vector data into the GRASS mapset, which is a collection of layers that GRASS operations can refer to. For rasters, for example, our digital elevation model and landuse raster, this is done with
 ```{r}
-raster_to_mapset(..., overwrite = TRUE)
+raster_to_mapset(c(dem, lus), overwrite = TRUE)
 ```
-Note that the function accepts vectors of file paths. For vector data, for example our shapefile of stream channels, we need to use
+Note that the function accepts vectors of file paths. For vector data, for example our shapefiles of sites and stream channels, we need to use
 ```{r}
-vector_to_mapset(..., overwrite = TRUE)
+vector_to_mapset(c(sts, stm), overwrite = TRUE)
 ```
 Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. 
 
@@ -88,6 +95,11 @@ Note that the `overwrite` option simply allows the dataset we're importing to ov
 ### The sites
 
 ## Compute watershed attributes
+
+## Contributors
+
++ [Alan Pearse](https://github.com/apear9)
++ [Grace Heron](https://github.com/GraceHeron)
 
 ## References
 
