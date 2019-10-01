@@ -20,6 +20,11 @@ Load `rdwplus` after it has been installed.
 library(rdwplus)
 ```
 
+A preliminary note
+------------------
+
+This markdown document has been generated in such a way that warnings and messages from GRASS were suppressed. Therefore, you may see the console print some angry-looking messages when you run this code. Do not worry.
+
 Retrieving the example data
 ---------------------------
 
@@ -52,6 +57,19 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/Rtmp6jVu9Y 
+    ## location    file4d94363757c4 
+    ## mapset      PERMANENT 
+    ## rows        1 
+    ## columns     1 
+    ## north       1 
+    ## south       0 
+    ## west        0 
+    ## east        1 
+    ## nsres       1 
+    ## ewres       1 
+    ## projection  NA
+
 At this stage it is possible to set other environment parameters but, for this demonstration, the above is fine.
 
 Now we can check that a GRASS session is running.
@@ -59,6 +77,8 @@ Now we can check that a GRASS session is running.
 ``` r
 check_running()
 ```
+
+    ## [1] TRUE
 
 We can then set up the GRASS environment. This means setting the extent, spatial resolution, coordinate system, etc., of the current GRASS mapset. This is done by giving the function `set_envir()` a file path to a raster file.
 
@@ -76,6 +96,8 @@ Now that we have set up and configured our GRASS session, we need to import rast
 raster_to_mapset(c(dem, lus), overwrite = TRUE)
 ```
 
+    ## [1] "dem.tif"     "landuse.tif"
+
 Note that the function accepts vectors of file paths.
 
 Sometimes it is also necessary to convert raster formats from float to integer. It happens that the landuse raster used here does not have the correct encoding, so it upsets the `compute_metrics` function. We perform the conversion as follows:
@@ -90,6 +112,8 @@ For vector data, for example our shapefiles of sites and stream channels, we nee
 ``` r
 vector_to_mapset(c(sts, stm), overwrite = TRUE)
 ```
+
+    ## [1] "site.shp"    "streams.shp"
 
 Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`.
 
@@ -133,6 +157,20 @@ Once the DEM has been hydrologically conditioned, we can use it to derive valid 
 derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
 ```
 
+If you're curious to see what these look like:
+
+``` r
+plot_GRASS("flowdir.tif", col = topo.colors(8))
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+``` r
+plot_GRASS("flowacc.tif", col = topo.colors(15))
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-14-2.png)
+
 ### The sites
 
 The land use metrics we calculate with `rdwplus` relate to percentages of effective landuse within watersheds. The sites are treated as the outlets (the point of lowest elevation) for the stream watersheds, and enable the delineation of these regions. In order to obtain the correct watershed, we need to ensure the sites are snapped to the stream line; a region of high flow accumulation. If the sites are not snapped to the flow accumulation grid, then degenerate watersheds can result. These degenerate watersheds tend to have only a few raster cells in them.
@@ -164,6 +202,9 @@ compute_metrics(
   -1
 )
 ```
+
+    ##   ID  lumped_    iFLO_    iEDO_     HAiFLO_    iFLS_    iEDS_ HAiFLS_
+    ## 1  1 2.059486 1.179034 1.097731 0.005071802 1.556769 1.847157  1.2414
 
 Contributors
 ------------

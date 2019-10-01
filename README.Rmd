@@ -5,7 +5,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
-  eval = FALSE, # switch to TRUE when compiling final documentation
+  eval = TRUE, # switch to TRUE when compiling final documentation
   message=FALSE,
   warning=FALSE
 )
@@ -28,6 +28,10 @@ Load `rdwplus` after it has been installed.
 ```{r}
 library(rdwplus)
 ```
+
+## A preliminary note
+
+This markdown document has been generated in such a way that warnings and messages from GRASS were suppressed. Therefore, you may see the console print some angry-looking messages when you run this code. Do not worry.
 
 ## Retrieving the example data
 
@@ -133,6 +137,13 @@ Once the DEM has been hydrologically conditioned, we can use it to derive valid 
 ```{r}
 # Derive flow direction and accumulation rasters
 derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
+```
+
+If you're curious to see what these look like:
+
+```{r}
+plot_GRASS("flowdir.tif", col = topo.colors(8))
+plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 
 ### The sites

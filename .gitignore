@@ -6,3 +6,7 @@ junk
 *.tif
 
 
+snapsite/snapsite.dbf
+snapsite/snapsite.prj
+snapsite/snapsite.shp
+snapsite/snapsite.shx
