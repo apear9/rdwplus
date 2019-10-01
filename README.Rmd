@@ -142,7 +142,8 @@ derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
 If you're curious to see what these look like:
 
 ```{r}
-plot_GRASS("flowdir.tif", col = topo.colors(8))
+plot_GRASS("filldem.tif", col = topo.colors(15))
+plot_GRASS("flowdir.tif", col = topo.colors(5))
 plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 

@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/Rtmp6jVu9Y 
-    ## location    file4d94363757c4 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpOsZhtw 
+    ## location    file4488688f2779 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -160,16 +160,22 @@ derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
 If you're curious to see what these look like:
 
 ``` r
-plot_GRASS("flowdir.tif", col = topo.colors(8))
+plot_GRASS("filldem.tif", col = topo.colors(15))
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ``` r
-plot_GRASS("flowacc.tif", col = topo.colors(15))
+plot_GRASS("flowdir.tif", col = topo.colors(5))
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-14-2.png)
+
+``` r
+plot_GRASS("flowacc.tif", col = topo.colors(15))
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-14-3.png)
 
 ### The sites
 
