@@ -1,11 +1,10 @@
 .Rproj.user
 junk
+*.tif
+*.RData
+.Rhistory
+*.html
 
 !inst\extdata\dem.tif
 !inst\extdata\landuse.tif
-*.tif
 
-.RData
-
-.Rhistory
-*.html
