@@ -1,6 +1,8 @@
 .Rproj.user
 junk
 
+!inst\extdata\dem.tif
+!inst\extdata\landuse.tif
 *.tif
 
 .RData
