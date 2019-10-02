@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpAL3T44 
-    ## location    file42844dba5743 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpCcS1Ok 
+    ## location    file1ce06e59f17 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -93,19 +93,10 @@ Importing data into the mapset
 Now that we have set up and configured our GRASS session, we need to import raster and vector data into the GRASS mapset, which is a collection of layers that GRASS operations can refer to. For rasters, for example, our digital elevation model and landuse raster, this is done with
 
 ``` r
-raster_to_mapset(c(dem, lus), overwrite = TRUE)
+raster_to_mapset(c(dem, lus), as_integer = c(FALSE, TRUE), overwrite = TRUE)
 ```
 
     ## [1] "dem.tif"     "landuse.tif"
-
-Note that the function accepts vectors of file paths.
-
-Sometimes it is also necessary to convert raster formats from float to integer. It happens that the landuse raster used here does not have the correct encoding, so it upsets the `compute_metrics` function. We perform the conversion as follows:
-
-``` r
-# May need to convert certain files to integer format
-convert_to_integer("landuse.tif")
-```
 
 For vector data, for example our shapefiles of sites and stream channels, we need to use
 
@@ -163,19 +154,19 @@ If you're curious to see what these look like:
 plot_GRASS("filldem.tif", col = topo.colors(15))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ``` r
 plot_GRASS("flowdir.tif", col = topo.colors(15))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-14-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-2.png)
 
 ``` r
 plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-14-3.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-3.png)
 
 ### The sites
 
@@ -199,7 +190,7 @@ Once the preprocessing steps have been completed, we can use the `compute_metric
 # Compute metrics
 compute_metrics(
   c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
-  "landuse", # needs to be integer 
+  "landuse.tif", # needs to be integer 
   sts, 
   "dem.tif",
   "flowdir.tif",
@@ -209,8 +200,10 @@ compute_metrics(
 )
 ```
 
-    ##   ID  lumped_    iFLO_    iEDO_     HAiFLO_    iFLS_    iEDS_ HAiFLS_
-    ## 1  1 2.059486 1.179034 1.097731 0.005071802 1.556769 1.847157  1.2414
+    ##   ID lumped_landuse iFLO_landuse iEDO_landuse HAiFLO_landuse iFLS_landuse
+    ## 1  1       2.059486     1.179034     1.097731    0.005071802     1.556769
+    ##   iEDS_landuse HAiFLS_landuse
+    ## 1     1.847157         1.2414
 
 Contributors
 ------------

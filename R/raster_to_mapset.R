@@ -25,6 +25,7 @@ raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), 
   for(i in 1:n_raster){
     cur_name <- rasters[i]
     outs[i] <- out_name <- basename(cur_name)
+    if(as_integer[i]) out_name <- paste0("tmp_", out_name)
     execGRASS(
       "r.import",
       flags = flags,
@@ -35,7 +36,7 @@ raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), 
       )
     )
     if(as_integer[i]){
-      command <- paste0(out_name, " = int(", out_name, ")")
+      command <- paste0(outs[i], " = int(", out_name, ")")
       rast_calc(command)
     }
   }
