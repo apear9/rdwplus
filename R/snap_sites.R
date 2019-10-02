@@ -33,7 +33,7 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_me
   )
   
   # Retrieve vector
-  retrieve_vector(grass_out, out, overwrite = overwrite, max_memory = max_memory)
+  retrieve_vector(grass_out, out, overwrite = overwrite)
   
   # Return nothing
   invisible()

@@ -9,6 +9,7 @@
 #' @param streams File name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
+#' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics. 
 #' @export
 compute_metrics <- function(
@@ -20,7 +21,8 @@ compute_metrics <- function(
   flow_acc,
   streams,
   idwp = -1, 
-  max_memory = 300
+  max_memory = 300,
+  lessmem = FALSE
 ){
   
   # Check inputs
@@ -68,7 +70,7 @@ compute_metrics <- function(
     
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE)
+    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE, lessmem = lessmem)
     
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){

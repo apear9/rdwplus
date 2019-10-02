@@ -6,7 +6,7 @@
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
   sites, elevation, flow_dir, flow_acc, streams, idwp = -1,
-  max_memory = 300)
+  max_memory = 300, lessmem = FALSE)
 }
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}
@@ -26,6 +26,8 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
+
+\item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
 A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
