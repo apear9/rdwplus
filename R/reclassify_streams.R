@@ -39,7 +39,7 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
   
   # Create new file
   writeRaster(stream, out, overwrite = overwrite, dataType = "INT1U")
-  raster_to_mapset(out, overwrite)
+  raster_to_mapset(out, overwrite = overwrite)
   
   # Return nothing 
   invisible()

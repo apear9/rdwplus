@@ -1,17 +1,20 @@
 #' Import rasters into GRASS mapset
 #' @description GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external rasters and imports them into the current GRASS mapset.
 #' @param rasters A character vector of filenames of rasters to import.
-#' @param overwrite A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.
+#' @param as_integer A logical vector indicating whether each raster should be imported strictly in integer format. Defaults to \code{FALSE}.
+#' @param overwrite A logical indicating whether the overwrite flag should be used. If \code{FALSE}, then the corresponding raster is allowed to retain its original format. Defaults to \code{FALSE}. May cause value truncation if improperly used.
 #' @param ... Additional arguments to \code{r.import}.
 #' @return A vector of raster layer names in the GRASS mapset.
 #' @export
-raster_to_mapset <- function(rasters, overwrite = FALSE, ...){
+raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
   # Check how many rasters
   n_raster <- length(rasters)
+  n_integs <- length(as_integer)
+  if(n_raster != n_integs) stop("Please supply one as_integer logical for each raster.")
   
   # Check ovewrite setting
   flags <- "quiet"
@@ -31,6 +34,10 @@ raster_to_mapset <- function(rasters, overwrite = FALSE, ...){
         ...
       )
     )
+    if(as_integer[i]){
+      command <- paste0(out_name, " = int(", out_name, ")")
+      rast_calc(command)
+    }
   }
   
   # Return names of mapset objects

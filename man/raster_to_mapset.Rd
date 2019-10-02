@@ -4,12 +4,15 @@
 \alias{raster_to_mapset}
 \title{Import rasters into GRASS mapset}
 \usage{
-raster_to_mapset(rasters, overwrite = FALSE, ...)
+raster_to_mapset(rasters, as_integer = rep(FALSE, length(rasters)),
+  overwrite = FALSE, ...)
 }
 \arguments{
 \item{rasters}{A character vector of filenames of rasters to import.}
 
-\item{overwrite}{A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.}
+\item{as_integer}{A logical vector indicating whether each raster should be imported strictly in integer format. Defaults to \code{FALSE}.}
+
+\item{overwrite}{A logical indicating whether the overwrite flag should be used. If \code{FALSE}, then the corresponding raster is allowed to retain its original format. Defaults to \code{FALSE}. May cause value truncation if improperly used.}
 
 \item{...}{Additional arguments to \code{r.import}.}
 }
