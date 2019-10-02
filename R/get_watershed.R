@@ -46,7 +46,7 @@ get_watershed <- function(sites, i, flow_dir, out, write_file = FALSE, overwrite
       parameters = list(
         input = flow_dir,
         output = basename(out),
-        coordinates = c(x, y)
+        coordinates = c(x, y)))
   }
   
   # Export outside of mapset if requested
