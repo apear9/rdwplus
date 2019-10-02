@@ -6,9 +6,10 @@
 #' @param out The name of the output raster. A raster with the name \code{basename(out)} will be imported into the GRASS mapset. If \code{write_file} is true, then a file with the name \code{out} will be written into the user's current working directory.
 #' @param write_file A logical indicating whether the output file should be stored as a file in the user's current working directory. Defaults to \code{FALSE}.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
+#' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset. 
 #' @export
-get_watershed <- function(sites, i, flow_dir, out, write_file = FALSE, overwrite = FALSE){
+get_watershed <- function(sites, i, flow_dir, out, write_file = FALSE, overwrite = FALSE, lessmem = FALSE){
   
   # Check whether GRASS running
   if(!check_running()) stop("There is no active GRASS session. Program halted.")
@@ -27,7 +28,8 @@ get_watershed <- function(sites, i, flow_dir, out, write_file = FALSE, overwrite
   flags <- "quiet"
   if(overwrite) flags <- c(flags, "overwrite")
   
-  # Execute GRASS command (consider r.wateroutlet.lessmem)
+  if(!lessmem){
+  # Execute GRASS command
   execGRASS(
     "r.water.outlet",
     flags = flags,
@@ -36,7 +38,16 @@ get_watershed <- function(sites, i, flow_dir, out, write_file = FALSE, overwrite
       output = basename(out),
       coordinates = c(x, y)
     )
-  )
+  )} else {
+    # Execute GRASS command 
+    execGRASS(
+      "r.wateroutlet.lessmem",
+      flags = flags,
+      parameters = list(
+        input = flow_dir,
+        output = basename(out),
+        coordinates = c(x, y)
+  }
   
   # Export outside of mapset if requested
   if(write_file){
