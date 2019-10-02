@@ -4,8 +4,7 @@
 \alias{retrieve_raster}
 \title{Write a raster layer from the current GRASS mapset to file}
 \usage{
-retrieve_raster(layer, out_layer, overwrite = FALSE, max_memory = 300,
-  ...)
+retrieve_raster(layer, out_layer, overwrite = FALSE, ...)
 }
 \arguments{
 \item{layer}{The name of the raster in the GRASS mapset that is to be written out.}
@@ -13,8 +12,6 @@ retrieve_raster(layer, out_layer, overwrite = FALSE, max_memory = 300,
 \item{out_layer}{The name of the file to be created, with the relevant file extension.}
 
 \item{overwrite}{A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
-
-\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Additional arguments to \code{r.out.gdal}.}
 }

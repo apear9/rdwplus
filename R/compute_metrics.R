@@ -36,7 +36,7 @@ compute_metrics <- function(
     # Retrieve the streams and reclassify them
     streams_convert <- paste(paste0("stream", sample(0:9, 5, TRUE)), collapse = "")
     streams_convert <- paste0(tempdir(), "/", streams_convert, ".tif")
-    retrieve_raster(streams, streams_convert, overwrite = TRUE, max_memory = max_memory)
+    retrieve_raster(streams, streams_convert, overwrite = TRUE)
     # Generate random name to minimise risk of overwriting anything important
     rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
     rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
@@ -68,7 +68,7 @@ compute_metrics <- function(
     
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE, max_memory = max_memory)
+    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE)
     
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){

@@ -3,7 +3,6 @@
 #' @param x The name of an object in the current GRASS mapset.
 #' @param out_x Optional. If supplied, the function makes a call to \code{\link{retrieve_raster}} and writes out the raster to the file path \code{out_x}. Otherwise the function will write the layer to \code{tempdir}.
 #' @param ... Additional arguments to \code{plot}.
-#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing.
 #' @export
 plot_GRASS <- function(x, out_x, max_memory = 300, ...){
@@ -14,9 +13,9 @@ plot_GRASS <- function(x, out_x, max_memory = 300, ...){
   # Retrieve the raster from the mapset
   if(missing(out_x)){
     out_x <- paste0(tempdir(), "/", x)
-    retrieve_raster(x, out_x, TRUE, max_memory = max_memory) # allow overwrite of temporary files
+    retrieve_raster(x, out_x, TRUE) # allow overwrite of temporary files
   } else {
-    retrieve_raster(x, out_x, FALSE, max_memory = max_memory) # but not if actual file location specified
+    retrieve_raster(x, out_x, FALSE) # but not if actual file location specified
   }
   
   # Load into r
