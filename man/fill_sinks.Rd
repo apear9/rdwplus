@@ -4,7 +4,7 @@
 \alias{fill_sinks}
 \title{Fill sinks in a digital elevation model (DEM)}
 \usage{
-fill_sinks(dem, out, flags, overwrite = FALSE, ...)
+fill_sinks(dem, out, flags, overwrite = FALSE, max_memory = 300, ...)
 }
 \arguments{
 \item{dem}{The name of a DEM in the current GRASS mapset.}
@@ -14,6 +14,8 @@ fill_sinks(dem, out, flags, overwrite = FALSE, ...)
 \item{flags}{Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Optional additional parameters to \code{r.hydrodem}.}
 }

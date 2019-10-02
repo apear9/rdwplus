@@ -4,6 +4,7 @@
 #' @param out Name of the output, which is a hydrologically corrected (sink-filled) DEM.
 #' @param flags Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Optional additional parameters to \code{r.hydrodem}.
 #' @return  Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
 #' @details 
@@ -17,7 +18,7 @@
 #' }
 #' 
 #' @export
-fill_sinks <- function(dem, out, flags, overwrite = FALSE, ...){
+fill_sinks <- function(dem, out, flags, overwrite = FALSE, max_memory = 300, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -31,6 +32,7 @@ fill_sinks <- function(dem, out, flags, overwrite = FALSE, ...){
         parameters = list(
           input = dem,
           output = out,
+          memory = max_memory,
           ...
         )
       )
@@ -40,6 +42,7 @@ fill_sinks <- function(dem, out, flags, overwrite = FALSE, ...){
         parameters = list(
           input = dem,
           output = out,
+          memory = max_memory,
           ...
         )
       )
@@ -52,6 +55,7 @@ fill_sinks <- function(dem, out, flags, overwrite = FALSE, ...){
       parameters = list(
         input = dem,
         output = out,
+        memory = max_memory,
         ...
       )
     )
