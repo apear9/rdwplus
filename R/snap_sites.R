@@ -5,10 +5,11 @@
 #' @param max_move The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.
 #' @param out The output file path. 
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.stream.snap}.
 #' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 #' @export 
-snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, ...){
+snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -26,12 +27,13 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, ...){
       output = grass_out,
       accumulation = flow_acc,
       radius = max_move,
+      memory = max_memory,
       ...
     )
   )
   
   # Retrieve vector
-  retrieve_vector(grass_out, out, overwrite = overwrite)
+  retrieve_vector(grass_out, out, overwrite = overwrite, max_memory = max_memory)
   
   # Return nothing
   invisible()

@@ -5,7 +5,7 @@
 \title{Delineate watershed for a survey site}
 \usage{
 get_watershed(sites, i, flow_dir, out, write_file = FALSE,
-  overwrite = FALSE)
+  overwrite = FALSE, max_memory = 300)
 }
 \arguments{
 \item{sites}{A file path to a shapefile of points or a \code{SpatialPoints*} object.}
@@ -19,6 +19,8 @@ get_watershed(sites, i, flow_dir, out, write_file = FALSE,
 \item{write_file}{A logical indicating whether the output file should be stored as a file in the user's current working directory. Defaults to \code{FALSE}.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
 Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset.

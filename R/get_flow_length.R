@@ -5,9 +5,10 @@
 #' @param out A file name for the output raster of flow lengths.
 #' @param to_outlet Calculate parameters for outlets flag. Defaults to \code{FALSE} for streams.
 #' @param overwrite Overwrite flag. Defaults to \code{FALSE}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing. A file with the name \code{out} will be written to GRASS's current workspace.
 #' @export
-get_flow_length <- function(str_rast, flow_dir, out, to_outlet = FALSE, overwrite = FALSE){
+get_flow_length <- function(str_rast, flow_dir, out, to_outlet = FALSE, overwrite = FALSE, max_memory = 300){
   
   # Check whether GRASS running
   if(!check_running()) stop("There is no active GRASS session. Program halted.")
@@ -23,7 +24,8 @@ get_flow_length <- function(str_rast, flow_dir, out, to_outlet = FALSE, overwrit
     parameters = list(
       stream_rast = str_rast,
       direction = flow_dir,
-      distance = out
+      distance = out,
+      memory = max_memory
     )
   )
 

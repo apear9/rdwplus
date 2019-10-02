@@ -3,10 +3,11 @@
 #' @param rasters A character vector of filenames of rasters to import.
 #' @param as_integer A logical vector indicating whether each raster should be imported strictly in integer format. Defaults to \code{FALSE}.
 #' @param overwrite A logical indicating whether the overwrite flag should be used. If \code{FALSE}, then the corresponding raster is allowed to retain its original format. Defaults to \code{FALSE}. May cause value truncation if improperly used.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.import}.
 #' @return A vector of raster layer names in the GRASS mapset.
 #' @export
-raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), overwrite = FALSE, ...){
+raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), overwrite = FALSE, max_memory = 300, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -32,6 +33,7 @@ raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), 
       parameters = list(
         input = cur_name,
         output = out_name,
+        memory = max_memory,
         ...
       )
     )

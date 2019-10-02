@@ -5,7 +5,7 @@
 \title{Import rasters into GRASS mapset}
 \usage{
 raster_to_mapset(rasters, as_integer = rep(FALSE, length(rasters)),
-  overwrite = FALSE, ...)
+  overwrite = FALSE, max_memory = 300, ...)
 }
 \arguments{
 \item{rasters}{A character vector of filenames of rasters to import.}
@@ -13,6 +13,8 @@ raster_to_mapset(rasters, as_integer = rep(FALSE, length(rasters)),
 \item{as_integer}{A logical vector indicating whether each raster should be imported strictly in integer format. Defaults to \code{FALSE}.}
 
 \item{overwrite}{A logical indicating whether the overwrite flag should be used. If \code{FALSE}, then the corresponding raster is allowed to retain its original format. Defaults to \code{FALSE}. May cause value truncation if improperly used.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Additional arguments to \code{r.import}.}
 }

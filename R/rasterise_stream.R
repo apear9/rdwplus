@@ -3,10 +3,11 @@
 #' @param streams A file name for a shapefile of stream edges in the current GRASS mapset.
 #' @param out The filename of the output. 
 #' @param overwrite A logical indicating whether the output is allowed to overwrite existing files. Defaults to \code{FALSE}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{v.to.rast}.
 #' @return Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
 #' @export
-rasterise_stream <- function(streams, out, overwrite = FALSE, ...){
+rasterise_stream <- function(streams, out, overwrite = FALSE, max_memory = 300, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -39,6 +40,7 @@ rasterise_stream <- function(streams, out, overwrite = FALSE, ...){
         output = grass_out,
         use = "val",
         value = 1,
+        memory = max_memory,
         ...
       )
     )
@@ -51,13 +53,14 @@ rasterise_stream <- function(streams, out, overwrite = FALSE, ...){
         output = grass_out,
         use = "val",
         value = 1,
+        memory = max_memory,
         ...
       )
     )
   }
   
   # Write out to file
-  retrieve_raster(grass_out, out, overwrite = overwrite)
+  retrieve_raster(grass_out, out, overwrite = overwrite, max_memory = max_memory)
   
   # Return nothing
   invisible()

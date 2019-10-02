@@ -5,9 +5,10 @@
 #' @param out The filename of the raster to be written out. It will also be imported into the current GRASS mapset with the name \code{basename(out)}. 
 #' @param burn The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.
 #' @param overwrite A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing.
 #' @export 
-burn_in <- function(dem, stream, out, burn = 10, overwrite = FALSE){
+burn_in <- function(dem, stream, out, burn = 10, overwrite = FALSE, max_memory = 300){
   
   # If dem and stream are file paths, then import them as rasters
   if(is.character(dem)) dem <- raster(dem)
@@ -28,7 +29,7 @@ burn_in <- function(dem, stream, out, burn = 10, overwrite = FALSE){
   
   # Write raster to file
   writeRaster(burned, out, overwrite = overwrite)
-  raster_to_mapset(out, overwrite = overwrite)
+  raster_to_mapset(out, overwrite = overwrite, max_memory = max_memory)
 
   # Return nothing
   invisible()

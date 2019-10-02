@@ -8,6 +8,7 @@
 #' @param flow_acc File name of a flow accumulation grid derived from \code{derive_flow} in the current GRASS mapset.
 #' @param streams File name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
+#' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics. 
 #' @export
 compute_metrics <- function(
@@ -18,7 +19,8 @@ compute_metrics <- function(
   flow_dir,
   flow_acc,
   streams,
-  idwp = -1
+  idwp = -1, 
+  max_memory = 300
 ){
   
   # Check inputs
@@ -34,12 +36,12 @@ compute_metrics <- function(
     # Retrieve the streams and reclassify them
     streams_convert <- paste(paste0("stream", sample(0:9, 5, TRUE)), collapse = "")
     streams_convert <- paste0(tempdir(), "/", streams_convert, ".tif")
-    retrieve_raster(streams, streams_convert, overwrite = TRUE)
+    retrieve_raster(streams, streams_convert, overwrite = TRUE, max_memory = max_memory)
     # Generate random name to minimise risk of overwriting anything important
     rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
     rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
     # Create streams raster with null in stream
-    reclassify_streams(streams_convert, rand_name, "none", TRUE)
+    reclassify_streams(streams_convert, rand_name, "none", TRUE, max_memory = max_memory)
     rand_name <- basename(rand_name)
   }
   
@@ -66,7 +68,7 @@ compute_metrics <- function(
     
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE)
+    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE, max_memory = max_memory)
     
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
@@ -174,7 +176,7 @@ compute_metrics <- function(
       current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
       
       # Compute it
-      get_flow_length(str_rast = coords_i_out, flow_dir = flow_dir, out = current_flow_out, to_outlet = TRUE, overwrite = TRUE)
+      get_flow_length(str_rast = coords_i_out, flow_dir = flow_dir, out = current_flow_out, to_outlet = TRUE, overwrite = TRUE, max_memory = max_memory)
       
       # Compute iFLO weights for real
       iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)
@@ -189,7 +191,7 @@ compute_metrics <- function(
       current_flow_str <- paste0("flow_str_", rowID, ".tif")
       
       # Compute flow length
-      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE)
+      get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE, max_memory = max_memory)
       subtract_streams_command <- paste0("current_flow_str2 = ", current_flow_str, " * ", rand_name)
       rast_calc(subtract_streams_command)
       

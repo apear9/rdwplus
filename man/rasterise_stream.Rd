@@ -4,7 +4,8 @@
 \alias{rasterise_stream}
 \title{Turn a shapefile of stream edges into a raster}
 \usage{
-rasterise_stream(streams, out, overwrite = FALSE, ...)
+rasterise_stream(streams, out, overwrite = FALSE, max_memory = 300,
+  ...)
 }
 \arguments{
 \item{streams}{A file name for a shapefile of stream edges in the current GRASS mapset.}
@@ -12,6 +13,8 @@ rasterise_stream(streams, out, overwrite = FALSE, ...)
 \item{out}{The filename of the output.}
 
 \item{overwrite}{A logical indicating whether the output is allowed to overwrite existing files. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Additional arguments to \code{v.to.rast}.}
 }

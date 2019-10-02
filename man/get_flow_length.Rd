@@ -5,7 +5,7 @@
 \title{Derive a flow length to streams and outlets}
 \usage{
 get_flow_length(str_rast, flow_dir, out, to_outlet = FALSE,
-  overwrite = FALSE)
+  overwrite = FALSE, max_memory = 300)
 }
 \arguments{
 \item{str_rast}{Rasterized unary streams file.}
@@ -17,6 +17,8 @@ get_flow_length(str_rast, flow_dir, out, to_outlet = FALSE,
 \item{to_outlet}{Calculate parameters for outlets flag. Defaults to \code{FALSE} for streams.}
 
 \item{overwrite}{Overwrite flag. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
 Nothing. A file with the name \code{out} will be written to GRASS's current workspace.

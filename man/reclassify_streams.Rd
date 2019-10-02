@@ -4,7 +4,8 @@
 \alias{reclassify_streams}
 \title{Reclassify streams into the format required for the land use metric calculations.}
 \usage{
-reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
+reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
+  max_memory = 300)
 }
 \arguments{
 \item{stream}{A streams raster as either a filepath to a raster or a Raster* object.}
@@ -14,6 +15,8 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 \item{out_type}{Either 'binary' or 'unary'. See the Description above.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
 Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset. This raster will have the \code{INT1U} data type.

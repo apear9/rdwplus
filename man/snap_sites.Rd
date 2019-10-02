@@ -4,7 +4,8 @@
 \alias{snap_sites}
 \title{A function to snap sites in a shapefile to a stream network}
 \usage{
-snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
+snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
+  max_memory = 300, ...)
 }
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}
@@ -16,6 +17,8 @@ snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE, ...)
 \item{out}{The output file path.}
 
 \item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Additional arguments to \code{r.stream.snap}.}
 }

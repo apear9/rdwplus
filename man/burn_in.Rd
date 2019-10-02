@@ -4,7 +4,8 @@
 \alias{burn_in}
 \title{Burn in streams to a digital elevation model}
 \usage{
-burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
+burn_in(dem, stream, out, burn = 10, overwrite = FALSE,
+  max_memory = 300)
 }
 \arguments{
 \item{dem}{A RasterLayer object containing the digital elevation model. This can also be the file path to a raster.}
@@ -16,6 +17,8 @@ burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
 \item{burn}{The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.}
 
 \item{overwrite}{A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
 Nothing.

@@ -4,12 +4,14 @@
 \alias{plot_GRASS}
 \title{A function to plot a raster from the current GRASS mapset}
 \usage{
-plot_GRASS(x, out_x, ...)
+plot_GRASS(x, out_x, max_memory = 300, ...)
 }
 \arguments{
 \item{x}{The name of an object in the current GRASS mapset.}
 
 \item{out_x}{Optional. If supplied, the function makes a call to \code{\link{retrieve_raster}} and writes out the raster to the file path \code{out_x}. Otherwise the function will write the layer to \code{tempdir}.}
+
+\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{...}{Additional arguments to \code{plot}.}
 }
