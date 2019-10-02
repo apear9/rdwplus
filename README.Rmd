@@ -89,7 +89,7 @@ Note that the function accepts vectors of file paths.
 Sometimes it is also necessary to convert raster formats from float to integer. It happens that the landuse raster used here does not have the correct encoding, so it upsets the `compute_metrics` function. We perform the conversion as follows:
 
 ```{r}
-# May need convert certain files to integer format
+# May need to convert certain files to integer format
 convert_to_integer("landuse.tif")
 ```
 
@@ -143,7 +143,7 @@ If you're curious to see what these look like:
 
 ```{r}
 plot_GRASS("filldem.tif", col = topo.colors(15))
-plot_GRASS("flowdir.tif", col = topo.colors(5))
+plot_GRASS("flowdir.tif", col = topo.colors(15))
 plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 

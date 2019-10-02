@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpOsZhtw 
-    ## location    file4488688f2779 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpAL3T44 
+    ## location    file42844dba5743 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -103,7 +103,7 @@ Note that the function accepts vectors of file paths.
 Sometimes it is also necessary to convert raster formats from float to integer. It happens that the landuse raster used here does not have the correct encoding, so it upsets the `compute_metrics` function. We perform the conversion as follows:
 
 ``` r
-# May need convert certain files to integer format
+# May need to convert certain files to integer format
 convert_to_integer("landuse.tif")
 ```
 
@@ -166,7 +166,7 @@ plot_GRASS("filldem.tif", col = topo.colors(15))
 ![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ``` r
-plot_GRASS("flowdir.tif", col = topo.colors(5))
+plot_GRASS("flowdir.tif", col = topo.colors(15))
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-14-2.png)
