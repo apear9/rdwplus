@@ -4,7 +4,7 @@
 #' @param out The output file.
 #' @param out_type Either 'binary' or 'unary'. See the Description above.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
-#' @return Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
+#' @return Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset. This raster will have the \code{INT1U} data type. 
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){
   
@@ -38,7 +38,7 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
   }
   
   # Create new file
-  writeRaster(stream, out, overwrite = overwrite)
+  writeRaster(stream, out, overwrite = overwrite, dataType = "INT1U")
   raster_to_mapset(out, overwrite)
   
   # Return nothing 
