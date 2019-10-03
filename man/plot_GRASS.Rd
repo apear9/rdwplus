@@ -4,7 +4,7 @@
 \alias{plot_GRASS}
 \title{A function to plot a raster from the current GRASS mapset}
 \usage{
-plot_GRASS(x, out_x, max_memory = 300, ...)
+plot_GRASS(x, out_x, ...)
 }
 \arguments{
 \item{x}{The name of an object in the current GRASS mapset.}

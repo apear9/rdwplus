@@ -5,7 +5,7 @@
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
 #' @export
-plot_GRASS <- function(x, out_x, max_memory = 300, ...){
+plot_GRASS <- function(x, out_x, ...){
   
   # Check if GRASS is running
   if(!check_running()) stop("There is currently no valid GRASS session. Program halted.")
