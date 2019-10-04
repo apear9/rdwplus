@@ -38,8 +38,8 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
     stream[!ind] <- NA
   }
   
-  # Create new file
-  writeRaster(stream, out, overwrite = overwrite, datatype = "INT1U")
+  # Create new file (LOG1S)
+  writeRaster(x = stream, filename = out, overwrite = overwrite, datatype = "INT1U") 
   raster_to_mapset(out, overwrite = overwrite, max_memory = max_memory)
   
   # Return nothing 
