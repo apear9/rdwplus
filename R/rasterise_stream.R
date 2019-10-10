@@ -60,7 +60,7 @@ rasterise_stream <- function(streams, out, overwrite = FALSE, max_memory = 300, 
   }
   
   # Write out to file
-  retrieve_raster(grass_out, out, overwrite = overwrite, max_memory = max_memory)
+  retrieve_raster(grass_out, out, overwrite = overwrite)
   
   # Return nothing
   invisible()
