@@ -27,13 +27,20 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_me
       output = grass_out,
       accumulation = flow_acc,
       radius = max_move,
-      memory = max_memory,
-      ...
+      memory = max_memory
+      # ...
     )
   )
+
+  # Read in sites and grass out as vector points
+  sites <- readVECT(sites)
+  grass_out <- readVECT(grass_out)
   
-  # Retrieve vector
-  retrieve_vector(grass_out, out, overwrite = overwrite)
+  # Calculate distances between original and snapped, add to grass_out
+  grass_out$SnapDist <- pointDistance(sites, grass_out)
+  
+  # Export shapefile (maybe use v.out.ogr)
+  shapefile(obj = grass_out, filename = out, overwrite = overwrite)
   
   # Return nothing
   invisible()
