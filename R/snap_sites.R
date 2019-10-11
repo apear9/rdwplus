@@ -31,8 +31,8 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_me
       output = grass_out,
       accumulation = flow_acc,
       radius = max_move,
-      memory = max_memory
-      # ...
+      memory = max_memory,
+      ...
     )
   )
 
