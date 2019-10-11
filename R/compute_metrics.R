@@ -24,7 +24,7 @@ compute_metrics <- function(
   max_memory = 300,
   lessmem = FALSE
 ){
-  
+  #print(Sys.time())
   # Check inputs
   no_stream <- missing(streams)
   is_stream <- length(grep("S", metrics)) > 0
@@ -46,7 +46,7 @@ compute_metrics <- function(
     reclassify_streams(streams_convert, rand_name, "none", TRUE, max_memory = max_memory)
     rand_name <- basename(rand_name)
   }
-  
+  print(paste0(Sys.time(), ": stream retrieval "))
   # Initialise empty list to store results
   # List structure:
   # Top level -- land use types [x length(landuse)]
@@ -67,11 +67,11 @@ compute_metrics <- function(
     # # Just to be safe. Like really really safe.
     # # It can lead to problems if mask from last iteration still on. 
     # clear_mask()
-    
+    print(paste0(Sys.time(), ": rowID : ", rowID))
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE, lessmem = lessmem)
-    
+    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE) # change watershed flag later
+    print(paste0(Sys.time(), ": watershed delineated"))
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
       
@@ -133,7 +133,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$iEDO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0( Sys.time(), ": rowID : ", rowID, " : iEDO finish"))
     }
     
     if(any(metrics == "iEDS")){
@@ -168,7 +168,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$iEDS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : iEDS finish"))
     }
     
     # Compute iFLO weights
@@ -183,6 +183,7 @@ compute_metrics <- function(
       # Compute iFLO weights for real
       iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)
       rast_calc(iFLO_weights_command)
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : FLO weights finish"))
       
     }
     
@@ -200,6 +201,7 @@ compute_metrics <- function(
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
       rast_calc(iFLS_weights_command)
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : FLS weights finish"))
       
     }
     
@@ -223,7 +225,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$iFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : iFLO finish"))
     }
     
     # Compute iFLS metric in full if needed
@@ -247,7 +249,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$iFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : iFLS finish"))
     }
     
     # Compute HAiFLO weights if needed
@@ -274,7 +276,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLO finish"))
     }
     
     # Compute HAiFLS weights if needed
@@ -301,7 +303,7 @@ compute_metrics <- function(
         result_metrics[[lu_idx]]$HAiFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
         
       }
-      
+      print(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLS finish"))
     }
     
     # Remove mask
@@ -324,7 +326,7 @@ compute_metrics <- function(
     full_data <- cbind(full_data, temp_data)
   }
   full_data <- as.data.frame(full_data)
-  
+  print(paste0(Sys.time(), ": Successfully completed computing metrics"))
   # Return data frame with site metrics immediately
   return(full_data)
   
