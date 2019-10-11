@@ -6,13 +6,17 @@
 #' @param out The output file path. 
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
+#' @param use_sp Logical to use 'sf' or 'stars' classes for vector objects. Defaults to \code{TRUE} to use 'stars' class.
 #' @param ... Additional arguments to \code{r.stream.snap}.
 #' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 #' @export 
-snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, ...){
+snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, use_sp = TRUE, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
+  
+  # Check classes for vector objects in R
+  if(use_sp) rgrass7::use_sp() else rgrass7::use_sf()
   
   # Call GRASS function
   flags <- "quiet"
@@ -40,7 +44,8 @@ snap_sites <- function(sites, flow_acc, max_move, out, overwrite = FALSE, max_me
   grass_out$SnapDist <- pointDistance(sites, grass_out)
   
   # Export shapefile (maybe use v.out.ogr)
-  shapefile(obj = grass_out, filename = out, overwrite = overwrite)
+  raster::shapefile(x = grass_out, filename = out, overwrite = overwrite)
+  vector_to_mapset(out, overwrite = overwrite)
   
   # Return nothing
   invisible()

@@ -5,7 +5,7 @@
 \title{A function to snap sites in a shapefile to a stream network}
 \usage{
 snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
-  max_memory = 300, ...)
+  max_memory = 300, use_sp = TRUE, ...)
 }
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}
@@ -19,6 +19,8 @@ snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
 \item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
+
+\item{use_sp}{Logical to use 'sf' or 'stars' classes for vector objects. Defaults to \code{TRUE} to use 'stars' class.}
 
 \item{...}{Additional arguments to \code{r.stream.snap}.}
 }
