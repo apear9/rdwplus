@@ -71,7 +71,7 @@ compute_metrics <- function(
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
     get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE) # change watershed flag later
-    print(paste0(Sys.time(), ": watershed delineated"))
+    print(paste0(Sys.time(), ": rowID : ", rowID, " : watershed delineated"))
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
       
