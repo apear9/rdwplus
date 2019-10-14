@@ -12,7 +12,7 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
 
 \item{out}{The output file.}
 
-\item{out_type}{Either 'binary' or 'unary'. See the Description above.}
+\item{out_type}{Either 'binary', 'unary', or 'none'. See the Description above.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 
@@ -22,5 +22,5 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
 Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset. This raster will have the \code{INT1U} data type.
 }
 \description{
-Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells).
+Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). Another option is to reclassify the streams raster such that stream cells are given the value NoData and non-stream cells are given the value 1.
 }
