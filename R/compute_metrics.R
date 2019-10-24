@@ -236,7 +236,7 @@ compute_metrics <- function(
         
         # Compute table
         iFLS_table <- paste0(tempdir(), "\\iFLS_table.csv")
-        message(iFLS_table)
+        
         zonal_table("wFLS", landuse[lu_idx], iFLS_table)
         
         # Get result table
