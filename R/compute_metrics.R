@@ -146,7 +146,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$iEDO[rowID] <-100
           
         }
         
@@ -199,7 +199,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$iEDS[rowID] <-100
           
         }
 
@@ -274,7 +274,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$iFLO[rowID] <-100
           
         }
         
@@ -317,7 +317,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$iFLS[rowID] <-100
           
         }
         
@@ -362,7 +362,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100
           
         }
         
@@ -407,7 +407,7 @@ compute_metrics <- function(
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - 0/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100
           
         }
         
