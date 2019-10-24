@@ -129,8 +129,26 @@ compute_metrics <- function(
         sums <- iEDO_table$sum
         zone <- iEDO_table$zone
         
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
+        
         # Insert iEDO metric for this row
-        result_metrics[[lu_idx]]$iEDO[rowID] <- 100*(1 - sums[1]/sum(sums))
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
         
       }
       message(paste0( Sys.time(), ": rowID : ", rowID, " : iEDO finish"))
@@ -164,9 +182,27 @@ compute_metrics <- function(
         sums <- iEDS_table$sum
         zone <- iEDS_table$zone
         
-        # Insert iEDS metric for this row
-        result_metrics[[lu_idx]]$iEDS[rowID] <- 100*(1 - sums[1]/sum(sums))
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
         
+        # Insert iEDS metric for this row
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
+
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : iEDS finish"))
     }
@@ -221,8 +257,26 @@ compute_metrics <- function(
         sums <- iFLO_table$sum
         zone <- iFLO_table$zone
         
-        # Insert HAiFLO metric for this row
-        result_metrics[[lu_idx]]$iFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
+        
+        # Insert iFLO metric for this row
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
         
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLO finish"))
@@ -246,8 +300,26 @@ compute_metrics <- function(
         sums <- iFLS_table$sum
         zone <- iFLS_table$zone
         
-        # Insert HAiFLS metric for this row
-        result_metrics[[lu_idx]]$iFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
+        
+        # Insert iFLS metric for this row
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
         
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLS finish"))
@@ -273,8 +345,26 @@ compute_metrics <- function(
         sums <- HA_iFLO_table$sum
         zone <- HA_iFLO_table$zone
         
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
+        
         # Insert HAiFLO metric for this row
-        result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100*(1 - sums[1]/sum(sums))
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
         
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLO finish"))
@@ -300,8 +390,26 @@ compute_metrics <- function(
         sums <- HA_iFLS_table$sum
         zone <- HA_iFLS_table$zone
         
+        # row index of zone 1
+        zoneID <- which(zone == 1) 
+        
         # Insert HAiFLS metric for this row
-        result_metrics[[lu_idx]]$HAiFLS[rowID] <- 100*(1 - sums[1]/sum(sums))
+        if(length(zone) == 2){
+          
+          # Mix of LU
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          
+        } else if(length(which(zone == 0) != 0)){
+          
+          # Only 0% LU (always top row)
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - sums[1]/sum(sums))
+          
+        } else {
+          
+          # Only 100% LU
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - 0/sum(sums))
+          
+        }
         
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLS finish"))
