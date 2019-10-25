@@ -10,7 +10,7 @@
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
-#' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
+#' @return A \code{data.frame} object, which is a table with rows corresponding to those from the \code{sites} argument plus columns for each combination of land use and metric type. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @export

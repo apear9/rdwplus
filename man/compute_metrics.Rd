@@ -30,7 +30,7 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
-A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
+A \code{data.frame} object, which is a table with rows corresponding to those from the \code{sites} argument plus columns for each combination of land use and metric type.
 }
 \description{
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
