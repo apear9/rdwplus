@@ -1,5 +1,5 @@
 #' Compute spatially explicit watershed attributes for survey sites on streams
-#' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-PLUS.
+#' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
 #' @param landuse Names of landuse or landcover binary rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.
 #' @param sites A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.
@@ -10,7 +10,9 @@
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
-#' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics. 
+#' @return A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
+#' @references 
+#' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @export
 compute_metrics <- function(
   metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
@@ -90,7 +92,11 @@ compute_metrics <- function(
         # Compute statistics
         counts <- lumped_table$non_null_cells
         zone <- lumped_table$zone
-        result_metrics[[lu_idx]]$lumped[rowID] <- 100 * (1 - counts[1]/sum(counts))
+        if(length(zone) > 1){
+          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * (1 - counts[1]/sum(counts))
+        } else {
+          100 * zone # zone is either zero or 1, so this works 
+        }
         
       }
       
