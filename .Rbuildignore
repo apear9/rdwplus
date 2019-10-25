@@ -7,3 +7,5 @@
 ^\.html
 ^README\.Rmd
 ^.*\.png
+^doc$
+^Meta$
