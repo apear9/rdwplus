@@ -12,23 +12,7 @@ rasterise_stream <- function(streams, out, overwrite = FALSE, max_memory = 300, 
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
-  # Check if streams is spatial lines
-  # if(!is_splines(streams)) streams <- shapefile(streams)
-  
-  # Check reference raster is a RasterLayer
-  # if(!is_raster_layer(reference_raster)) reference_raster <- raster(reference_raster)
-  
-  # Check valid method
-  # if(!method %in% c("unary", "binary")) stop("Invalid method specified. Either write 'unary' or 'binary'. See the documentation for further details.")
-  
-  # Mask, etc.
-  # reference_raster[] <- 1
-  # if(method == "unary"){
-  #   streams_raster <- mask(reference_raster, streams, inverse = TRUE)
-  # } else {
-  #   streams_raster <- mask(reference_raster, streams)
-  #   streams_raster[is.na(streams_raster[])] <- 0
-  # }
+  # Run grass function
   grass_out <- basename(out)
   if(overwrite){
     execGRASS(

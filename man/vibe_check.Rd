@@ -10,5 +10,5 @@ vibe_check()
 Nothing.
 }
 \description{
-This function takes no inputs and prints a list of maps in mapset.
+This function takes no inputs. It prints a list of maps in the current GRASS mapset.
 }

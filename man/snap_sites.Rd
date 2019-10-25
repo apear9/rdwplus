@@ -2,7 +2,7 @@
 % Please edit documentation in R/snap_sites.R
 \name{snap_sites}
 \alias{snap_sites}
-\title{A function to snap sites in a shapefile to a stream network}
+\title{A function to snap sites in a shapefile to a flow accumulation grid}
 \usage{
 snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
   max_memory = 300, use_sp = TRUE, ...)
@@ -28,5 +28,5 @@ snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
 Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 }
 \description{
-This function takes a set of survey site locations and makes sure that they are coincident with the stream network dataset.
+This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network.
 }

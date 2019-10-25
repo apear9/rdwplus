@@ -1,4 +1,4 @@
-#' Reclassify streams into the format required for the land use metric calculations.
+#' Reclassify streams into the format required for the land use metric calculations
 #' @description Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). Another option is to reclassify the streams raster such that stream cells are given the value NoData and non-stream cells are given the value 1.
 #' @param stream A streams raster as either a filepath to a raster or a Raster* object.
 #' @param out The output file.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_metrics.R
 \name{compute_metrics}
 \alias{compute_metrics}
-\title{Compute spatially explicit watershed attributes}
+\title{Compute spatially explicit watershed attributes for survey sites on streams}
 \usage{
 compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
   sites, elevation, flow_dir, flow_acc, streams, idwp = -1,
@@ -33,5 +33,5 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 A SpatialPointsDataFrame object, which is the \code{sites} argument with a modified attribute table. The table will contain the new land use metrics.
 }
 \description{
-Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
+Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-PLUS.
 }

@@ -1,5 +1,5 @@
-#' A function to snap sites in a shapefile to a stream network
-#' @description This function takes a set of survey site locations and makes sure that they are coincident with the stream network dataset.
+#' A function to snap sites in a shapefile to a flow accumulation grid
+#' @description This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network.
 #' @param sites File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.
 #' @param flow_acc File name for a flow accumulation raster in the current GRASS mapset.
 #' @param max_move The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/reclassify_streams.R
 \name{reclassify_streams}
 \alias{reclassify_streams}
-\title{Reclassify streams into the format required for the land use metric calculations.}
+\title{Reclassify streams into the format required for the land use metric calculations}
 \usage{
 reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
   max_memory = 300)

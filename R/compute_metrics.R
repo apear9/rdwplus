@@ -1,5 +1,5 @@
-#' Compute spatially explicit watershed attributes
-#' @description Workhorse function for rdwplus. This function computes the spatially explicit landuse metrics in IDW-PLUS.
+#' Compute spatially explicit watershed attributes for survey sites on streams
+#' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-PLUS.
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
 #' @param landuse Names of landuse or landcover binary rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.
 #' @param sites A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.
@@ -64,14 +64,16 @@ compute_metrics <- function(
   # Main loop for metric computation per site
   for(rowID in 1:nrow(sites@data)){
     
-    # # Just to be safe. Like really really safe.
-    # # It can lead to problems if mask from last iteration still on. 
-    # clear_mask()
+    # Print dialogue to user
     message(paste0(Sys.time(), ": rowID : ", rowID))
+    
     # Compute current site's watershed
     current_watershed <- paste0("watershed_", rowID, ".tif")
     get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE) # change watershed flag later
+    
+    # Print dialogue to user
     message(paste0(Sys.time(), ": rowID : ", rowID, " : watershed delineated"))
+    
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
       
@@ -135,7 +137,7 @@ compute_metrics <- function(
         # Insert iEDO metric for this row
         if(length(zone) == 2){
           
-          # Mix of LU
+          # Neither 0 nor 100%
           result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
           
         } else if(length(which(zone == 0) != 0)){
