@@ -11,7 +11,7 @@ compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}
 
-\item{landuse}{Names of landuse or landcover binary rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed.}
+\item{landuse}{Names of binary landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed. Binary means land use cells are coded 1 and all other cells are given a value of 0.}
 
 \item{sites}{A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.}
 
