@@ -9,38 +9,45 @@
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE, max_memory = 300){
   
+  # Check that grass is running
+  running <- check_running()
+  if(!running) stop("No active GRASS session. Program halted.")
+  
   # Check out_type
   if(!out_type %in% c("binary", "unary","none")) stop("Invalid option for argument out_type. Must be either 'binary', 'unary', or 'none'.")
   # Check whether input for stream is a string
-  if(is.character(stream)) stream <- raster(stream)
+  # if(is.character(stream)) stream <- raster(stream)
   # Otherwise check that it is a Raster* object
-  if(!is_raster_layer(stream)) stop("The argument stream must be a Raster* object.")
+  # if(!is_raster_layer(stream)) stop("The argument stream must be a Raster* object.")
   
   # Reclassify based on out_type
   if(out_type == "binary"){
     # Ones for stream
-    stream[!is.na(stream[])] <- 1
+    # stream[!is.na(stream[])] <- 1
     # Zeros for non-stream
-    stream[is.na(stream[])] <- 0
+    # stream[is.na(stream[])] <- 0
+    binary(stream, out, overwrite)
   } 
   if(out_type == "none"){
-    ind <- !is.na(stream[])
+    # ind <- !is.na(stream[])
     # NoData for stream
-    stream[ind] <- NA
+    # stream[ind] <- NA
     # Ones otherwise
-    stream[!ind] <- 1
+    # stream[!ind] <- 1
+    none(stream, out, overwrite)
   }
   if(out_type == "unary"){
     ind <- !is.na(stream[])
     # Ones for stream
-    stream[ind] <- 1
+    # stream[ind] <- 1
     # NoData otherwise
-    stream[!ind] <- NA
+    # stream[!ind] <- NA
+    unary(stream, out, overwrite)
   }
   
   # Create new file (LOG1S)
-  writeRaster(x = stream, filename = out, overwrite = overwrite, datatype = "INT1U") 
-  raster_to_mapset(out, overwrite = overwrite, max_memory = max_memory)
+  # writeRaster(x = stream, filename = out, overwrite = overwrite, datatype = "INT1U") 
+  # raster_to_mapset(out, overwrite = overwrite, max_memory = max_memory)
   
   # Return nothing 
   invisible()
