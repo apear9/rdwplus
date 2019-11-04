@@ -1,11 +1,11 @@
 #' Reclassify streams into the format required for the land use metric calculations
 #' @description Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). Another option is to reclassify the streams raster such that stream cells are given the value NoData and non-stream cells are given the value 1.
-#' @param stream A streams raster as either a filepath to a raster or a Raster* object.
+#' @param stream Name of a streams raster in the current GRASS mapset.
 #' @param out The output file.
 #' @param out_type Either 'binary', 'unary', or 'none'. See the Description above.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
-#' @return Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset. This raster will have the \code{INT1U} data type. 
+#' @return Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE, max_memory = 300){
   

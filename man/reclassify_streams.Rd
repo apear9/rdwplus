@@ -8,7 +8,7 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
   max_memory = 300)
 }
 \arguments{
-\item{stream}{A streams raster as either a filepath to a raster or a Raster* object.}
+\item{stream}{Name of a streams raster in the current GRASS mapset.}
 
 \item{out}{The output file.}
 
@@ -19,7 +19,7 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
-Nothing. A file with the name \code{out} will be written to the current working directory and a raster with the name \code{basename(out)} will be imported into the current GRASS mapset. This raster will have the \code{INT1U} data type.
+Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
 }
 \description{
 Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). Another option is to reclassify the streams raster such that stream cells are given the value NoData and non-stream cells are given the value 1.
