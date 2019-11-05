@@ -11,7 +11,7 @@ burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
 
 \item{stream}{Binary stream raster in the GRASS mapset.}
 
-\item{out}{Name of output to be crated in the GRASS mapset.}
+\item{out}{Name of output to be created in the GRASS mapset.}
 
 \item{burn}{The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.}
 
