@@ -105,7 +105,7 @@ The rasterisation and reclassification step can be performed in two separate lin
 
 ```{r}
 rasterise_stream("streams", "streams.tif", TRUE)
-reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
+reclassify_streams("streams.tif", "streams01.tif", "binary", overwrite = TRUE)
 
 ```
 
