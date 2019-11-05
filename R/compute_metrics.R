@@ -95,8 +95,9 @@ compute_metrics <- function(
         # Compute statistics
         counts <- lumped_table$non_null_cells
         zone <- lumped_table$zone
+        zonw <- which(zone == 1)
         if(length(zone) > 1){
-          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[1]/sum(counts)
+          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[zonw]/sum(counts)
         } else {
           100 * zone # zone is either zero or 1, so this works 
         }

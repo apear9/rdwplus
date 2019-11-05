@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpisCgik 
-    ## location    file43a44bde123d 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpmwBlri 
+    ## location    file1d44352b43e5 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -181,11 +181,11 @@ snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
 ```
 
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpisCgik\file43a44bde123d\PERMANENT\.tmp\unknown\73.0.gpkg", layer: "site"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpmwBlri\file1d44352b43e5\PERMANENT\.tmp\unknown\636.0.gpkg", layer: "site"
     ## with 1 features
     ## It has 3 fields
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpisCgik\file43a44bde123d\PERMANENT\.tmp\unknown\747.0.gpkg", layer: "snapsite"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpmwBlri\file1d44352b43e5\PERMANENT\.tmp\unknown\298.0.gpkg", layer: "snapsite"
     ## with 1 features
     ## It has 1 fields
 
@@ -211,7 +211,7 @@ compute_metrics(
 ```
 
     ##   ID lumped_landuse iFLO_landuse iEDO_landuse HAiFLO_landuse iFLS_landuse
-    ## 1  1      -97.93819     1.179034     1.097731    0.005071802     1.556769
+    ## 1  1       2.059486     1.179034     1.097731    0.005071802     1.556769
     ##   iEDS_landuse HAiFLS_landuse
     ## 1     1.847157         1.2414
 
