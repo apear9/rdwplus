@@ -43,7 +43,9 @@ compute_metrics <- function(
     retrieve_raster(streams, streams_convert, overwrite = TRUE)
     # Generate random name to minimise risk of overwriting anything important
     rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
-    rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
+    rand_name <- paste0(
+      # tempdir(), "/", 
+      rand_name, ".tif")
     # Create streams raster with null in stream
     reclassify_streams(streams_convert, rand_name, "none", TRUE)
     rand_name <- basename(rand_name)
@@ -149,7 +151,7 @@ compute_metrics <- function(
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$iEDO[rowID] <- 0
           
         } else {
           
