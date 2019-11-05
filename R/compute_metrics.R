@@ -45,7 +45,7 @@ compute_metrics <- function(
     rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
     rand_name <- paste0(tempdir(), "/", rand_name, ".tif")
     # Create streams raster with null in stream
-    reclassify_streams(streams_convert, rand_name, "none", TRUE, max_memory = max_memory)
+    reclassify_streams(streams_convert, rand_name, "none", TRUE)
     rand_name <- basename(rand_name)
   }
   message(paste0(Sys.time(), ": stream retrieval "))
@@ -93,7 +93,7 @@ compute_metrics <- function(
         counts <- lumped_table$non_null_cells
         zone <- lumped_table$zone
         if(length(zone) > 1){
-          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * (1 - counts[1]/sum(counts))
+          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * (1 - counts[1])/sum(counts)
         } else {
           100 * zone # zone is either zero or 1, so this works 
         }
@@ -144,7 +144,7 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Neither 0 nor 100%
-          result_metrics[[lu_idx]]$iEDO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$iEDO[rowID] <-100* sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
@@ -197,12 +197,12 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Mix of LU
-          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$iEDS[rowID] <-100*sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iEDS[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$iEDS[rowID] <- 0
           
         } else {
           
@@ -272,12 +272,12 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Mix of LU
-          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$iFLO[rowID] <-100* sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iFLO[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$iFLO[rowID] <- 0
           
         } else {
           
@@ -315,17 +315,17 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Mix of LU
-          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$iFLS[rowID] <-100* sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iFLS[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$iFLS[rowID] <- 0
           
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$iFLS[rowID] <-100
+          result_metrics[[lu_idx]]$iFLS[rowID] <- 100
           
         }
         
@@ -360,17 +360,17 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Mix of LU
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <- 0
           
         } else {
           
           # Only 100% LU
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100
+          result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100
           
         }
         
@@ -405,12 +405,12 @@ compute_metrics <- function(
         if(length(zone) == 2){
           
           # Mix of LU
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - sums[zoneID]/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*sums[zoneID]/sum(sums)
           
         } else if(length(which(zone == 0) != 0)){
           
           # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*(1 - sums[1]/sum(sums))
+          result_metrics[[lu_idx]]$HAiFLS[rowID] <- 0
           
         } else {
           
