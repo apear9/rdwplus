@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpaK7Fcj 
-    ## location    file4f6c3a4b281c 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpisCgik 
+    ## location    file43a44bde123d 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -131,7 +131,8 @@ As alluded to above, if your streams were not derived from the digital elevation
 
 ``` r
 # Drainage reinforcement
-burn_in(dem, "streams01.tif", "burndem.tif", overwrite = TRUE)
+de2 <- raster_to_mapset(dem, overwrite = TRUE)
+burn_in(de2, "streams01.tif", "burndem.tif", overwrite = TRUE)
 ```
 
 The DEM must then be hydrologically corrected. This is a process of removing 'sinks'; small depressions in the DEM where flowing water gets trapped and stops flowing toward the streams. Of course, sinks are actually natural features of the landscape. However, our metrics cannot deal with them. Therefore, we remove them using the `fill_sinks` function:
@@ -179,6 +180,15 @@ Here is the code for snapping sites to the flow accumulation grid:
 snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
 ```
 
+    ## OGR data source with driver: GPKG 
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpisCgik\file43a44bde123d\PERMANENT\.tmp\unknown\73.0.gpkg", layer: "site"
+    ## with 1 features
+    ## It has 3 fields
+    ## OGR data source with driver: GPKG 
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpisCgik\file43a44bde123d\PERMANENT\.tmp\unknown\747.0.gpkg", layer: "snapsite"
+    ## with 1 features
+    ## It has 1 fields
+
 Note that in this case, no snapping is needed as the point in the shapefile already falls along a raster cell with high flow accumulation.
 
 Compute watershed attributes
@@ -201,7 +211,7 @@ compute_metrics(
 ```
 
     ##   ID lumped_landuse iFLO_landuse iEDO_landuse HAiFLO_landuse iFLS_landuse
-    ## 1  1       2.059486     1.179034     1.097731    0.005071802     1.556769
+    ## 1  1      -97.93819     1.179034     1.097731    0.005071802     1.556769
     ##   iEDS_landuse HAiFLS_landuse
     ## 1     1.847157         1.2414
 

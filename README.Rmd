@@ -114,7 +114,8 @@ As alluded to above, if your streams were not derived from the digital elevation
 
 ```{r}
 # Drainage reinforcement
-burn_in(dem, "streams01.tif", "burndem.tif", overwrite = TRUE)
+de2 <- raster_to_mapset(dem, overwrite = TRUE)
+burn_in(de2, "streams01.tif", "burndem.tif", overwrite = TRUE)
 ```
 
 The DEM must then be hydrologically corrected. This is a process of removing 'sinks'; small depressions in the DEM where flowing water gets trapped and stops flowing toward the streams. Of course, sinks are actually natural features of the landscape. However, our metrics cannot deal with them. Therefore, we remove them using the `fill_sinks` function:
