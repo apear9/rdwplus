@@ -4,24 +4,21 @@
 \alias{burn_in}
 \title{Burn in streams to a digital elevation model}
 \usage{
-burn_in(dem, stream, out, burn = 10, overwrite = FALSE,
-  max_memory = 300)
+burn_in(dem, stream, out, burn = 10, overwrite = FALSE)
 }
 \arguments{
-\item{dem}{A RasterLayer object containing the digital elevation model. This can also be the file path to a raster.}
+\item{dem}{Digital elevation model raster in the GRASS mapset.}
 
-\item{stream}{A RasterLayer object containing a rasterised stream. The stream pixels should have a value of 1 and non-stream pixels should have a value of 0. This can also be the file path to a raster.}
+\item{stream}{Binary stream raster in the GRASS mapset.}
 
-\item{out}{The filename of the raster to be written out. It will also be imported into the current GRASS mapset with the name \code{basename(out)}.}
+\item{out}{Name of output to be crated in the GRASS mapset.}
 
 \item{burn}{The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.}
 
 \item{overwrite}{A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.}
-
-\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
-Nothing.
+Nothing. A raster with the name \code{out} will be written to the current GRASS mapset.
 }
 \description{
 Burning-in streams (also called 'drainage reinforcement') ensures flow direction and accumulation grids based on the digital elevation model will correctly identify the stream path.
