@@ -4,19 +4,16 @@
 \alias{reclassify_streams}
 \title{Reclassify streams into the format required for the land use metric calculations}
 \usage{
-reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE,
-  max_memory = 300)
+reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 }
 \arguments{
-\item{stream}{Name of a streams raster in the current GRASS mapset.}
+\item{stream}{Name of a streams raster in the current GRASS mapset. Typically this is the result of \code{rasterise_stream}. The raster should have NoData values for all non-stream cells. Stream cells can have any other value.}
 
 \item{out}{The output file.}
 
 \item{out_type}{Either 'binary', 'unary', or 'none'. See the Description above.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
-
-\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 }
 \value{
 Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
