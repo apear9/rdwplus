@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/Rtmp8KoO4f 
-    ## location    file674c61e7dec 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpaK7Fcj 
+    ## location    file4f6c3a4b281c 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
