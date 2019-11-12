@@ -11,3 +11,8 @@
 ^Meta$
 ^news\.md
 ^cran-comments\.md
+^streams\.tif
+^streams01\.tif
+^burndem\.tif
+^snapsite*
+^junk
