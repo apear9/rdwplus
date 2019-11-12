@@ -9,3 +9,5 @@
 ^.*\.png
 ^doc$
 ^Meta$
+^news\.md
+^cran-comments\.md
