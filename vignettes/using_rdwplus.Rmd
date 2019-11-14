@@ -99,7 +99,7 @@ Note that the `overwrite` option simply allows the dataset we're importing to ov
 If you start with a shapefile of stream edges (as opposed to deriving a streams raster from the DEM), then you will need to
 
 1. Rasterise the stream;
-2. Reclassify it so that the stream line cells have a value of 1 and the others a value of 0. (This is needed to perform 'drainage reinforcement' on the streams, which forces water to flow along the stream lines.)
+2. Reclassify it so that the stream line cells have a value of 1 and the others a value of 0. (This is needed to perform 'drainage reinforcement' on the streams, which forces water to flow along the stream lines. If no drainage enforcement is needed then this step is not necessary.)
 
 The rasterisation and reclassification step can be performed in two separate lines of code:
 
