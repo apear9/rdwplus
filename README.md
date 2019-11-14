@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpmwBlri 
-    ## location    file1d44352b43e5 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpuikhdV 
+    ## location    file3484296b421c 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -116,7 +116,7 @@ Data preprocessing
 If you start with a shapefile of stream edges (as opposed to deriving a streams raster from the DEM), then you will need to
 
 1.  Rasterise the stream;
-2.  Reclassify it so that the stream line cells have a value of 1 and the others a value of 0. (This is needed to perform 'drainage reinforcement' on the streams, which forces water to flow along the stream lines.)
+2.  Reclassify it so that the stream line cells have a value of 1 and the others a value of 0. (This is needed to perform 'drainage reinforcement' on the streams, which forces water to flow along the stream lines. If no drainage enforcement is needed then this step is not necessary.)
 
 The rasterisation and reclassification step can be performed in two separate lines of code:
 
@@ -181,11 +181,11 @@ snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
 ```
 
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpmwBlri\file1d44352b43e5\PERMANENT\.tmp\unknown\636.0.gpkg", layer: "site"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpuikhdV\file3484296b421c\PERMANENT\.tmp\unknown\646.0.gpkg", layer: "site"
     ## with 1 features
     ## It has 3 fields
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpmwBlri\file1d44352b43e5\PERMANENT\.tmp\unknown\298.0.gpkg", layer: "snapsite"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpuikhdV\file3484296b421c\PERMANENT\.tmp\unknown\278.0.gpkg", layer: "snapsite"
     ## with 1 features
     ## It has 1 fields
 
