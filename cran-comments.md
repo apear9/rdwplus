@@ -1,6 +1,6 @@
 ## Test environments
 
-* win-builder (devel and release) 
+* local Windows install, R 3.6.1
 
 ## R CMD check results
 
