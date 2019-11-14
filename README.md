@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpuikhdV 
-    ## location    file3484296b421c 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpYLu13y 
+    ## location    file47407451f1e 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -181,11 +181,11 @@ snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
 ```
 
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpuikhdV\file3484296b421c\PERMANENT\.tmp\unknown\646.0.gpkg", layer: "site"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpYLu13y\file47407451f1e\PERMANENT\.tmp\unknown\126.0.gpkg", layer: "site"
     ## with 1 features
     ## It has 3 fields
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpuikhdV\file3484296b421c\PERMANENT\.tmp\unknown\278.0.gpkg", layer: "snapsite"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpYLu13y\file47407451f1e\PERMANENT\.tmp\unknown\936.0.gpkg", layer: "snapsite"
     ## with 1 features
     ## It has 1 fields
 
@@ -220,6 +220,7 @@ Contributors
 
 -   [Alan Pearse](https://github.com/apear9)
 -   [Grace Heron](https://github.com/GraceHeron)
+-   [Erin Peterson](https://github.com/pet221)
 
 References
 ----------

@@ -175,6 +175,7 @@ compute_metrics(
 
 + [Alan Pearse](https://github.com/apear9)
 + [Grace Heron](https://github.com/GraceHeron)
++ [Erin Peterson](https://github.com/pet221)
 
 ## References
 
