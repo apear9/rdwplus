@@ -29,8 +29,8 @@ A sink is a depression in a DEM. Water flows into these depressions but not out 
 The following flags may be supplied (as strings):
 
 \itemize{
-    \item "a" The nuclear option. Vigorously remove all sinks.
-    \item "verbose" Lots of module output.
-    \item "quiet" Barely any module output.
+    \item "a": The nuclear option. Vigorously remove all sinks.
+    \item "verbose": Lots of module output.
+    \item "quiet": Barely any module output.
 }
 }
