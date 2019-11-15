@@ -89,7 +89,7 @@ For vector data, for example our shapefiles of sites and stream channels, we nee
 ```{r}
 vector_to_mapset(c(sts, stm), overwrite = TRUE)
 ```
-Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. 
+Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. We can use the function `vibe_check` to check if the vector and raster data are currently in the mapset.
 
 ## Data preprocessing
 
@@ -135,14 +135,17 @@ derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
 If you're curious to see what these look like:
 
 ```{r}
+# Filled DEM 
 plot_GRASS("filldem.tif", col = topo.colors(15))
+# Flow Direction
 plot_GRASS("flowdir.tif", col = topo.colors(15))
+# Flow Accumulation
 plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 
 ### The sites
 
-The land use metrics we calculate with `rdwplus` relate to percentages of effective landuse within watersheds. The sites are  treated as the outlets (the point of lowest elevation) for the stream watersheds, and enable the delineation of these regions. In order to obtain the correct watershed, we need to ensure the sites are snapped to the stream line; a region of high flow accumulation. If the sites are not snapped to the flow accumulation grid, then degenerate watersheds can result. These degenerate watersheds tend to have only a few raster cells in them.
+The land use metrics we calculate with `rdwplus` relate to percentages of effective landuse within watersheds. The sites are treated as the outlets (the point of lowest elevation) for the stream watersheds, and enable the delineation of these regions. In order to obtain the correct watershed, we need to ensure the sites are snapped to the stream line; a region of high flow accumulation. If the sites are not snapped to the flow accumulation grid, then degenerate watersheds can result. These degenerate watersheds tend to have only a few raster cells in them.
 
 Here is the code for snapping sites to the flow accumulation grid:
 
