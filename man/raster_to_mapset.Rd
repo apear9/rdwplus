@@ -24,3 +24,7 @@ A vector of raster layer names in the GRASS mapset.
 \description{
 GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external rasters and imports them into the current GRASS mapset.
 }
+\examples{
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+raster_to_mapset(dem)
+}

@@ -6,6 +6,9 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.import}.
 #' @return A vector of raster layer names in the GRASS mapset.
+#' @examples 
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' raster_to_mapset(dem)
 #' @export
 raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), overwrite = FALSE, max_memory = 300, ...){
   
