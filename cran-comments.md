@@ -1,5 +1,7 @@
 # CRAN submission 25-11-2019
 
+## Changes
+
 THIS IS A RESUBMISSION. Here are the changes that were made in accordance with CRAN maintainers' requests:
 
 In the DESCRIPTION file:
@@ -10,8 +12,6 @@ In the DESCRIPTION file:
 In Rd files:
 
 * Added executable examples.
-
-## Changes
 
 ## Test environments
 
