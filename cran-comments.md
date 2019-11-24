@@ -1,3 +1,28 @@
+# CRAN submission 25-11-2019
+
+THIS IS A RESUBMISSION. Here are the changes that were made in accordance with CRAN maintainers' requests:
+
+In the DESCRIPTION file:
+
+* Shortened title to under 65 characters. Now it is 34 characters long.
+* Changed citation style to authors (year) <doi:...>
+
+In Rd files:
+
+* Added executable examples.
+
+## Changes
+
+## Test environments
+
+## R CMD check results
+
+## Downstream dependencies
+
+There are no downstream dependencies. 
+
+# Initial CRAN submission
+
 ## Test environments
 
 * local OS X install, R 3.6.1

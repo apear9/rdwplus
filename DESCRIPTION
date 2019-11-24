@@ -1,10 +1,10 @@
 Package: rdwplus
-Title: An Implementation of IDW-PLUS (Inverse Distance Weighted Percent Land Use for Streams) in R
+Title: An Implementation of IDW-PLUS in R
 Version: 0.1.0
 Authors@R: c(person("Alan", "Pearse", email = "apearse9@gmail.com", role = c("aut", "cre")), person("Grace", "Heron", email = "grace.heron@connect.qut.edu.au", role = c("aut")), person("Erin", "Peterson", email = "erin.petereson@qut.edu.au", role = c("aut")))
 Author: Alan Pearse [aut, cre], Grace Heron [aut], Erin Peterson [aut]
 Maintainer: Alan Pearse <apearse9@gmail.com>
-Description: Compute spatially explicit land-use metrics for stream survey sites in GRASS GIS and R. The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) Freshwater Biology, 56(3), 590-610 and previously implemented by Peterson and Pearse (2017) Journal of the American Water Resources Association, 53(5), 1241-1249. 
+Description: Compute spatially explicit land-use metrics for stream survey sites in GRASS GIS and R as an open-source implementation of IDW-PLUS (Inverse Distance Weighted Percent Land Use for Streams). The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) <doi:10.1111/j.1365-2427.2010.02507.x> and previously implemented by Peterson and Pearse (2017) <doi:10.1111/1752-1688.12558> in ArcGIS-Python as IDW-PLUS. 
 Depends: R (>= 3.5.0), raster, rgrass7
 Imports: methods, utils
 License: GPL-3
