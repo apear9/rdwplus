@@ -30,3 +30,42 @@ Nothing. Note that a shapefile of snapped survey sites will be written to the fi
 \description{
 This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network.
 }
+\examples{
+\donttest{
+if(!check_running()){
+## Initialise session
+if(.Platform$OS.type == "windows"){
+  my_grass <- "C:/Program Files/GRASS GIS 7.6"
+} else {
+  my_grass <- "/usr/lib/grass76/"
+}
+initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+
+## Load data set
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+sites <- system.file("extdata", "site.shp", package = "rdwplus")
+stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
+
+set_envir(dem)
+raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
+vector_to_mapset(vectors = c(sites, stream_shp))
+
+## Create binary stream
+rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
+
+## Burn dem 
+burn_in(dem = "dem.tif", stream = "streams_binary.tif", out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+
+## Fill sinks
+fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+
+## Derive flow accumulation and direction grids
+derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", flow_acc = "facc.tif", overwrite = TRUE)
+
+## Snap sites to pour points (based on flow accumulation)
+snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, out = "snapsite.shp", overwrite = TRUE)
+
+}
+}
+}
