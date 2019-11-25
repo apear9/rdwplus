@@ -25,6 +25,7 @@ A vector of raster layer names in the GRASS mapset.
 GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external rasters and imports them into the current GRASS mapset.
 }
 \examples{
+\donttest{
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 if(.Platform$OS.type == "windows"){
   my_grass <- "C:/Program Files/GRASS GIS 7.6"
@@ -33,4 +34,5 @@ if(.Platform$OS.type == "windows"){
 }
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 raster_to_mapset(dem)
+}
 }
