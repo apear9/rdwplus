@@ -43,7 +43,7 @@ set_envir(dem)
 
 vector_to_mapset(vectors =  stream_shp)
 
-## Create binary stream
+## Create rasterised stream
 rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 
 ## Plot
