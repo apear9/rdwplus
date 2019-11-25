@@ -16,8 +16,12 @@ A vector of file paths to potential GRASS installations.
 This function finds the path to potential GRASS installations. Warning: this function works by brute force, so it may take a few minutes to find potential GRASS installations.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 my_grass <- search_for_grass()
 my_grass
+
+}
 }
 }

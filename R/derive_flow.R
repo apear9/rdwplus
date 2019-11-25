@@ -7,8 +7,9 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.watershed}. 
 #' @return Nothing. Files are written in the current GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -46,6 +47,7 @@
 #' par(mfrow = c(1,2))
 #' plot_GRASS("fdir.tif", col = topo.colors(15))
 #' plot_GRASS("facc.tif", col = topo.colors(15))
+#' }
 #' }
 #' }
 #' @export

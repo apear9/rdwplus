@@ -4,8 +4,9 @@
 #' @param out_x Optional. If supplied, the function makes a call to \code{\link{retrieve_raster}} and writes out the raster to the file path \code{out_x}. Otherwise the function will write the layer to \code{tempdir}.
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -37,6 +38,7 @@
 #' plot_GRASS("landuse.tif", col = topo.colors(2))
 #' plot_GRASS("streams_rast.tif", col = heat.colors(1), add = TRUE)
 #' 
+#' }
 #' }
 #' }
 #' @export

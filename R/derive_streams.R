@@ -7,8 +7,9 @@
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{r.stream.extract}.
 #' @return Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset. 
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -41,6 +42,7 @@
 #' 
 #' ## Derive streams 
 #' derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
+#' }
 #' }
 #' }
 #' @export

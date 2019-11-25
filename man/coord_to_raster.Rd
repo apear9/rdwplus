@@ -20,7 +20,9 @@ Nothing.
 Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -45,6 +47,7 @@ coord_to_raster(outlet = coord_df, out = "coords", overwrite = TRUE)
 ## Plot
 plot_GRASS("dem.tif", col = topo.colors(15))
 plot_GRASS("coords", col = "red", add = TRUE)
+}
 }
 }
 }

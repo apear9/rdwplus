@@ -27,7 +27,9 @@ Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a v
 Derive a set of stream lines from a flow accumulation raster.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -60,6 +62,7 @@ derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",  flow_acc = "facc.tif",
 
 ## Derive streams 
 derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
+}
 }
 }
 }

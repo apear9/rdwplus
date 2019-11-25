@@ -22,7 +22,9 @@ Nothing. A file called \code{out} will be created in the current GRASS mapset.
 Given a shapefile of outlet(s), this function will convert its contents into a raster.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -45,6 +47,7 @@ point_to_raster(outlets = "site", out = "sites_rast.tif", overwrite = TRUE)
 ## Check conversion success
 vibe_check()
 
+}
 }
 }
 }

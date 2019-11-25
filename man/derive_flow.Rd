@@ -27,7 +27,9 @@ Nothing. Files are written in the current GRASS mapset.
 This function computes flow direction and accumulation (among other things) from a DEM. This is done using the \code{r.terraflow} tool in GRASS.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -65,6 +67,7 @@ overwrite = TRUE)
 par(mfrow = c(1,2))
 plot_GRASS("fdir.tif", col = topo.colors(15))
 plot_GRASS("facc.tif", col = topo.colors(15))
+}
 }
 }
 }

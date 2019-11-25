@@ -22,7 +22,9 @@ Nothing.
 This function writes a GRASS mapset raster to file.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -41,6 +43,7 @@ raster_to_mapset(rasters = dem, as_integer = FALSE)
 ## Retrieve raster 
 retrieve_raster("dem.tif", out_layer = "retrieved_dem.tif", overwrite = TRUE)
 
+}
 }
 }
 }

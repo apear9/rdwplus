@@ -4,8 +4,9 @@
 #' @param overwrite A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{v.import}.
 #' @return A vector of vector layer names in the GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -21,6 +22,8 @@
 #' 
 #' set_envir(dem)
 #' vector_to_mapset(vectors = stream_shp)
+#' 
+#' }
 #' }
 #' }
 #' @export

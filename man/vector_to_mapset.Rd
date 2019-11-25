@@ -20,7 +20,9 @@ A vector of vector layer names in the GRASS mapset.
 GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external vectors and imports them into the current GRASS mapset.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -36,6 +38,8 @@ stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
 set_envir(dem)
 vector_to_mapset(vectors = stream_shp)
+
+}
 }
 }
 }

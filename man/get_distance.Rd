@@ -20,7 +20,9 @@ Nothing. A file with the name \code{basename(out)} will be created in the curren
 This function is needed to compute Euclidean distance from a feature of interest in a watershed raster.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -83,6 +85,7 @@ clear_mask()
 ## Plot
 plot_GRASS(iEDO_distance)
 
+}
 }
 }
 }

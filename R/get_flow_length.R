@@ -7,8 +7,9 @@
 #' @param overwrite Overwrite flag. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing. A file with the name \code{out} will be written to GRASS's current workspace.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -62,6 +63,7 @@
 #' ## Plot 
 #' plot_GRASS(current_flow_out, col = topo.colors(15))
 #' 
+#' }
 #' }
 #' }
 #' @export

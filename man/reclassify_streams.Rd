@@ -22,7 +22,9 @@ Nothing. A file with the name \code{out} will be written to the current GRASS ma
 Given a streams raster, this function will either create a binary streams raster (0 for non-stream cells and 1 for stream cells) or a unary streams raster (1 for stream cells and NoData for all other cells). Another option is to reclassify the streams raster such that stream cells are given the value NoData and non-stream cells are given the value 1.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -52,6 +54,7 @@ plot_GRASS("streams_binary.tif", col = topo.colors(2), main = "Binary Streams")
 plot_GRASS("streams_unary.tif", col = topo.colors(2), main = "Unary Streams")
 plot_GRASS("streams_none.tif", col = topo.colors(2), main = "Null (none) Streams")
 
+}
 }
 }
 }

@@ -16,7 +16,6 @@ Nothing.
 GRASS GIS uses a system of mapsets.
 }
 \examples{
-
 \dontrun{
 
 # Get GRASS installation

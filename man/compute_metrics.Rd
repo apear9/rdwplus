@@ -36,7 +36,9 @@ A \code{data.frame} object, which is a table with rows corresponding to those fr
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -81,6 +83,7 @@ lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
                               streams = "streams_rast.tif")
 
 print(lu_metrics)
+}
 }
 }
 }

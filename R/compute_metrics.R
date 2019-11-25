@@ -13,8 +13,9 @@
 #' @return A \code{data.frame} object, which is a table with rows corresponding to those from the \code{sites} argument plus columns for each combination of land use and metric type. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -60,6 +61,7 @@
 #'                               streams = "streams_rast.tif")
 #' 
 #' print(lu_metrics)
+#' }
 #' }
 #' }
 #' @export

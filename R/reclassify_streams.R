@@ -5,8 +5,9 @@
 #' @param out_type Either 'binary', 'unary', or 'none'. See the Description above.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @return Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -36,8 +37,9 @@
 #' plot_GRASS("streams_unary.tif", col = topo.colors(2), main = "Unary Streams")
 #' plot_GRASS("streams_none.tif", col = topo.colors(2), main = "Null (none) Streams")
 #' 
-#'}
-#'}
+#' }
+#' }
+#' }
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){
   

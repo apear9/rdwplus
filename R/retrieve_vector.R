@@ -5,8 +5,9 @@
 #' @param overwrite A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{v.out.ogr}.
 #' @return Nothing.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -26,6 +27,7 @@
 #' ## Retrieve raster 
 #' retrieve_vector("streams", out_layer = "retrieved_streams.shp", overwrite = TRUE)
 #' 
+#' }
 #' }
 #' }
 #' @export

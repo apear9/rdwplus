@@ -6,8 +6,10 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.import}.
 #' @return A vector of raster layer names in the GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
+#' if(!check_running()){
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' if(.Platform$OS.type == "windows"){
 #'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
@@ -16,6 +18,9 @@
 #' }
 #' initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 #' raster_to_mapset(dem)
+#' 
+#' }
+#' }
 #' }
 #' @export
 raster_to_mapset <- function(rasters, as_integer = rep(FALSE, length(rasters)), overwrite = FALSE, max_memory = 300, ...){

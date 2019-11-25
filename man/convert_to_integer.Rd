@@ -16,7 +16,9 @@ Nothing. A raster with the same name as \code{x} (it may overwrite it) but witho
 Given a raster in float, double or any other format, this function will convert it to integer format. This can be important because it is often an unstated requirement of GRASS modules such as the one for zonal statistics.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -39,6 +41,7 @@ rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 
 ## Convert to integer
 convert_to_integer("streams_rast.tif")
+}
 }
 }
 }

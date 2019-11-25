@@ -31,7 +31,9 @@ Nothing. Note that a shapefile of snapped survey sites will be written to the fi
 This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -66,6 +68,7 @@ derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", flow_acc = "facc.tif", 
 ## Snap sites to pour points (based on flow accumulation)
 snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, out = "snapsite.shp", overwrite = TRUE)
 
+}
 }
 }
 }

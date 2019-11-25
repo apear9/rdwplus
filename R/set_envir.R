@@ -2,8 +2,9 @@
 #' @description This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent. 
 #' @param layer A \code{Raster*} object or the file path to a GIS layer that should be used to set environment parameters such as cell size, extent, etc.
 #' @return Nothing. Displays current environment settings.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -20,6 +21,8 @@
 #' set_envir(dem)
 #' 
 #' gmeta()
+#' 
+#' }
 #' }
 #' }
 #' @export

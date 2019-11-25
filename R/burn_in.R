@@ -6,8 +6,9 @@
 #' @param burn The magnitude of the drainage reinforcement in elevation units. Defaults to \code{10} elevation units.
 #' @param overwrite A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.
 #' @return Nothing. A raster with the name \code{out} will be written to the current GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples\donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -34,6 +35,7 @@
 #' ## Plot
 #' plot_GRASS("dem_burn", col = topo.colors(10))
 #' 
+#' }
 #' }
 #' }
 #' @export 

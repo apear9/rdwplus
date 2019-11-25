@@ -4,8 +4,9 @@
 #' @param out The file name of the output outlet raster in the current GRASS mapset.
 #' @param overwrite Whether the output files should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @return Nothing.
-#' @examples 
-#' \donttest{
+#' @examples\donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -30,6 +31,7 @@
 #' ## Plot
 #' plot_GRASS("dem.tif", col = topo.colors(15))
 #' plot_GRASS("coords", col = "red", add = TRUE)
+#' }
 #' }
 #' }
 #' @export

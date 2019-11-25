@@ -16,8 +16,9 @@
 #'     \item "verbose": Lots of module output.
 #'     \item "quiet": Barely any module output.
 #' }
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -49,6 +50,7 @@
 #' 
 #' ## Plot
 #' plot_GRASS("dem_fill.tif", col = topo.colors(15))
+#' }
 #' }
 #' }
 #' @export

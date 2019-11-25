@@ -22,7 +22,9 @@ Nothing.
 This function writes a GRASS mapset vector layer (like a shapefile) to file.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -42,6 +44,7 @@ vector_to_mapset(vectors = stream_shp)
 ## Retrieve raster 
 retrieve_vector("streams", out_layer = "retrieved_streams.shp", overwrite = TRUE)
 
+}
 }
 }
 }

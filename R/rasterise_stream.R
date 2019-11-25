@@ -6,8 +6,9 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{v.to.rast}.
 #' @return Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -30,6 +31,8 @@
 #' 
 #' ## Plot
 #' plot_GRASS("streams_rast.tif", col = topo.colors(2))
+#' 
+#' }
 #' }
 #' }
 #' @export

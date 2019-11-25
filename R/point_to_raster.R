@@ -5,8 +5,9 @@
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing. A file called \code{out} will be created in the current GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -29,6 +30,7 @@
 #' ## Check conversion success
 #' vibe_check()
 #' 
+#' }
 #' }
 #' }
 #' @export

@@ -16,7 +16,9 @@ Nothing. Displays current environment settings.
 This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -33,6 +35,8 @@ dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 set_envir(dem)
 
 gmeta()
+
+}
 }
 }
 }

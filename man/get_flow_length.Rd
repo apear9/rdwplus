@@ -27,7 +27,9 @@ Nothing. A file with the name \code{out} will be written to GRASS's current work
 Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -81,6 +83,7 @@ overwrite = TRUE)
 ## Plot 
 plot_GRASS(current_flow_out, col = topo.colors(15))
 
+}
 }
 }
 }

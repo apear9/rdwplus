@@ -35,7 +35,9 @@ The following flags may be supplied (as strings):
 }
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -67,6 +69,7 @@ fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRU
 
 ## Plot
 plot_GRASS("dem_fill.tif", col = topo.colors(15))
+}
 }
 }
 }

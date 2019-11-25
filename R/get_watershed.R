@@ -8,8 +8,9 @@
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset. 
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -61,6 +62,7 @@
 #' plot_GRASS("streams_rast.tif", col = "white", add = TRUE)
 #' plot_GRASS("sites_rast.tif", col = "red", add = TRUE)
 #' 
+#' }
 #' }
 #' }
 #' @export

@@ -9,8 +9,9 @@
 #' @param use_sp Logical to use 'sf' or 'stars' classes for vector objects. Defaults to \code{TRUE} to use 'stars' class.
 #' @param ... Additional arguments to \code{r.stream.snap}.
 #' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -45,6 +46,7 @@
 #' ## Snap sites to pour points (based on flow accumulation)
 #' snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, out = "snapsite.shp", overwrite = TRUE)
 #' 
+#' }
 #' }
 #' }
 #' @export 

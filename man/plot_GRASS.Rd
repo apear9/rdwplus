@@ -20,7 +20,9 @@ Nothing.
 Given the name of a raster in the current GRASS mapset, this function will plot it as a \code{RasterLayer} object.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -52,6 +54,7 @@ plot_GRASS("sites_rast.tif", col = heat.colors(1), add = TRUE)
 plot_GRASS("landuse.tif", col = topo.colors(2))
 plot_GRASS("streams_rast.tif", col = heat.colors(1), add = TRUE)
 
+}
 }
 }
 }

@@ -4,8 +4,9 @@
 #' @param out File path for the result to be written.
 #' @param overwrite A logical indicating whether the outputs of this function should be allowed to overwrite existing files.
 #' @return Nothing. A file with the name \code{basename(out)} will be created in the current GRASS mapset. 
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -68,6 +69,7 @@
 #' ## Plot
 #' plot_GRASS(iEDO_distance)
 #' 
+#' }
 #' }
 #' }
 #' @export

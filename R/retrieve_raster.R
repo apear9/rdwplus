@@ -5,8 +5,9 @@
 #' @param overwrite A logical indicating whether the output from this function should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{r.out.gdal}.
 #' @return Nothing.
-#' @examples 
-#' \donttest{
+#' @examples \donttest{ 
+#' \dontrun{ 
+#' 
 #' if(!check_running()){
 #' ## Initialise session
 #' if(.Platform$OS.type == "windows"){
@@ -25,6 +26,7 @@
 #' ## Retrieve raster 
 #' retrieve_raster("dem.tif", out_layer = "retrieved_dem.tif", overwrite = TRUE)
 #' 
+#' }
 #' }
 #' }
 #' @export

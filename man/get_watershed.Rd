@@ -29,7 +29,9 @@ Nothing. A raster file with the name \code{out} may be written to the current wo
 This function delineates a watershed around the \code{i}th site from a set of survey sites.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -81,6 +83,7 @@ plot_GRASS(current_watershed, col = topo.colors(2))
 plot_GRASS("streams_rast.tif", col = "white", add = TRUE)
 plot_GRASS("sites_rast.tif", col = "red", add = TRUE)
 
+}
 }
 }
 }

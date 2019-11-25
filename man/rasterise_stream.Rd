@@ -25,7 +25,9 @@ Nothing. A file will be written to \code{out}. A raster with the name \code{base
 Given a shapefile of lines representing the channels of a stream network, this function will return a rasterised version of the shapefile. The raster will have the parameters of the current GRASS mapset.
 }
 \examples{
-\donttest{
+\donttest{ 
+\dontrun{ 
+
 if(!check_running()){
 ## Initialise session
 if(.Platform$OS.type == "windows"){
@@ -48,6 +50,8 @@ rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 
 ## Plot
 plot_GRASS("streams_rast.tif", col = topo.colors(2))
+
+}
 }
 }
 }
