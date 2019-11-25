@@ -4,6 +4,34 @@
 #' @param out The file name of the output outlet raster in the current GRASS mapset.
 #' @param overwrite Whether the output files should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @return Nothing.
+#' @examples 
+#' \donttest{
+#' if(!check_running()){
+#' ## Initialise session
+#' if(.Platform$OS.type == "windows"){
+#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' } else {
+#'   my_grass <- "/usr/lib/grass76/"
+#' }
+#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' 
+#' ## Load data set
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' 
+#' set_envir(dem)
+#' 
+#' raster_to_mapset(dem)
+#' 
+#' coord_df <-  c(1098671, 6924794)
+#' 
+#' ## Convert to integer
+#' coord_to_raster(outlet = coord_df, out = "coords", overwrite = TRUE)
+#' 
+#' ## Plot
+#' plot_GRASS("dem.tif", col = topo.colors(15))
+#' plot_GRASS("coords", col = "red", add = TRUE)
+#' }
+#' }
 #' @export
 coord_to_raster <- function(outlet, out, overwrite = FALSE){
   
