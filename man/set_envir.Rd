@@ -15,3 +15,24 @@ Nothing. Displays current environment settings.
 \description{
 This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent.
 }
+\examples{
+\donttest{
+if(!check_running()){
+## Initialise session
+if(.Platform$OS.type == "windows"){
+  my_grass <- "C:/Program Files/GRASS GIS 7.6"
+} else {
+  my_grass <- "/usr/lib/grass76/"
+}
+initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+
+## Load data set
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+
+## Set environment 
+set_envir(dem)
+
+gmeta()
+}
+}
+}
