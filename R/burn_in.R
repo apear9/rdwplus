@@ -10,8 +10,11 @@
 #' \donttest{
 #' if(!check_running()){
 #' ## Initialise session
-#' # my_grass <- search_for_grass()[1]
-#' my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' if(.Platform$OS.type == "windows"){
+#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' } else {
+#'   my_grass <- "/usr/lib/grass76/"
+#' }
 #' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
 #' ## Load data set
