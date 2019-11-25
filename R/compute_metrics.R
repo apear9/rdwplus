@@ -14,6 +14,7 @@
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @examples 
+#' \donttest{
 #' if(!check_running()){
 #' ## Initialise session
 #' my_grass <- search_for_grass()[1]
@@ -55,6 +56,7 @@
 #'                               streams = "streams_rast.tif")
 #' 
 #' print(lu_metrics)
+#' }
 #' }
 #' @export
 compute_metrics <- function(
