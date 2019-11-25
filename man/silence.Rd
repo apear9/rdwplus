@@ -15,3 +15,9 @@ A logical indicating the current status of the option.
 \description{
 Prevents the printing GRASS warnings, etc. Use with extreme caution. This is only helpful IF AND ONLY IF you are SURE that any printed messages, warnings, and errors are spurious.
 }
+\examples{
+\donttest{
+silence(TRUE)
+silence(FALSE)
+}
+}

@@ -2,7 +2,9 @@
 #' @description This function takes no inputs. It prints a list of maps in the current GRASS mapset.
 #' @return Nothing.
 #' @examples
+#' \donttest{
 #' vibe_check()
+#' }
 #' @export 
 vibe_check <- function(){
   
