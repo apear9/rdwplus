@@ -5,6 +5,32 @@
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @return Nothing. A file called \code{out} will be created in the current GRASS mapset.
+#' @examples 
+#' \donttest{
+#' if(!check_running()){
+#' ## Initialise session
+#' if(.Platform$OS.type == "windows"){
+#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' } else {
+#'   my_grass <- "/usr/lib/grass76/"
+#' }
+#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' 
+#' ## Load data set
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' sites <- system.file("extdata", "site.shp", package = "rdwplus")
+#' 
+#' set_envir(dem)
+#' vector_to_mapset(vectors = sites)
+#' 
+#' ## Point to raster
+#' point_to_raster(outlets = "site", out = "sites_rast.tif", overwrite = TRUE)
+#' 
+#' ## Check conversion success
+#' vibe_check()
+#' 
+#' }
+#' }
 #' @export
 point_to_raster <- function(
   outlets,
