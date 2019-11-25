@@ -26,3 +26,40 @@ Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a v
 \description{
 Derive a set of stream lines from a flow accumulation raster.
 }
+\examples{
+\donttest{
+if(!check_running()){
+## Initialise session
+if(.Platform$OS.type == "windows"){
+  my_grass <- "C:/Program Files/GRASS GIS 7.6"
+} else {
+  my_grass <- "/usr/lib/grass76/"
+}
+initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+
+## Load data set
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
+
+set_envir(dem)
+raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
+vector_to_mapset(vectors = c(stream_shp))
+
+## Create binary stream
+rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
+
+## Burn dem 
+burn_in(dem = "dem.tif", stream = "streams_binary.tif", out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+
+## Fill sinks
+fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+
+## Derive flow accumulation and direction grids
+derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",  flow_acc = "facc.tif", overwrite = TRUE)
+
+## Derive streams 
+derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
+}
+}
+}

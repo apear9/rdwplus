@@ -39,13 +39,11 @@ initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
 ## Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
-sites <- system.file("extdata", "site.shp", package = "rdwplus")
 stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
 set_envir(dem)
-raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE))
-vector_to_mapset(vectors = c(sites, stream_shp))
+raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
+vector_to_mapset(vectors = c(stream_shp))
 
 ## Create binary stream
 rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
