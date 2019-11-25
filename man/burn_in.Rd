@@ -24,6 +24,7 @@ Nothing. A raster with the name \code{out} will be written to the current GRASS 
 Burning-in streams (also called 'drainage reinforcement') ensures flow direction and accumulation grids based on the digital elevation model will correctly identify the stream path.
 }
 \examples{
+\donttest{
 if(!check_running()){
 ## Initialise session
 my_grass <- search_for_grass()[1]
@@ -46,5 +47,6 @@ burn_in(dem = "dem.tif", stream = "streams_binary", out = "dem_burn", burn = 10,
 ## Plot
 plot_GRASS("dem_burn", col = topo.colors(10))
 
+}
 }
 }
