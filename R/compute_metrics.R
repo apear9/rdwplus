@@ -17,7 +17,8 @@
 #' \donttest{
 #' if(!check_running()){
 #' ## Initialise session
-#' my_grass <- search_for_grass()[1]
+#' # my_grass <- search_for_grass()[1]
+#' my_grass <- "C:/Program Files/GRASS GIS 7.6"
 #' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
 #' ## Load data set
