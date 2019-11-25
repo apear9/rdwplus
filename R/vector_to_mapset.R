@@ -4,6 +4,25 @@
 #' @param overwrite A logical indicating whether the overwrite flag should be used. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{v.import}.
 #' @return A vector of vector layer names in the GRASS mapset.
+#' @examples 
+#' \donttest{
+#' if(!check_running()){
+#' ## Initialise session
+#' if(.Platform$OS.type == "windows"){
+#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' } else {
+#'   my_grass <- "/usr/lib/grass76/"
+#' }
+#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' 
+#' ## Load data set
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
+#' 
+#' set_envir(dem)
+#' vector_to_mapset(vectors = stream_shp)
+#' }
+#' }
 #' @export
 vector_to_mapset <- function(vectors, overwrite = FALSE, ...){
   
