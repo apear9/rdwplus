@@ -13,6 +13,8 @@ In Rd files:
 
 * Added executable examples.
 
+Note that although the request was to "Please add small executable examples in your Rd-files to illustrate the use of the exported function but also enable automatic testing", we have set our examples to not run. This is because almost all the examples require an installation of GRASS GIS 7.6, which CRAN does not have. Allowing the examples to run would simply mean that they all report errors due to the missing GRASS GIS installation. There is no point in that.
+
 ## Test environments
 
 ## R CMD check results
