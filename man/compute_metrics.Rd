@@ -35,6 +35,49 @@ A \code{data.frame} object, which is a table with rows corresponding to those fr
 \description{
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 }
+\examples{
+if(!check_running()){
+## Initialise session
+my_grass <- search_for_grass()[1]
+initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+
+## Load data set
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
+sites <- system.file("extdata", "site.shp", package = "rdwplus")
+stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
+
+set_envir(dem)
+raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE))
+vector_to_mapset(vectors = c(sites, stream_shp))
+
+## Create binary stream
+rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
+
+## Burn dem 
+burn_in(dem = "dem.tif", stream = "streams_binary.tif", out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+
+## Fill sinks
+fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+
+## Derive flow accumulation and direction grids
+derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", flow_acc = "facc.tif", overwrite = TRUE)
+
+## Snap sites to pour points (based on flow accumulation)
+snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, out = "snapsite.shp", overwrite = TRUE)
+
+lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), 
+                              landuse = "landuse.tif",
+                              sites = "snapsite.shp", 
+                              elevation = "dem_fill.tif", 
+                              flow_dir = "fdir.tif", 
+                              flow_acc = "facc.tif", 
+                              streams = "streams_rast.tif")
+
+print(lu_metrics)
+}
+}
 \references{
 Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.
 }
