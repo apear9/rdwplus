@@ -17,3 +17,10 @@ Nothing.
 \description{
 Given a path to a file raster, this function will plot it as a \code{RasterLayer} object.
 }
+\examples{
+## Load data set file path
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+
+## Plot
+plot_layer(dem)
+}

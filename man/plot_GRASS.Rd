@@ -49,7 +49,7 @@ par(mfrow = c(1,2))
 plot_GRASS("dem.tif", col = topo.colors(15))
 plot_GRASS("sites_rast.tif", col = heat.colors(1), add = TRUE)
 
-plot_GRASS("landuse.tif", col = topo.colors(15))
+plot_GRASS("landuse.tif", col = topo.colors(2))
 plot_GRASS("streams_rast.tif", col = heat.colors(1), add = TRUE)
 
 }

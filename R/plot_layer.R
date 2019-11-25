@@ -3,6 +3,12 @@
 #' @param x A file path to a raster stored on disk. Can also be a \code{Raster*} object.
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
+#' @examples 
+#' ## Load data set file path
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' 
+#' ## Plot
+#' plot_layer(dem)
 #' @export
 plot_layer <- function(x, ...){
   
