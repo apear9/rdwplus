@@ -21,7 +21,6 @@
 #' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 #' 
 #' set_envir(dem)
-#' raster_to_mapset(rasters = dem, as_integer = FALSE)
 #' vector_to_mapset(vectors =  stream_shp)
 #' 
 #' ## Create binary stream
