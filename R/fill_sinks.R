@@ -24,7 +24,7 @@
 #' #} else {
 #' #   my_grass <- "/usr/lib/grass76/"
 #' #}
-#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
 #' # Will only run if GRASS is running
 #' if(check_running()){
