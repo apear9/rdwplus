@@ -27,63 +27,65 @@ Nothing. A file with the name \code{out} will be written to GRASS's current work
 Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM.
 }
 \examples{
-\donttest{ 
-\dontrun{ 
-
-if(!check_running()){
+## Uncomment and run the following if you haven't already set up a GRASS session
 ## Initialise session
-if(.Platform$OS.type == "windows"){
-  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-} else {
-  my_grass <- "/usr/lib/grass76/"
-}
-initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+# if(.Platform$OS.type == "windows"){
+#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+# } else {
+#   my_grass <- "/usr/lib/grass76/"
+# }
+#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
-## Load data set
+# Will only run if GRASS is running
+if(check_running()){
+# Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 sites <- system.file("extdata", "site.shp", package = "rdwplus")
 stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
+# Set environment parameters and import data to GRASS
 set_envir(dem)
 raster_to_mapset(rasters = dem, as_integer = FALSE)
 vector_to_mapset(vectors = c(sites, stream_shp))
 
-## Create binary stream
+# Create binary stream
 rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
-reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
+reclassify_streams("streams_rast.tif", "streams_binary.tif", 
+out_type = "binary", overwrite = TRUE)
 
-## Burn dem 
-burn_in(dem = "dem.tif", stream = "streams_binary.tif", out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+# Burn dem 
+burn_in(dem = "dem.tif", stream = "streams_binary.tif",
+ out = "dem_burn.tif", burn = 10, overwrite = TRUE)
 
-## Fill sinks
+# Fill sinks
 fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
 
-## Derive flow accumulation and direction grids
-derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", flow_acc = "facc.tif", overwrite = TRUE)
+# Derive flow accumulation and direction grids
+derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",
+ flow_acc = "facc.tif", overwrite = TRUE)
 
-## Snap sites to pour points (based on flow accumulation)
-snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, out = "snapsite.shp", overwrite = TRUE)
+# Snap sites to pour points (based on flow accumulation)
+snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
+out = "snapsite.shp", overwrite = TRUE)
 
-## Get pour points / outlets as raster cells 
+# Get pour points / outlets as raster cells 
 rowID <- 1
 site_coords <- readVECT("site")
 coords_i <- site_coords@coords[rowID, 1:2]
 coords_i_out <- paste0("pour_point_", rowID)
 coord_to_raster(coords_i, coords_i_out, TRUE)
 
-## Name for flow length raster
+# Name for flow length raster
 current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
 
+# Create it
 get_flow_length(str_rast = coords_i_out, 
 flow_dir = "fdir.tif", 
 out = current_flow_out, 
 to_outlet = TRUE, 
 overwrite = TRUE)
 
-## Plot 
+# Plot 
 plot_GRASS(current_flow_out, col = topo.colors(15))
-
-}
-}
 }
 }
