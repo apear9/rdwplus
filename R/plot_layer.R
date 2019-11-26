@@ -4,11 +4,12 @@
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
 #' @examples 
-#' ## Load data set file path
+#' \dontrun{
+#' # Load data set file path
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-#' 
-#' ## Plot
+#' # Plot
 #' plot_layer(dem)
+#' }
 #' @export
 plot_layer <- function(x, ...){
   
