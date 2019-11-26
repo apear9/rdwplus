@@ -13,5 +13,5 @@ Nothing.
 This function takes no inputs. It prints a list of maps in the current GRASS mapset.
 }
 \examples{
-if(check_running) vibe_check()
+if(check_running()) vibe_check()
 }
