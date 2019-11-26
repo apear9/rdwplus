@@ -30,6 +30,7 @@ This function is needed to compute Euclidean distance from a feature of interest
 #}
 #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
+# Will only run if a GRASS session is initialised
 if(check_running()){
 # Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")

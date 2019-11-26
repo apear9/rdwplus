@@ -34,6 +34,7 @@ Burning-in streams (also called 'drainage reinforcement') ensures flow direction
 #}
 #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
+# Will only run if a GRASS session is initialised
 if(check_running()){
 # Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")

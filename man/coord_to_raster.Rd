@@ -20,34 +20,34 @@ Nothing.
 Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
 }
 \examples{
-\donttest{ 
-\dontrun{ 
-
-if(!check_running()){
+## Uncomment and run the following if you haven't already got a
+## running session of GRASS 
 ## Initialise session
-if(.Platform$OS.type == "windows"){
-  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-} else {
-  my_grass <- "/usr/lib/grass76/"
-}
-initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#if(.Platform$OS.type == "windows"){
+#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#} else {
+#   my_grass <- "/usr/lib/grass76/"
+#}
+#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
-## Load data set
+if(check_running()){
+# Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 
+# Set environment parameters
 set_envir(dem)
 
+# Read in data
 raster_to_mapset(dem)
 
+# Set coordinates to rasterise
 coord_df <-  c(1098671, 6924794)
 
-## Convert to integer
+# Convert to raster
 coord_to_raster(outlet = coord_df, out = "coords", overwrite = TRUE)
 
-## Plot
+# Plot
 plot_GRASS("dem.tif", col = topo.colors(15))
 plot_GRASS("coords", col = "red", add = TRUE)
-}
-}
 }
 }
