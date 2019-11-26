@@ -1,21 +1,60 @@
 # CRAN submission 25-11-2019
 
+THIS IS A RESUBMISSION. 
+
+## Feedback from CRAN maintainer
+
+"
+Please shorten the title to a maximum of 65 characters.
+Acronyms can be used on their own in the title as long as they are
+explained in the description field.
+
+Please write references in the form
+authors (year) <doi:...>
+authors (year) <arXiv:...>f
+authors (year, ISBN:...)
+or if those are not available: authors (year) <https:...>
+with no space after 'doi:', 'arXiv:', 'https:' and angle brackets for
+auto-linking.
+
+Please add small executable examples in your Rd-files to illustrate the
+use of the exported function but also enable automatic testing.
+
+Please fix and resubmit, and document what was changed in the submission
+comments.
+"
+
 ## Changes
 
-THIS IS A RESUBMISSION. Here are the changes that were made in accordance with CRAN maintainers' requests:
+Here are the changes that were made in accordance with CRAN maintainers' requests:
 
 In the DESCRIPTION file:
 
 * Shortened title to under 65 characters. Now it is 34 characters long.
+* The acronym IDW-PLUS is now explained in the description field.
 * Changed citation style to authors (year) <doi:...>
 
 In Rd files:
 
-* Added executable examples.
+* Added executable examples to exported functions.
 
-Note that although the request was to "Please add small executable examples in your Rd-files to illustrate the use of the exported function but also enable automatic testing", we have set our examples to not run. This is because almost all the examples require an installation of GRASS GIS 7.6, which CRAN does not have. Allowing the examples to run would simply mean that they all report errors due to the missing GRASS GIS installation. There is no point in that.
+Note that the request was 
+
+"Please add small executable examples in your Rd-files to illustrate the use of the exported function but also enable automatic testing".
+
+We have indeed written executable examples. However, on the 'automatic testing' note, we don't think this is possible. 
+Very few of our functions can be run without a valid installation of GRASS GIS 7.6 on the user's computer. 
+CRAN checks performed on computers without GRASS GIS 7.6 will therefore always fail if we allow examples to be executed during CRAN checks and other testing. 
+We tried to do CRAN checks on the testing environments listed below with the examples set to run and we came across this issue. 
+To avoid this issue, we have ...
+Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on local R installs that the examples run without error. 
 
 ## Test environments
+
+* local Windows install, R 3.6.1
+* Ubuntu Linux 16.04 (release)
+* Fedora Linux (devel)
+* Windows Server 2008 R2 SP1 (devel)
 
 ## R CMD check results
 
