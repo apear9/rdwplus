@@ -22,32 +22,31 @@ Nothing. A file called \code{out} will be created in the current GRASS mapset.
 Given a shapefile of outlet(s), this function will convert its contents into a raster.
 }
 \examples{
-\donttest{ 
-\dontrun{ 
-
-if(!check_running()){
+## Uncomment and run the following if you haven't already set up a GRASS session
 ## Initialise session
-if(.Platform$OS.type == "windows"){
-  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-} else {
-  my_grass <- "/usr/lib/grass76/"
-}
-initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#if(.Platform$OS.type == "windows"){
+#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#} else {
+#   my_grass <- "/usr/lib/grass76/"
+#}
+#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
-## Load data set
+# Will only run if GRASS is running
+if(check_running()){
+
+# Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 sites <- system.file("extdata", "site.shp", package = "rdwplus")
 
+# Set environment parameters and import data to GRASS
 set_envir(dem)
 vector_to_mapset(vectors = sites)
 
-## Point to raster
+# Point to raster
 point_to_raster(outlets = "site", out = "sites_rast.tif", overwrite = TRUE)
 
-## Check conversion success
+# Check conversion success
 vibe_check()
 
-}
-}
 }
 }

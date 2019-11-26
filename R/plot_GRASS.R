@@ -4,42 +4,46 @@
 #' @param out_x Optional. If supplied, the function makes a call to \code{\link{retrieve_raster}} and writes out the raster to the file path \code{out_x}. Otherwise the function will write the layer to \code{tempdir}.
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
-#' @examples \donttest{ 
-#' \dontrun{ 
-#' 
-#' if(!check_running()){
+#' @examples
+#' ## Uncomment and run the following if you haven't already set up a session of GRASS
 #' ## Initialise session
-#' if(.Platform$OS.type == "windows"){
-#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' } else {
-#'   my_grass <- "/usr/lib/grass76/"
-#' }
-#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' #if(.Platform$OS.type == "windows"){
+#' #  my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' #} else {
+#' #   my_grass <- "/usr/lib/grass76/"
+#' #}
+#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
-#' ## Load data set
+#' # Will only run if GRASS is running
+#' if(check_running()){
+#' 
+#' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
 #' sites <- system.file("extdata", "site.shp", package = "rdwplus")
 #' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 #' 
+#' # Set environment parameters and import data to GRASS
 #' set_envir(dem)
 #' raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE))
 #' vector_to_mapset(vectors = c(sites, stream_shp))
 #' 
-#' ## Rasterise streams and sites
+#' # Rasterise streams and sites
 #' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 #' point_to_raster(outlets = "site", out = "sites_rast.tif", overwrite = TRUE)
 #' 
-#' ## Plot
+#' # Plot
+#' # Set number 1
 #' par(mfrow = c(1,2))
 #' plot_GRASS("dem.tif", col = topo.colors(15))
 #' plot_GRASS("sites_rast.tif", col = heat.colors(1), add = TRUE)
 #' 
+#' # Set number 2
 #' plot_GRASS("landuse.tif", col = topo.colors(2))
 #' plot_GRASS("streams_rast.tif", col = heat.colors(1), add = TRUE)
 #' 
-#' }
-#' }
+#' # Reset plotting device parameters
+#' par(mfrow = c(1, 1))
 #' }
 #' @export
 plot_GRASS <- function(x, out_x, ...){
