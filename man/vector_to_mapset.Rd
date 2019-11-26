@@ -20,26 +20,27 @@ A vector of vector layer names in the GRASS mapset.
 GRASS can only deal with raster and vector data in a GRASS mapset. This function takes external vectors and imports them into the current GRASS mapset.
 }
 \examples{
-\donttest{ 
-\dontrun{ 
-
-if(!check_running()){
+## Uncomment and run the following if you haven't already set up a GRASS session
 ## Initialise session
-if(.Platform$OS.type == "windows"){
-  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-} else {
-  my_grass <- "/usr/lib/grass76/"
-}
-initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#if(.Platform$OS.type == "windows"){
+#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#} else {
+#   my_grass <- "/usr/lib/grass76/"
+#}
+#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
-## Load data set
+# Will only run if GRASS is running
+if(check_running()){
+
+# Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
+# Set environment parameters
 set_envir(dem)
+
+# Import vector data to mapset
 vector_to_mapset(vectors = stream_shp)
 
-}
-}
 }
 }

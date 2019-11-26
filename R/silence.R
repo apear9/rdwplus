@@ -2,13 +2,12 @@
 #' @description Prevents the printing GRASS warnings, etc. Use with extreme caution. This is only helpful IF AND ONLY IF you are SURE that any printed messages, warnings, and errors are spurious.
 #' @param value A logical indicating whether GRASS messages, warnings, errors should be suppressed. Can be missing, and it is missing by default. Choose "TRUE" or "FALSE".
 #' @return A logical indicating the current status of the option.
-#' @examples \donttest{ 
+#' @examples
 #' \dontrun{ 
 #' 
 #' silence(TRUE)
 #' silence(FALSE)
 #' 
-#' }
 #' }
 #' @export
 silence <- function(value){

@@ -1,13 +1,8 @@
 #' A function to print current vectors and rasters in the mapset.
 #' @description This function takes no inputs. It prints a list of maps in the current GRASS mapset.
 #' @return Nothing.
-#' @examples \donttest{ 
-#' \dontrun{ 
-#' 
-#' vibe_check()
-#' 
-#' }
-#' }
+#' @examples 
+#' if(check_running) vibe_check()
 #' @export 
 vibe_check <- function(){
   
