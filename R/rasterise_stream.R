@@ -6,34 +6,32 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{v.to.rast}.
 #' @return Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
-#' @examples \donttest{ 
-#' \dontrun{ 
-#' 
-#' if(!check_running()){
+#' @examples
+#' ## Uncomment and run the following if you haven't already set up a GRASS session
 #' ## Initialise session
-#' if(.Platform$OS.type == "windows"){
-#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' } else {
-#'   my_grass <- "/usr/lib/grass76/"
-#' }
-#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' #if(.Platform$OS.type == "windows"){
+#' #  my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' #} else {
+#' #   my_grass <- "/usr/lib/grass76/"
+#' #}
+#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
-#' ## Load data set
+#' # Will only run if GRASS is running
+#' if(check_running()){
+#' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 #' 
+#' # Set environment parameters and import data to GRASS
 #' set_envir(dem)
-#' 
 #' vector_to_mapset(vectors =  stream_shp)
 #' 
-#' ## Create rasterised stream
+#' # Create rasterised stream
 #' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 #' 
-#' ## Plot
+#' # Plot
 #' plot_GRASS("streams_rast.tif", col = topo.colors(2))
 #' 
-#' }
-#' }
 #' }
 #' @export
 rasterise_stream <- function(streams, out, overwrite = FALSE, max_memory = 300, ...){

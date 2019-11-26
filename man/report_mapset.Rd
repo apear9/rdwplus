@@ -18,18 +18,17 @@ GRASS GIS uses a system of mapsets.
 \examples{
 \dontrun{
 
-## Get GRASS installation
+# Get GRASS installation
 my_grass <- search_for_grass()[1]
 
-## Create GRASS session
+# Create GRASS session
 initGRASS(my_grass)
 
-## Ask for current mapset
+# Ask for current mapset
 report_mapset()
 
-## Ask for possible mapsets
+# Ask for possible mapsets
 report_mapset('possible')
 
 }
-
 }

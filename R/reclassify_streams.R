@@ -5,40 +5,40 @@
 #' @param out_type Either 'binary', 'unary', or 'none'. See the Description above.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @return Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
-#' @examples \donttest{ 
-#' \dontrun{ 
-#' 
-#' if(!check_running()){
+#' @examples
+#' ## Uncomment and run the following if you haven't already set up a session of GRASS
 #' ## Initialise session
-#' if(.Platform$OS.type == "windows"){
-#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' } else {
-#'   my_grass <- "/usr/lib/grass76/"
-#' }
-#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' #if(.Platform$OS.type == "windows"){
+#' #   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' # } else {
+#' #   my_grass <- "/usr/lib/grass76/"
+#' #}
+#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
-#' ## Load data set
+#' # Will only run if GRASS is running
+#' if(check_running()){
+#' 
+#' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 #' 
+#' # Set environment parameters and import data
 #' set_envir(dem)
 #' vector_to_mapset(vectors =  stream_shp)
 #' 
-#' ## Create binary stream
+#' # Create binary stream
 #' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_unary.tif", out_type = "unary", overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_none.tif", out_type = "none", overwrite = TRUE)
 #' 
-#' ## Plot
+#' # Plot
 #' par(mfrow = c(2,2))
 #' plot_GRASS("streams_rast.tif", col = topo.colors(2), main = "Rasterized Streams")
 #' plot_GRASS("streams_binary.tif", col = topo.colors(2), main = "Binary Streams")
 #' plot_GRASS("streams_unary.tif", col = topo.colors(2), main = "Unary Streams")
 #' plot_GRASS("streams_none.tif", col = topo.colors(2), main = "Null (none) Streams")
-#' 
-#' }
-#' }
+#' par(mfrow = c(1, 1))
 #' }
 #' @export
 reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FALSE){

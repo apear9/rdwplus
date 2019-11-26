@@ -22,28 +22,27 @@ Nothing.
 This function writes a GRASS mapset raster to file.
 }
 \examples{
-\donttest{ 
-\dontrun{ 
-
-if(!check_running()){
+## Uncomment and run the following if you haven't already set up a GRASS session
 ## Initialise session
-if(.Platform$OS.type == "windows"){
-  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-} else {
-  my_grass <- "/usr/lib/grass76/"
-}
-initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#if(.Platform$OS.type == "windows"){
+#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#} else {
+#   my_grass <- "/usr/lib/grass76/"
+#}
+#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 
-## Load data set
+# Will only run if GRASS is running
+if(check_running()){
+
+# Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 
+# Set environment parameters and import data to GRASS
 set_envir(dem)
 raster_to_mapset(rasters = dem, as_integer = FALSE)
 
-## Retrieve raster 
+# Retrieve raster 
 retrieve_raster("dem.tif", out_layer = "retrieved_dem.tif", overwrite = TRUE)
 
-}
-}
 }
 }

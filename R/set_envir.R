@@ -2,28 +2,28 @@
 #' @description This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent. 
 #' @param layer A \code{Raster*} object or the file path to a GIS layer that should be used to set environment parameters such as cell size, extent, etc.
 #' @return Nothing. Displays current environment settings.
-#' @examples \donttest{ 
-#' \dontrun{ 
-#' 
-#' if(!check_running()){
+#' @examples 
+#' ## Uncomment and run the following if you haven't already set up a GRASS session
 #' ## Initialise session
-#' if(.Platform$OS.type == "windows"){
-#'   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' } else {
-#'   my_grass <- "/usr/lib/grass76/"
-#' }
-#' initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
+#' #if(.Platform$OS.type == "windows"){
+#' #   my_grass <- "C:/Program Files/GRASS GIS 7.6"
+#' #} else {
+#' #   my_grass <- "/usr/lib/grass76/"
+#' #}
+#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
 #' 
-#' ## Load data set
+#' # Will only run if GRASS is running
+#' if(check_running()){
+#' 
+#' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' 
-#' ## Set environment 
+#' # Set environment 
 #' set_envir(dem)
 #' 
+#' # Get environment metadata
 #' gmeta()
 #' 
-#' }
-#' }
 #' }
 #' @export
 set_envir <- function(layer){
