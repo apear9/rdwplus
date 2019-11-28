@@ -24,8 +24,9 @@
 #' 
 #' # Set environment parameters and import data into GRASS
 #' set_envir(dem)
-#' raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE))
-#' vector_to_mapset(vectors = c(sites, stream_shp))
+#' raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE),
+#' overwrite = TRUE)
+#' vector_to_mapset(vectors = c(sites, stream_shp), overwrite = TRUE)
 #' 
 #' # Create binary stream
 #' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)

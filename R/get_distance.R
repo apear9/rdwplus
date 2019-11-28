@@ -65,7 +65,6 @@
 #' plot_GRASS(iEDO_distance)
 #' 
 #' }
-#' @export
 get_distance <- function(target, out, overwrite = FALSE){
   
   # Check grass is running

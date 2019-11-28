@@ -17,7 +17,7 @@
 #' # Rasterise the streams
 #' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 #' 
-#' ## Convert to integer
+#' # Convert to integer
 #' convert_to_integer("streams_rast.tif")
 #' }
 #' @export
