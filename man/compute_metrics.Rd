@@ -36,16 +36,6 @@ A \code{data.frame} object, which is a table with rows corresponding to those fr
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 }
 \examples{
-## Uncomment and run this if you haven't already set up
-## a GRASS session
-## Initialise session
-# if(.Platform$OS.type == "windows"){
-#  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#  my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
 # Will only run if GRASS is running
 if(check_running()){
 # Load data set

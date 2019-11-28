@@ -7,16 +7,6 @@
 #' @param overwrite A logical indicating whether the file \code{out} should be overwritten in the mapset and on disk. Defaults to \code{FALSE}.
 #' @return Nothing. A raster with the name \code{out} will be written to the current GRASS mapset.
 #' @examples
-#' ## Uncomment and run the following if you don't
-#' ## have a current GRASS session set up.
-#' ## Initialise session
-#' #if(.Platform$OS.type == "windows"){
-#' #   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' #} else {
-#' #   my_grass <- "/usr/lib/grass76/"
-#' #}
-#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-#' 
 #' # Will only run if a GRASS session is initialised
 #' if(check_running()){
 #' # Load data set

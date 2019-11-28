@@ -26,18 +26,9 @@ GRASS can only deal with raster and vector data in a GRASS mapset. This function
 }
 \examples{
  
-
-dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-## Uncomment and run the following to test locally: 
-#if(.Platform$OS.type == "windows"){
-#  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#  my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
-
 # Will only run if a GRASS session is initialised
 if(check_running()){
+   dem <- system.file("extdata", "dem.tif", package = "rdwplus")
    raster_to_mapset(dem)
 }
 }

@@ -20,16 +20,6 @@ Nothing. A file with the name \code{basename(out)} will be created in the curren
 This function is needed to compute Euclidean distance from a feature of interest in a watershed raster.
 }
 \examples{
-## Uncomment the following if you don't already have
-## a GRASS session running.
-## Initialise session
-#if(.Platform$OS.type == "windows"){
-#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#  my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
 # Will only run if a GRASS session is initialised
 if(check_running()){
 # Load data set

@@ -20,16 +20,7 @@ Nothing.
 Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
 }
 \examples{
-## Uncomment and run the following if you haven't already got a
-## running session of GRASS 
-## Initialise session
-#if(.Platform$OS.type == "windows"){
-#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#   my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
+# Will only run if GRASS is running
 if(check_running()){
 # Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")

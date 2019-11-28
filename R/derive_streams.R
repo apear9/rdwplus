@@ -7,17 +7,7 @@
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{r.stream.extract}.
 #' @return Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset. 
-#' @examples 
-#' ## Uncomment and run the following if you haven't already set up
-#' ## a GRASS session
-#' ## Initialise session
-#' #if(.Platform$OS.type == "windows"){
-#' #   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' #} else {
-#' #   my_grass <- "/usr/lib/grass76/"
-#' #}
-#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-#' 
+#' @examples  
 #' # Will only run if GRASS is running
 #' if(check_running()){
 #' # Load data set

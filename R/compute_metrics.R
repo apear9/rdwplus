@@ -14,16 +14,6 @@
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @examples 
-#' ## Uncomment and run this if you haven't already set up
-#' ## a GRASS session
-#' ## Initialise session
-#' # if(.Platform$OS.type == "windows"){
-#' #  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#' #} else {
-#' #  my_grass <- "/usr/lib/grass76/"
-#' #}
-#' #initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-#' 
 #' # Will only run if GRASS is running
 #' if(check_running()){
 #' # Load data set
