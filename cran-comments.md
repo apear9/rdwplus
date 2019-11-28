@@ -26,13 +26,12 @@ comments.
 
 ## Changes
 
-Here are the changes that were made in accordance with CRAN maintainers' requests:
-
 In the DESCRIPTION file:
 
 * Shortened title to under 65 characters. Now it is 34 characters long.
 * The acronym IDW-PLUS is now explained in the description field.
 * Changed citation style to authors (year) <doi:...>
+* Added a Suggests field for the package rgdal. 
 
 In Rd files:
 
@@ -46,8 +45,8 @@ We have indeed written executable examples. However, on the 'automatic testing' 
 Very few of our functions can be run without a valid installation of GRASS GIS 7.6 on the user's computer. 
 CRAN checks performed on computers without GRASS GIS 7.6 will therefore always fail if we allow examples to be executed during CRAN checks and other testing. 
 We tried to do CRAN checks on the testing environments listed below with the examples set to run and we came across this issue. 
-To avoid this issue, we have ...
-Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on local R installs that the examples run without error. 
+To avoid this issue, we have set up the examples such that instructive code blocks are provided but are set only to run if R detects an instance of GRASS is running. 
+Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on Windows 10 with a local R install (3.6.1) that the examples run without error. 
 
 ## Test environments
 
