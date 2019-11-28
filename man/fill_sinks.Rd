@@ -35,15 +35,6 @@ The following flags may be supplied (as strings):
 }
 }
 \examples{
-## Uncomment and run the following if you haven't already set up a GRASS session
-## Initialise session
-#if(.Platform$OS.type == "windows"){
-#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#   my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
 # Will only run if GRASS is running
 if(check_running()){
 # Load data set

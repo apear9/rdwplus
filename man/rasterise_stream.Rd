@@ -25,15 +25,6 @@ Nothing. A file will be written to \code{out}. A raster with the name \code{base
 Given a shapefile of lines representing the channels of a stream network, this function will return a rasterised version of the shapefile. The raster will have the parameters of the current GRASS mapset.
 }
 \examples{
-## Uncomment and run the following if you haven't already set up a GRASS session
-## Initialise session
-#if(.Platform$OS.type == "windows"){
-#  my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#   my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
 # Will only run if GRASS is running
 if(check_running()){
 # Load data set

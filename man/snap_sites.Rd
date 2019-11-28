@@ -31,15 +31,6 @@ Nothing. Note that a shapefile of snapped survey sites will be written to the fi
 This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network.
 }
 \examples{
-## Uncomment and run the following if you haven't already set up a GRASS session
-## Initialise session
-#if(.Platform$OS.type == "windows"){
-#   my_grass <- "C:/Program Files/GRASS GIS 7.6"
-#} else {
-#   my_grass <- "/usr/lib/grass76/"
-#}
-#initGRASS(gisBase = my_grass, override = TRUE, mapset = "PERMANENT")
-
 # Will only run if GRASS is running
 if(check_running()){
 # Load data set
