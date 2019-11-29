@@ -23,7 +23,7 @@ derive_streams(dem, flow_acc, out, min_acc = 1000, min_length = 0,
 \item{...}{Additional arguments to \code{r.stream.extract}.}
 }
 \value{
-Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset.
+Nothing. A vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset.
 }
 \description{
 Derive a set of stream lines from a flow accumulation raster.
@@ -61,6 +61,6 @@ derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",
 flow_acc = "facc.tif", overwrite = TRUE)
 
 # Derive streams 
-derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
+derive_streams(dem = "dem_fill.tif", flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
 }
 }

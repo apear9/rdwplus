@@ -7,7 +7,7 @@
 #' @param min_length The minimum length of a stream segment in cells. Defaults to \code{0}.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Additional arguments to \code{r.stream.extract}.
-#' @return Nothing. A file with the name \code{paste0(out, ".shp")} will be created and a vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset. 
+#' @return Nothing. A vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset. 
 #' @examples  
 #' # Will only run if GRASS is running
 #' if(check_running()){
@@ -40,7 +40,7 @@
 #' flow_acc = "facc.tif", overwrite = TRUE)
 #' 
 #' # Derive streams 
-#' derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
+#' derive_streams(dem = "dem_fill.tif", flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
 #' }
 #' @export
 derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, overwrite = FALSE, ...){
@@ -68,7 +68,7 @@ derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, ov
   )
   
   # Get as shapefile
-  out_shp <- paste0(out, ".shp")
-  retrieve_vector(out_grass, out_shp, overwrite = overwrite)
+  # out_shp <- paste0(out, ".shp")
+  # retrieve_vector(out_grass, out_shp, overwrite = overwrite)
    
 }
