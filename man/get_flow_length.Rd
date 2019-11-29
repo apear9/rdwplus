@@ -24,7 +24,7 @@ get_flow_length(str_rast, flow_dir, out, to_outlet = FALSE,
 Nothing. A file with the name \code{out} will be written to GRASS's current workspace.
 }
 \description{
-Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM.
+Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM. Note that this function calls \code{r.stream.distance}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 }
 \examples{
 # Will only run if GRASS is running

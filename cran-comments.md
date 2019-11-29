@@ -43,6 +43,9 @@ Note that the request was
 
 We have indeed written executable examples for our exported functions. These illustrate how to use our functions. 
 However, on the 'automatic testing' note, we don't think this is possible. Very few of our functions can be run without a valid installation of GRASS GIS 7.6 on the user's computer. 
+Not only that but the function get_flow_length will not execute without a GRASS add-on module called r.stream.distance that must be installed manually from inside GRASS. 
+Similarly for the function fill_sinks with the GRASS add-on module r.hydrodem, and snap_sites with the module r.stream.snap. 
+These reliances on the GRASS GIS add-on modules have been noted in the corresponding Rd files. 
 CRAN checks performed on computers without GRASS GIS 7.6 will therefore always fail if we allow examples to be executed during CRAN checks and other testing. 
 We tried to do CRAN checks on the testing environments listed below with the examples set to run and we came across this issue. 
 To avoid this, we have set up the examples such that instructive code blocks are provided but are set only to run if R detects an instance of GRASS is running. 

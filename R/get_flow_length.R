@@ -1,5 +1,5 @@
 #' Derive a flow length to streams and outlets
-#' @description Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM.
+#' @description Given a (hydrologically corrected, see \code{\link{fill_sinks}}) DEM, this function produces a flow accumulation grid which shows the upstream area that flows into each cell in the DEM. Note that this function calls \code{r.stream.distance}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 #' @param str_rast Rasterized unary streams file.
 #' @param flow_dir Flow direction raster.
 #' @param out A file name for the output raster of flow lengths.
