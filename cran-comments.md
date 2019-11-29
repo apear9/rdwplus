@@ -1,4 +1,4 @@
-# CRAN submission 28-11-2019
+# CRAN submission 29-11-2019
 
 THIS IS A RESUBMISSION. 
 
