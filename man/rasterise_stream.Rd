@@ -4,8 +4,7 @@
 \alias{rasterise_stream}
 \title{Turn a shapefile of stream edges into a raster}
 \usage{
-rasterise_stream(streams, out, overwrite = FALSE, max_memory = 300,
-  ...)
+rasterise_stream(streams, out, overwrite = FALSE, max_memory = 300, ...)
 }
 \arguments{
 \item{streams}{A file name for a shapefile of stream edges in the current GRASS mapset.}

@@ -4,8 +4,15 @@
 \alias{get_watershed}
 \title{Delineate watershed for a survey site}
 \usage{
-get_watershed(sites, i, flow_dir, out, write_file = FALSE,
-  overwrite = FALSE, lessmem = FALSE)
+get_watershed(
+  sites,
+  i,
+  flow_dir,
+  out,
+  write_file = FALSE,
+  overwrite = FALSE,
+  lessmem = FALSE
+)
 }
 \arguments{
 \item{sites}{A file path to a shapefile of points or a \code{SpatialPoints*} object.}

@@ -4,8 +4,13 @@
 \alias{raster_to_mapset}
 \title{Import rasters into GRASS mapset}
 \usage{
-raster_to_mapset(rasters, as_integer = rep(FALSE, length(rasters)),
-  overwrite = FALSE, max_memory = 300, ...)
+raster_to_mapset(
+  rasters,
+  as_integer = rep(FALSE, length(rasters)),
+  overwrite = FALSE,
+  max_memory = 300,
+  ...
+)
 }
 \arguments{
 \item{rasters}{A character vector of filenames of rasters to import.}

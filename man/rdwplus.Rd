@@ -3,7 +3,6 @@
 \docType{package}
 \name{rdwplus}
 \alias{rdwplus}
-\alias{rdwplus-package}
 \title{An Implementation of IDW-PLUS (Inverse Distance Weighted Percent Land Use for Streams) in R}
 \description{
 Use R to call the hydrological toolboxes and functions in GRASS GIS to compute spatially explicit land-use metrics for stream survey sites. The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) Freshwater Biology, 56(3), 590-610.

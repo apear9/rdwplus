@@ -4,9 +4,18 @@
 \alias{compute_metrics}
 \title{Compute spatially explicit watershed attributes for survey sites on streams}
 \usage{
-compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), landuse,
-  sites, elevation, flow_dir, flow_acc, streams, idwp = -1,
-  max_memory = 300, lessmem = FALSE)
+compute_metrics(
+  metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
+  landuse,
+  sites,
+  elevation,
+  flow_dir,
+  flow_acc,
+  streams,
+  idwp = -1,
+  max_memory = 300,
+  lessmem = FALSE
+)
 }
 \arguments{
 \item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}

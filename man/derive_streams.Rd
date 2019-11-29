@@ -4,8 +4,15 @@
 \alias{derive_streams}
 \title{Extract streams from a flow accumulation raster}
 \usage{
-derive_streams(dem, flow_acc, out, min_acc = 1000, min_length = 0,
-  overwrite = FALSE, ...)
+derive_streams(
+  dem,
+  flow_acc,
+  out,
+  min_acc = 1000,
+  min_length = 0,
+  overwrite = FALSE,
+  ...
+)
 }
 \arguments{
 \item{dem}{Name of the elevation raster in the current GRASS mapset.}

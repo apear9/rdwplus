@@ -4,8 +4,16 @@
 \alias{snap_sites}
 \title{A function to snap sites in a shapefile to a flow accumulation grid}
 \usage{
-snap_sites(sites, flow_acc, max_move, out, overwrite = FALSE,
-  max_memory = 300, use_sp = TRUE, ...)
+snap_sites(
+  sites,
+  flow_acc,
+  max_move,
+  out,
+  overwrite = FALSE,
+  max_memory = 300,
+  use_sp = TRUE,
+  ...
+)
 }
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}

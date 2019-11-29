@@ -4,8 +4,7 @@
 \alias{derive_flow}
 \title{Obtain flow direction and accumulation over a digital elevation model (DEM)}
 \usage{
-derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE,
-  max_memory = 300, ...)
+derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE, max_memory = 300, ...)
 }
 \arguments{
 \item{dem}{A digital elevation model that has been hydrologically corrected.}

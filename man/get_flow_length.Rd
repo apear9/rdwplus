@@ -4,8 +4,14 @@
 \alias{get_flow_length}
 \title{Derive a flow length to streams and outlets}
 \usage{
-get_flow_length(str_rast, flow_dir, out, to_outlet = FALSE,
-  overwrite = FALSE, max_memory = 300)
+get_flow_length(
+  str_rast,
+  flow_dir,
+  out,
+  to_outlet = FALSE,
+  overwrite = FALSE,
+  max_memory = 300
+)
 }
 \arguments{
 \item{str_rast}{Rasterized unary streams file.}
