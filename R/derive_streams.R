@@ -1,5 +1,6 @@
 #' Extract streams from a flow accumulation raster
 #' @description Derive a set of stream lines from a flow accumulation raster.
+#' @param dem Name of the elevation raster in the current GRASS mapset.
 #' @param flow_acc Name of the flow accumulation raster in the current GRASS mapset.
 #' @param out File path to the output vector dataset of stream lines. Should be WITHOUT .shp extension. 
 #' @param min_acc The minimum accumulation value (in upstream cells) that a cell needs to have in order to be classified as a stream. Defaults to \code{1000}.
@@ -10,6 +11,7 @@
 #' @examples  
 #' # Will only run if GRASS is running
 #' if(check_running()){
+#' 
 #' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
@@ -41,7 +43,7 @@
 #' derive_streams(flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
 #' }
 #' @export
-derive_streams <- function(flow_acc, out, min_acc = 1e3, min_length = 0, overwrite = FALSE, ...){
+derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, overwrite = FALSE, ...){
   
   # Check for GRASS instance
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -56,6 +58,7 @@ derive_streams <- function(flow_acc, out, min_acc = 1e3, min_length = 0, overwri
     "r.stream.extract",
     flags = flags,
     parameters = list(
+      elevation = dem,
       accumulation = flow_acc,
       stream_length = min_length,
       threshold = min_acc,

@@ -4,10 +4,12 @@
 \alias{derive_streams}
 \title{Extract streams from a flow accumulation raster}
 \usage{
-derive_streams(flow_acc, out, min_acc = 1000, min_length = 0,
+derive_streams(dem, flow_acc, out, min_acc = 1000, min_length = 0,
   overwrite = FALSE, ...)
 }
 \arguments{
+\item{dem}{Name of the elevation raster in the current GRASS mapset.}
+
 \item{flow_acc}{Name of the flow accumulation raster in the current GRASS mapset.}
 
 \item{out}{File path to the output vector dataset of stream lines. Should be WITHOUT .shp extension.}
@@ -30,6 +32,7 @@ Derive a set of stream lines from a flow accumulation raster.
  
 # Will only run if GRASS is running
 if(check_running()){
+
 # Load data set
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
