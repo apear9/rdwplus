@@ -8,6 +8,7 @@
 #' # Load data set file path
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' # Plot
+#' # MAY NEED TO HAVE RGDAL INSTALLED FOR .TIF FILES
 #' plot_layer(dem)
 #' }
 #' @export
