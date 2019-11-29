@@ -31,11 +31,11 @@ In the DESCRIPTION file:
 * Shortened title to under 65 characters. Now it is 34 characters long.
 * The acronym IDW-PLUS is now explained in the description field.
 * Changed citation style to authors (year) <doi:...>
-* Added a Suggests field for the package rgdal. 
 
 In Rd files:
 
 * Added executable examples to exported functions.
+* Minor adjustments to text throughout. 
 
 Note that the request was 
 
@@ -47,6 +47,11 @@ CRAN checks performed on computers without GRASS GIS 7.6 will therefore always f
 We tried to do CRAN checks on the testing environments listed below with the examples set to run and we came across this issue. 
 To avoid this, we have set up the examples such that instructive code blocks are provided but are set only to run if R detects an instance of GRASS is running. 
 Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on Windows 10 with a local R install (3.6.1) that the examples run without error. 
+
+In functions:
+
+* derive_streams had a previously unknown issue which we uncovered while writing and testing its example. It was missing an argument (dem) that needed to be passed to the GRASS module that it calls. This has now been added and the documentation for the function changed accordingly.
+* changed the search string in search_for_grass
 
 ## Test environments
 

@@ -7,13 +7,17 @@
 search_for_grass(guide)
 }
 \arguments{
-\item{guide}{An optional guide folder to search.}
+\item{guide}{Optional. A specific folder to search in for the GRASS installation.}
 }
 \value{
 A vector of file paths to potential GRASS installations.
 }
 \description{
-This function finds the path to potential GRASS installations. Warning: this function works by brute force, so it may take a few minutes to find potential GRASS installations.
+This function finds the path to potential GRASS installations. 
+
+Warning: this function works by brute force, so it may take a few minutes to find potential GRASS installations.
+
+Note: it is not hard to find the path to your computer's GRASS installation yourself. This is the preferred course of action.
 }
 \examples{
 \dontrun{ 
