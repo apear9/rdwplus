@@ -17,7 +17,6 @@
 #' report_mapset('possible')
 #' 
 #' }
-#' @export
 report_mapset <- function(which = "current"){
   
   if(!which %in% c("current", "possible")) stop("Invalid 'which' value specified.")

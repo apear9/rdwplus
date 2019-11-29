@@ -52,6 +52,7 @@ In functions:
 
 * derive_streams had a previously unknown issue which we uncovered while writing and testing its example. It was missing an argument (dem) that needed to be passed to the GRASS module that it calls. This has now been added and the documentation for the function changed accordingly.
 * changed the search string in search_for_grass
+* the function report_mapset is no longer exported
 
 ## Test environments
 
