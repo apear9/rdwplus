@@ -46,7 +46,7 @@ However, on the 'automatic testing' note, we don't think this is possible. Very 
 CRAN checks performed on computers without GRASS GIS 7.6 will therefore always fail if we allow examples to be executed during CRAN checks and other testing. 
 We tried to do CRAN checks on the testing environments listed below with the examples set to run and we came across this issue. 
 To avoid this, we have set up the examples such that instructive code blocks are provided but are set only to run if R detects an instance of GRASS is running. 
-Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on Windows 10 with a local R install (3.6.1) that the examples run without error. 
+Users can still execute the examples by pasting the code from the function help files into their consoles. We have tested on a local Windows 10 computer with R 3.6.1 that the examples run without error when GRASS is running. 
 
 In functions:
 
