@@ -52,7 +52,8 @@ raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
 vector_to_mapset(vectors = c(sites, stream_shp))
 
 # Create binary stream
-rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+out_name <- paste0(tempdir(), "/streams_rast.tif")
+rasterise_stream("streams", out_name, overwrite = TRUE)
 reclassify_streams("streams_rast.tif", "streams_binary.tif", 
 out_type = "binary", overwrite = TRUE)
 
@@ -68,8 +69,9 @@ derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",
 flow_acc = "facc.tif", overwrite = TRUE)
 
 # Snap sites to pour points (based on flow accumulation)
+out_snap <- paste0(tempdir(), "/snapsite.shp")
 snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
-out = "snapsite.shp", overwrite = TRUE)
+out = out_snap, overwrite = TRUE)
 
 }
 }
