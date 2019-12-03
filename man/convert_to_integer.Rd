@@ -28,7 +28,8 @@ raster_to_mapset(rasters = dem)
 vector_to_mapset(vectors = stream_shp)
  
 # Rasterise the streams
-rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+out_name <- paste0(tempdir(), "/streams_rast.tif")
+rasterise_stream("streams", out_name, overwrite = TRUE)
 
 # Convert to integer
 convert_to_integer("streams_rast.tif")
