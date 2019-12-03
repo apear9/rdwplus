@@ -70,7 +70,10 @@ Other minor changes:
 
 ## Test environments
 
-[INSERT HERE]
+* local Windows install, R 3.6.1
+* Ubuntu Linux 16.04 (release)
+* Fedora Linux (devel)
+* Windows Server 2008 R2 SP1 (devel)
 
 ## R CMD check results
 
