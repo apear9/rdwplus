@@ -15,7 +15,7 @@
 #' 
 #' # Set environment parameters and import data to GRASS
 #' set_envir(dem)
-#' vector_to_mapset(vectors =  stream_shp)
+#' vector_to_mapset(vectors = stream_shp)
 #' 
 #' # Create rasterised stream
 #' out_name <- paste0(tempdir(), "/streams_rast.tif")
