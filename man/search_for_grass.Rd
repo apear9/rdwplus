@@ -20,9 +20,8 @@ Warning: this function works by brute force, so it may take a few minutes to fin
 Note: This is not guaranteed to work. It is not hard to find the path to your computer's GRASS installation yourself. This is the preferred course of action.
 }
 \examples{
-\dontrun{ 
+\donttest{ 
 
-# Not run because this takes a few minutes
 my_grass <- search_for_grass()
 my_grass
 

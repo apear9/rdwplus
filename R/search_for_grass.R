@@ -8,9 +8,8 @@
 #' @param guide Optional. A specific folder to search in for the GRASS installation.
 #' @return A vector of file paths to potential GRASS installations.
 #' @examples 
-#' \dontrun{ 
-#' 
-#' # Not run because this takes a few minutes
+#' \donttest{ 
+#'
 #' my_grass <- search_for_grass()
 #' my_grass
 #' 
