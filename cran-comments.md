@@ -56,7 +56,7 @@ Please only write/save files if the user has specified a directory in the functi
 
 * in get_watershed.R, the user can set the argument `out` to write a raster wherever they please. By default no file is written. Therefore there is no issue with the above comment. I have adjusted the Rd file to better reflect this.
 * in plot_GRASS.R, files are by default written to tempdir() which does not present a problem with the above. The function has an optional argument `out_x` which can be used to write out a file to the user's filespace in a location of their choosing if and only if that is what they want.
-* in rasterise_stream.R, the previous behaviour ...
+* in rasterise_stream.R, the function writes out a file to a user-specified location through the argument `out`. Therefore, in general, this does not violate CRAN policy. However, the example does violate this policy. I have set the example to write a file to tempdir() instead of in the default directory.
 * in retrieve_vector.R, the example did indeed violate CRAN policy by writing out a file to a default directory. This has been changed to write out the file to tempdir(). Nothing in the way the function works in general violates CRAN policy.
 * 
 

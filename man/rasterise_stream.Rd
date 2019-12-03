@@ -18,7 +18,7 @@ rasterise_stream(streams, out, overwrite = FALSE, max_memory = 300, ...)
 \item{...}{Additional arguments to \code{v.to.rast}.}
 }
 \value{
-Nothing. A file will be written to \code{out}. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
+Nothing. A file will be written to \code{out}. Note that \code{out} can be a full file path to any location in your file system. A raster with the name \code{basename(out)} will be written to the current GRASS mapset.
 }
 \description{
 Given a shapefile of lines representing the channels of a stream network, this function will return a rasterised version of the shapefile. The raster will have the parameters of the current GRASS mapset.
@@ -35,7 +35,8 @@ set_envir(dem)
 vector_to_mapset(vectors =  stream_shp)
 
 # Create rasterised stream
-rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+out_name <- paste0(tempdir(), "/streams_rast.tif")
+rasterise_stream("streams", out_name, overwrite = TRUE)
 
 # Plot
 plot_GRASS("streams_rast.tif", col = topo.colors(2))
