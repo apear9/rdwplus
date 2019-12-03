@@ -49,12 +49,12 @@ In Rd files:
 * Unexported functions previously with examples (get_distance.R, report_mapset.R, ...) have had their examples removed.
 * \dontrun has been replaced with \donttest in ...
 * \dontrun has been removed altogether in ...
-* All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, 
+* All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, reclassify_streams.R, ...
 
 Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace. ...
 Please only write/save files if the user has specified a directory in the function themselves" comment:
 
-* in get_watershed.R, the user can set the argument `out` to write a raster wherever they please. By default no file is written. Therefore there is no issue with the above comment.
+* in get_watershed.R, the user can set the argument `out` to write a raster wherever they please. By default no file is written. Therefore there is no issue with the above comment. I have adjusted the Rd file to better reflect this.
 * in plot_GRASS.R, files are by default written to tempdir() which does not present a problem with the above. The function has an optional argument `out_x` which can be used to write out a file to the user's filespace in a location of their choosing if and only if that is what they want.
 * 
 
