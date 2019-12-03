@@ -84,7 +84,7 @@ out = out_snap, overwrite = TRUE)
 # Compute metrics
 lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), 
                               landuse = "landuse.tif",
-                              sites out_snap, 
+                              sites =  out_snap, 
                               elevation = "dem_fill.tif", 
                               flow_dir = "fdir.tif", 
                               flow_acc = "facc.tif", 

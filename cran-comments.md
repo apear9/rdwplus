@@ -47,7 +47,7 @@ In the DESCRIPTION file:
 In Rd files:
 
 * Unexported functions previously with examples (get_distance.R, report_mapset.R) have had their examples removed.
-* \dontrun has been replaced with \donttest or removed altogether (e.g. toggle_silence.R, silence.R)
+* \dontrun has been replaced with \donttest or removed altogether (e.g. toggle_silence.R, silence.R, search_for_grass.R)
 * All examples where we set par() have been modified such that we no longer set par(). E.g. derive_flow.R, reclassify_streams.R.
 
 Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace. ...
