@@ -47,9 +47,8 @@ In the DESCRIPTION file:
 In Rd files:
 
 * Unexported functions previously with examples (get_distance.R, report_mapset.R) have had their examples removed.
-* \dontrun has been replaced with \donttest in ...
-* \dontrun has been removed altogether in toggle_silence.R, 
-* All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, reclassify_streams.R, ...
+* \dontrun has been replaced with \donttest or removed altogether (e.g. toggle_silence.R, silence.R)
+* All examples where we set par() have been modified such that we no longer set par(). E.g. derive_flow.R, reclassify_streams.R.
 
 Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace. ...
 Please only write/save files if the user has specified a directory in the function themselves" comment:
@@ -59,6 +58,8 @@ Please only write/save files if the user has specified a directory in the functi
 * in rasterise_stream.R, the function writes out a file to a user-specified location through the argument `out`. Therefore, in general, this does not violate CRAN policy. However, the example does violate this policy. I have set the example to write a file to tempdir() instead of in the default directory.
 * in retrieve_vector.R, the example did indeed violate CRAN policy by writing out a file to a default directory. This has been changed to write out the file to tempdir(). Nothing in the way the function works in general violates CRAN policy.
 * same deal for retrieve_raster.R
+* same deal for snap_sites.R
+* all functions whose examples were affected by the issue with rasterise_stream.R's, retrieve_vector/retrieve_raster.R's, and snap_sites.R's examples have had their examples changed.
 
 In any case, the main modes of writing outputs as files in the user's filespace are the two functions retrieve_raster.R and retrieve_vector.R. These are functions the user must generally explicitly call, and in which the user can specify exactly where files are to be written.
 Almost all other functions (with the exceptions addressed in the dot points above) only write to the GRASS dbase location. When initialising GRASS from R, this by default is tempdir(). At any rate, the user can set it to be whatever they want. 

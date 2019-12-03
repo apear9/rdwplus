@@ -18,7 +18,8 @@
 #' vector_to_mapset(vectors =  stream_shp)
 #' 
 #' # Create binary stream
-#' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
+#' out_name <- paste0(tempdir(), "/streams_rast.tif")
+#' rasterise_stream("streams", out_name, overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_binary.tif", out_type = "binary", overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_unary.tif", out_type = "unary", overwrite = TRUE)
 #' reclassify_streams("streams_rast.tif", "streams_none.tif", out_type = "none", overwrite = TRUE)
