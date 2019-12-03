@@ -1,5 +1,5 @@
 #' Obtain flow direction and accumulation over a digital elevation model (DEM)
-#' @description This function computes flow direction and accumulation (among other things) from a DEM. This is done using the \code{r.terraflow} tool in GRASS.
+#' @description This function computes flow direction and accumulation (among other things) from a DEM. This is done using the \code{r.watershed} tool in GRASS.
 #' @param dem A digital elevation model that has been hydrologically corrected.
 #' @param flow_dir The name of the output flow direction file in the current GRASS mapset.
 #' @param flow_acc The name of the output flow accumulation file in the current GRASS mapset.

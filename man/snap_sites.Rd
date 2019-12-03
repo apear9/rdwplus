@@ -33,7 +33,7 @@ snap_sites(
 \item{...}{Additional arguments to \code{r.stream.snap}.}
 }
 \value{
-Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
+Nothing. Note that a shapefile of snapped survey sites will be written to the location \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 }
 \description{
 This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.

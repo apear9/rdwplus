@@ -8,7 +8,7 @@
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param use_sp Logical to use 'sf' or 'stars' classes for vector objects. Defaults to \code{TRUE} to use 'stars' class.
 #' @param ... Additional arguments to \code{r.stream.snap}.
-#' @return Nothing. Note that a shapefile of snapped survey sites will be written to the file \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
+#' @return Nothing. Note that a shapefile of snapped survey sites will be written to the location \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 #' @examples 
 #' # Will only run if GRASS is running
 #' if(check_running()){

@@ -23,7 +23,7 @@ derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE, max_memory = 300, ...)
 Nothing. Files are written in the current GRASS mapset.
 }
 \description{
-This function computes flow direction and accumulation (among other things) from a DEM. This is done using the \code{r.terraflow} tool in GRASS.
+This function computes flow direction and accumulation (among other things) from a DEM. This is done using the \code{r.watershed} tool in GRASS.
 }
 \examples{
 if(check_running()){
