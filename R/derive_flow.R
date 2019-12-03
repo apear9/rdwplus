@@ -37,7 +37,6 @@
 #' overwrite = TRUE)
 #' 
 #' # Plot
-#' par(mfrow = c(1,2))
 #' plot_GRASS("fdir.tif", col = topo.colors(15))
 #' plot_GRASS("facc.tif", col = topo.colors(15))
 #' }
