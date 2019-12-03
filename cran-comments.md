@@ -55,7 +55,11 @@ Addressing the "[ensuring] that [our] functions do not write by default or in [o
 Please only write/save files if the user has specified a directory in the function themselves" comment:
 
 * in get_watershed.R, the user can set the argument `out` to write a raster wherever they please. By default no file is written. Therefore there is no issue with the above comment.
-* ...
+* in plot_GRASS.R, files are by default written to tempdir() which does not present a problem with the above. The function has an optional argument `out_x` which can be used to write out a file to the user's filespace in a location of their choosing if and only if that is what they want.
+* 
+
+In any case, the main modes of writing outputs as files in the user's filespace are the two functions retrieve_raster.R and retrieve_vector.R. These are functions the user must generally explicitly call, and in which the user can specify exactly where files are to be written.
+Almost all other functions (with the exceptions address in the dot points above) only write to the GRASS dbase location. When initialising GRASS from R, this by default is tempdir(). 
 
 ## Test environments
 
