@@ -1,5 +1,5 @@
 Package: rdwplus
-Title: An Implementation of IDW-PLUS in R
+Title: An Implementation of IDW-PLUS
 Version: 0.1.0
 Authors@R: c(person("Alan", "Pearse", email = "apearse9@gmail.com", role = c("aut", "cre")), person("Grace", "Heron", email = "grace.heron@connect.qut.edu.au", role = c("aut")), person("Erin", "Peterson", email = "erin.petereson@qut.edu.au", role = c("aut")))
 Author: Alan Pearse [aut, cre], Grace Heron [aut], Erin Peterson [aut]
