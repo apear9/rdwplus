@@ -4,7 +4,7 @@
 #' @param ... Additional arguments to \code{plot}.
 #' @return Nothing.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' # Load data set file path
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' # Plot
