@@ -18,9 +18,9 @@ This function detects whether output suppression is on or off, and switches it t
 \examples{
 
 # Even if silence is currently off, silence will stay off
-toggle_silence(T) 
+toggle_silence(TRUE) 
 
 # If silence is currently off, silence will be turned on.
-toggle_silence(F)
+toggle_silence(FALSE)
 
 }
