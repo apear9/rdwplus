@@ -3,7 +3,6 @@
 #' @param stay_off A logical indicating whether output suppression should be kept off once it is turned off. That is, if this function is called but output suppression is already off, then for \code{stay_off=TRUE} output suppression will simply remain off. Defaults to \code{TRUE}.
 #' @return A logical indicating whether output suppression is active.
 #' @examples
-#' \dontrun{ 
 #' 
 #' # Even if silence is currently off, silence will stay off
 #' toggle_silence(T) 
@@ -11,7 +10,6 @@
 #' # If silence is currently off, silence will be turned on.
 #' toggle_silence(F)
 #' 
-#' }
 #' @export
 toggle_silence <- function(stay_off = TRUE){
   current_state <- silence()

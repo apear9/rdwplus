@@ -16,7 +16,6 @@ A logical indicating whether output suppression is active.
 This function detects whether output suppression is on or off, and switches it to its opposite state. Under one setting, this function can be used as an off-switch for the GRASS message/warning/error suppression enforced via the use of \code{silence(value = TRUE)}.
 }
 \examples{
-\dontrun{ 
 
 # Even if silence is currently off, silence will stay off
 toggle_silence(T) 
@@ -24,5 +23,4 @@ toggle_silence(T)
 # If silence is currently off, silence will be turned on.
 toggle_silence(F)
 
-}
 }
