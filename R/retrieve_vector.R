@@ -18,7 +18,8 @@
 #' vector_to_mapset(vectors = stream_shp)
 #' 
 #' # Retrieve raster 
-#' retrieve_vector("streams", out_layer = "retrieved_streams.shp", overwrite = TRUE)
+#' out_name <- paste0(tempdir(), "/", "retrieved_streams.shp")
+#' retrieve_vector("streams", out_layer = out_name, overwrite = TRUE)
 #' 
 #' }
 #' @export
