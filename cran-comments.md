@@ -38,7 +38,7 @@ In your examples/vignettes/tests you can write to tempdir().
 Please fix and resubmit.
 "
 
-## Changes
+## Changes and addressing comments
 
 In the DESCRIPTION file:
 
@@ -46,9 +46,9 @@ In the DESCRIPTION file:
 
 In Rd files:
 
-* Unexported functions previously with examples (get_distance.R, report_mapset.R, ...) have had their examples removed.
+* Unexported functions previously with examples (get_distance.R, report_mapset.R) have had their examples removed.
 * \dontrun has been replaced with \donttest in ...
-* \dontrun has been removed altogether in ...
+* \dontrun has been removed altogether in toggle_silence.R, 
 * All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, reclassify_streams.R, ...
 
 Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace. ...
@@ -60,10 +60,13 @@ Please only write/save files if the user has specified a directory in the functi
 * in retrieve_vector.R, the example did indeed violate CRAN policy by writing out a file to a default directory. This has been changed to write out the file to tempdir(). Nothing in the way the function works in general violates CRAN policy.
 * same deal for retrieve_raster.R
 
-
-
 In any case, the main modes of writing outputs as files in the user's filespace are the two functions retrieve_raster.R and retrieve_vector.R. These are functions the user must generally explicitly call, and in which the user can specify exactly where files are to be written.
 Almost all other functions (with the exceptions address in the dot points above) only write to the GRASS dbase location. When initialising GRASS from R, this by default is tempdir(). 
+
+Other minor changes:
+
+* in toggle_silence.R, the example now uses TRUE and FALSE instead of T and F. Important because, now that the example runs, using T and F produce an error. 
+* other minor adjustments to documentation and formatting styles as a result of updating my roxygen2 version to 7.0.2. 
 
 ## Test environments
 
