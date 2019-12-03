@@ -51,9 +51,11 @@ In Rd files:
 * \dontrun has been removed altogether in ...
 * All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, 
 
-Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace" comment:
+Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace. ...
+Please only write/save files if the user has specified a directory in the function themselves" comment:
 
-[NEED TO CHECK THIS]
+* in get_watershed.R, the user can set the argument `out` to write a raster wherever they please. By default no file is written. Therefore there is no issue with the above comment.
+* ...
 
 ## Test environments
 
