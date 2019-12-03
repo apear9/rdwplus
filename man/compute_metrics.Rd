@@ -77,13 +77,14 @@ derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",
 flow_acc = "facc.tif", overwrite = TRUE)
 
 # Snap sites to pour points (based on flow accumulation)
+out_snap <- paste0(tempdir(), "/snapsite.shp")
 snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
-out = "snapsite.shp", overwrite = TRUE)
+out = out_snap, overwrite = TRUE)
 
 # Compute metrics
 lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), 
                               landuse = "landuse.tif",
-                              sites = "snapsite.shp", 
+                              sites out_snap, 
                               elevation = "dem_fill.tif", 
                               flow_dir = "fdir.tif", 
                               flow_acc = "facc.tif", 
