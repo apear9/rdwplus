@@ -1,3 +1,72 @@
+# CRAN submission 03-12-2019
+
+THIS IS A RESUBMISSION. 
+
+## Feedback from CRAN maintainer
+
+"
+Thanks,
+
+Please omit the redundant "in R" from the title.
+
+You have examples for unexported functions which cannot run in this way.
+Please either add rdwplus::: to the function calls in the examples, omit
+these examples or export these functions.
+e.g.: get_distance.Rd, ...
+
+\dontrun{} should only be used if the example really cannot be executed
+(e.g. because of missing additional software, missing API keys, ...) by
+the user. That's why wrapping examples in \dontrun{} adds the comment
+("# Not run:") as a warning for the user.
+Does not seem necessary in e.g. search_for_grass.Rd, ...
+Please replace \dontrun with \donttest.
+
+Please always make sure to reset to user's options (not default), wd or
+par after you changed it in examples and vignettes.
+e.g.: reclassify_streams.Rd, ...
+oldpar <- par(mfrow = c(2,2))
+...
+par(oldpar)
+
+Please ensure that your functions do not write by default or in your
+examples/vignettes/tests in the user's home filespace (including the
+package directory and getwd()). That is not allowed by CRAN policies.
+Please only write/save files if the user has specified a directory in
+the function themselves.
+In your examples/vignettes/tests you can write to tempdir().
+
+Please fix and resubmit.
+"
+
+## Changes
+
+In the DESCRIPTION file:
+
+* Removed the phrase 'in R' from the title
+
+In Rd files:
+
+* Unexported functions previously with examples (get_distance.R, report_mapset.R, ...) have had their examples removed.
+* \dontrun has been replaced with \donttest in ...
+* \dontrun has been removed altogether in ...
+* All examples where we set par() have been modified such that we no longer set par().
+
+Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace" comment:
+
+[NEED TO CHECK THIS]
+
+## Test environments
+
+[INSERT HERE]
+
+## R CMD check results
+
+[INSERT HERE]
+
+## Downstream dependencies
+
+There are no downstream dependencies. 
+
 # CRAN submission 29-11-2019
 
 THIS IS A RESUBMISSION. 
