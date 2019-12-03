@@ -33,7 +33,8 @@ set_envir(dem)
 raster_to_mapset(rasters = dem, as_integer = FALSE)
 
 # Retrieve raster 
-retrieve_raster("dem.tif", out_layer = "retrieved_dem.tif", overwrite = TRUE)
+out_name <- paste0(tempdir(), "/retrieved_dem.tif")
+retrieve_raster("dem.tif", out_layer = out_name, overwrite = TRUE)
 
 }
 }
