@@ -103,9 +103,9 @@ If you start with a shapefile of stream edges (as opposed to deriving a streams 
 The rasterisation and reclassification step can be performed in two separate lines of code:
 
 ```{r}
-rasterise_stream("streams", "streams.tif", TRUE)
+out_stream <- paste0(tempdir(), "/streams.tif")
+rasterise_stream("streams", out_stream, TRUE)
 reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
-
 ```
 
 ### The digital elevation model
@@ -151,7 +151,8 @@ Here is the code for snapping sites to the flow accumulation grid:
 
 ```{r}
 # Snap sites to flow accumulation grid
-snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
+out_snap <- paste0(tempdir(), "/snapsite.shp")
+snap_sites("site", "flowacc.tif", 2, out_snap, TRUE)
 ```
 
 Note that in this case, no snapping is needed as the point in the shapefile already falls along a raster cell with high flow accumulation. 

@@ -57,8 +57,8 @@ Once the location of the user's GRASS installation is known, the function `initG
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/apear/AppData/Local/Temp/RtmpYLu13y 
-    ## location    file47407451f1e 
+    ## gisdbase    C:/Users/apear/AppData/Local/Temp/Rtmpu4IsHD 
+    ## location    file360c74f82a83 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -106,7 +106,7 @@ vector_to_mapset(c(sts, stm), overwrite = TRUE)
 
     ## [1] "site.shp"    "streams.shp"
 
-Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`.
+Note that the `overwrite` option simply allows the dataset we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. We can use the function `vibe_check` to check if the vector and raster data are currently in the mapset.
 
 Data preprocessing
 ------------------
@@ -121,7 +121,8 @@ If you start with a shapefile of stream edges (as opposed to deriving a streams 
 The rasterisation and reclassification step can be performed in two separate lines of code:
 
 ``` r
-rasterise_stream("streams", "streams.tif", TRUE)
+out_stream <- paste0(tempdir(), "/streams.tif")
+rasterise_stream("streams", out_stream, TRUE)
 reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
 ```
 
@@ -152,18 +153,21 @@ derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
 If you're curious to see what these look like:
 
 ``` r
+# Filled DEM 
 plot_GRASS("filldem.tif", col = topo.colors(15))
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ``` r
+# Flow Direction
 plot_GRASS("flowdir.tif", col = topo.colors(15))
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-13-2.png)
 
 ``` r
+# Flow Accumulation
 plot_GRASS("flowacc.tif", col = topo.colors(15))
 ```
 
@@ -177,15 +181,16 @@ Here is the code for snapping sites to the flow accumulation grid:
 
 ``` r
 # Snap sites to flow accumulation grid
-snap_sites("site", "flowacc.tif", 2, "snapsite", TRUE)
+out_snap <- paste0(tempdir(), "/snapsite.shp")
+snap_sites("site", "flowacc.tif", 2, out_snap, TRUE)
 ```
 
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpYLu13y\file47407451f1e\PERMANENT\.tmp\unknown\126.0.gpkg", layer: "site"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\Rtmpu4IsHD\file360c74f82a83\PERMANENT\.tmp\unknown\628.0.gpkg", layer: "site"
     ## with 1 features
     ## It has 3 fields
     ## OGR data source with driver: GPKG 
-    ## Source: "C:\Users\apear\AppData\Local\Temp\RtmpYLu13y\file47407451f1e\PERMANENT\.tmp\unknown\936.0.gpkg", layer: "snapsite"
+    ## Source: "C:\Users\apear\AppData\Local\Temp\Rtmpu4IsHD\file360c74f82a83\PERMANENT\.tmp\unknown\256.0.gpkg", layer: "snapsite"
     ## with 1 features
     ## It has 1 fields
 
