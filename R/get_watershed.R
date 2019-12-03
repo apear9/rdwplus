@@ -7,7 +7,7 @@
 #' @param write_file A logical indicating whether the output file should be stored as a file in the user's current working directory. Defaults to \code{FALSE}.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
-#' @return Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset. 
+#' @return Nothing. A raster file with the name \code{out} may be written to file if you have set the \code{write_file} argument accordingly. A raster with the name \code{basename(out)} will be imported into the current GRASS mapset. 
 #' @examples
 #' # Will only run if GRASS is running
 #' if(check_running()){

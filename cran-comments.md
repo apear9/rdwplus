@@ -49,7 +49,7 @@ In Rd files:
 * Unexported functions previously with examples (get_distance.R, report_mapset.R, ...) have had their examples removed.
 * \dontrun has been replaced with \donttest in ...
 * \dontrun has been removed altogether in ...
-* All examples where we set par() have been modified such that we no longer set par().
+* All examples where we set par() have been modified such that we no longer set par(). These are derive_flow.R, 
 
 Addressing the "[ensuring] that [our] functions do not write by default or in [our] examples/vignettes/tests in the user's home filespace" comment:
 

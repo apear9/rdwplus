@@ -30,7 +30,7 @@ get_watershed(
 \item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
-Nothing. A raster file with the name \code{out} may be written to the current working directory and one with the name \code{basename(out)} will be imported into the current GRASS mapset.
+Nothing. A raster file with the name \code{out} may be written to file if you have set the \code{write_file} argument accordingly. A raster with the name \code{basename(out)} will be imported into the current GRASS mapset.
 }
 \description{
 This function delineates a watershed around the \code{i}th site from a set of survey sites.
