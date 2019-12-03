@@ -62,7 +62,7 @@ Please only write/save files if the user has specified a directory in the functi
 * all functions whose examples were affected by the issue with rasterise_stream.R's, retrieve_vector/retrieve_raster.R's, and snap_sites.R's examples have had their examples changed.
 
 In any case, the main modes of writing outputs as files in the user's filespace are the two functions retrieve_raster.R and retrieve_vector.R. These are functions the user must generally explicitly call, and in which the user can specify exactly where files are to be written.
-Almost all other functions (with the exceptions addressed in the dot points above) only write to the GRASS dbase location. When initialising GRASS from R, this by default is tempdir(). At any rate, the user can set it to be whatever they want. 
+Almost all other functions (with the exceptions addressed in the dot points above) only write to the GRASS dbase location. When initialising GRASS from R (done with a function `initGRASS` from the package `rgrass7`), the user must set this parameter or else it is set to tempdir() by default. Therefore, the user knows where these files are going.
 
 Other minor changes:
 
