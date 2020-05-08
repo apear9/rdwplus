@@ -2,7 +2,7 @@
 % Please edit documentation in R/snap_sites.R
 \name{snap_sites}
 \alias{snap_sites}
-\title{A function to snap sites in a shapefile to a flow accumulation grid}
+\title{A function to snap sites in a shapefile to a stream grid}
 \usage{
 snap_sites(
   sites,
@@ -18,7 +18,7 @@ snap_sites(
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}
 
-\item{streams}{File name for a streams raster in the current GRASS mapset. Snaps points to closest point on stream line.}
+\item{streams}{File name for a binary streams raster in the current GRASS mapset. Snaps points to closest point on stream line.}
 
 \item{max_move}{The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.}
 
@@ -36,7 +36,7 @@ snap_sites(
 Nothing. Note that a shapefile of snapped survey sites will be written to the location \code{out} and a shapefile called \code{basename(out)} will be imported into the GRASS mapset.
 }
 \description{
-This function takes a set of survey site locations and makes sure that they are coincident with the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+This function takes a set of survey site locations and makes sure that they are coincident with the point nearest the stream line within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 }
 \examples{
 # Will only run if GRASS is running
@@ -57,20 +57,9 @@ rasterise_stream("streams", out_name, overwrite = TRUE)
 reclassify_streams("streams_rast.tif", "streams_binary.tif", 
 out_type = "binary", overwrite = TRUE)
 
-# Burn dem 
-burn_in(dem = "dem.tif", stream = "streams_binary.tif",
- out = "dem_burn.tif", burn = 10, overwrite = TRUE)
-
-# Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
-
-# Derive flow accumulation and direction grids
-derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", 
-flow_acc = "facc.tif", overwrite = TRUE)
-
 # Snap sites to pour points (based on flow accumulation)
 out_snap <- paste0(tempdir(), "/snapsite.shp")
-snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
+snap_sites(sites = "site", streams = "streams_binary.tif", max_move = 2, 
 out = out_snap, overwrite = TRUE)
 
 }
