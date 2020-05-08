@@ -6,7 +6,7 @@
 \usage{
 snap_sites(
   sites,
-  flow_acc = NULL,
+  streams,
   max_move,
   out,
   overwrite = FALSE,
@@ -18,7 +18,7 @@ snap_sites(
 \arguments{
 \item{sites}{File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.}
 
-\item{flow_acc}{File name for a flow accumulation raster in the current GRASS mapset. Defaults to NULL. NULL snaps to closest stream line, while flow accumulation will snap to largest accumulation point.}
+\item{streams}{File name for a streams raster in the current GRASS mapset. Snaps points to closest point on stream line.}
 
 \item{max_move}{The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.}
 
