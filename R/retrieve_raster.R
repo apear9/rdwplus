@@ -37,7 +37,7 @@ retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
     for(i in 1:n_layers){
       execGRASS(
         'r.out.gdal', 
-        flags = c("overwrite", "quiet"),
+        flags = c("overwrite", "quiet", "c"),
         parameters = list(
           input = layer[i],
           output = out_layer[i],
@@ -49,7 +49,7 @@ retrieve_raster <- function(layer, out_layer, overwrite = FALSE, ...){
     for(i in 1:n_layers){
       execGRASS(
         'r.out.gdal', 
-        flags = c("quiet"),
+        flags = c("quiet", "c"),
         parameters = list(
           input = layer[i],
           output = out_layer[i],
