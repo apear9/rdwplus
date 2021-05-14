@@ -37,7 +37,7 @@ set_envir <- function(layer){
   
   execGRASS("g.proj", flags = c("c", "quiet"),
             parameters = list(
-              georef = layer
+              georef = slot(slot(r_layer, "file"), "name")
             ))
   
   execGRASS("g.region", flags = c("verbose"),
