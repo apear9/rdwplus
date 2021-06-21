@@ -1,4 +1,5 @@
 Package: rdwplus
+Date: 2019-12-07
 Title: An Implementation of IDW-PLUS
 Version: 0.1.0
 Authors@R: c(person("Alan", "Pearse", email = "arp320@uowmail.edu.au", role = c("aut", "cre")), person("Grace", "Heron", email = "g.heron@qut.edu.au", role = c("aut")), person("Erin", "Peterson", email = "erin@peterson-consulting.com", role = c("aut")))
