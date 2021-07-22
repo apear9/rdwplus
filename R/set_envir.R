@@ -20,7 +20,7 @@
 set_envir <- function(layer){
   
   # Check if GRASS session is running
-  if(!check_running()) stop("No active GRASS session. Please use initGRASS.")
+  if(!check_running()) stop("No active GRASS session. Please run the 'initGRASS' function.")
 
   # Check whether input is filepath or is already a raster layer
   if(!is_raster_layer(layer)){
@@ -29,15 +29,20 @@ set_envir <- function(layer){
     r_layer <- layer
   }
   
+  # Retrieve projection info as proj4string
+  r_proj <- proj4string(r_layer)
+    
+  # Retrieve attributes
   r_attr <- get_raster_attr(r_layer)
   
-  execGRASS("g.mapset", flags = c("quiet"),
-            parameters = list(
-              mapset = "PERMANENT"))
+  # execGRASS("g.mapset", flags = c("quiet"),
+  #           parameters = list(
+  #             mapset = "PERMANENT"))
   
   execGRASS("g.proj", flags = c("c", "quiet"),
             parameters = list(
-              georef = slot(slot(r_layer, "file"), "name")
+              # georef = slot(slot(r_layer, "file"), "name")
+              proj4 = r_proj
             ))
   
   execGRASS("g.region", flags = c("verbose"),
