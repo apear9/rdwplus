@@ -4,63 +4,26 @@
 \alias{fill_sinks}
 \title{Fill sinks in a digital elevation model (DEM)}
 \usage{
-fill_sinks(dem, out, flags, overwrite = FALSE, max_memory = 300, ...)
+fill_sinks(dem, out, overwrite = FALSE, ...)
 }
 \arguments{
 \item{dem}{The name of a DEM in the current GRASS mapset.}
 
 \item{out}{Name of the output, which is a hydrologically corrected (sink-filled) DEM.}
 
-\item{flags}{Optional. A vector of flags that should be passed to \code{r.hydrodem}. See details for more on the possible flags.}
-
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 
-\item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
-
-\item{...}{Optional additional parameters to \code{r.hydrodem}.}
+\item{...}{Optional additional parameters to \code{r.fill.dir}.}
 }
 \value{
 Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
 }
 \description{
-A sink is a depression in a DEM. Water flows into these depressions but not out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions. This function removes depressions (sinks) in a DEM. Note that this function calls \code{r.hydrodem}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
-}
-\details{
-The following flags may be supplied (as strings):
-
-\itemize{
-    \item "a": The nuclear option. Vigorously remove all sinks.
-    \item "verbose": Lots of module output.
-    \item "quiet": Barely any module output.
-}
+A sink is a depression in a DEM. Water flows into these depressions but does not flow out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions. This function removes depressions (sinks) in a DEM. Note that this function calls \code{r.hydrodem}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 }
 \examples{
 # Will only run if GRASS is running
 if(check_running()){
-# Load data set
-dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
-sites <- system.file("extdata", "site.shp", package = "rdwplus")
-stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
-# Set environment parameters and import data to GRASS
-set_envir(dem)
-raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE))
-vector_to_mapset(vectors = c(sites, stream_shp))
-
-# Create binary stream
-rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
-reclassify_streams("streams_rast.tif", "streams_binary.tif",
- out_type = "binary", overwrite = TRUE)
-
-# Burn dem 
-burn_in(dem = "dem.tif", stream = "streams_binary.tif", 
-out = "dem_burn.tif", burn = 10, overwrite = TRUE)
-
-# Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
-
-# Plot
-plot_GRASS("dem_fill.tif", col = topo.colors(15))
 }
 }

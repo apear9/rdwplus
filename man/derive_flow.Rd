@@ -4,7 +4,15 @@
 \alias{derive_flow}
 \title{Obtain flow direction and accumulation over a digital elevation model (DEM)}
 \usage{
-derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE, max_memory = 300, ...)
+derive_flow(
+  dem,
+  flow_dir,
+  flow_acc,
+  d8 = TRUE,
+  overwrite = FALSE,
+  max_memory = 300,
+  ...
+)
 }
 \arguments{
 \item{dem}{A digital elevation model that has been hydrologically corrected.}
@@ -13,7 +21,9 @@ derive_flow(dem, flow_dir, flow_acc, overwrite = FALSE, max_memory = 300, ...)
 
 \item{flow_acc}{The name of the output flow accumulation file in the current GRASS mapset.}
 
-\item{overwrite}{Whether any of the outputs should be allowed to overwrite existing files.}
+\item{d8}{A logical indicating whether D8 flow direction should be used. If \code{FALSE}, multiple flow direction is allowed. Defaults to \code{TRUE}.}
+
+\item{overwrite}{A logical indicating whether any of the outputs should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
