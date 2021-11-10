@@ -11,7 +11,7 @@
 #' 
 #' }
 #' @export
-fill_sinks <- function(dem, out, overwrite = FALSE, max_memory = 300, ...){
+fill_sinks <- function(dem, out, overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
