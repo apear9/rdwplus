@@ -33,7 +33,6 @@ fill_sinks <- function(dem, out, overwrite = FALSE, ...){
       parameters = list(
         input = dem,
         output = out,
-        memory = max_memory,
         ...
       )
     )
