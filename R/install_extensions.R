@@ -5,7 +5,7 @@
 #' 
 #' This function has no arguments. Simply run it and it will install a pre-set list of GRASS extensions.
 #' 
-#' Currently, the only GRASS extension required is \code{r.stream.snap}.
+#' Currently, the GRASS extension required are \code{r.stream.snap} and \code{r.wateroutlet.lessmem}.
 #' 
 #' @examples 
 #' # Will only run if GRASS is running
@@ -19,6 +19,7 @@ install_extensions <- function(){
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
   
   execGRASS("g.extension", parameters = list(extension = "r.stream.snap"))
+  execGRASS("g.extension", parameters = list(extension = "r.wateroutlet.lessmem"))
   
   # Return nothing
   invisible()
