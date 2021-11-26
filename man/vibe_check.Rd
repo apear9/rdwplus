@@ -2,7 +2,7 @@
 % Please edit documentation in R/vibe_check.R
 \name{vibe_check}
 \alias{vibe_check}
-\title{A function to print current vectors and rasters in the mapset.}
+\title{A function to summarise the computation region, vectors and rasters in the mapset.}
 \usage{
 vibe_check()
 }
@@ -10,7 +10,7 @@ vibe_check()
 Nothing.
 }
 \description{
-This function takes no inputs. It prints a list of maps in the current GRASS mapset.
+This function takes no inputs. It prints a list of maps in the current GRASS mapset, as well as the parameters of the current computation region.
 }
 \examples{
 if(check_running()) vibe_check()
