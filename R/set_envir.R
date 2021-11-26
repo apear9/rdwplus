@@ -1,6 +1,7 @@
-#' Set environment parameters from a GIS layer.
+#' Set projection and computation region from a raster file.
 #' @description This function simplifies the process of setting up a GRASS environment with parameters such as cell snapping, size and mapset extent. 
-#' @param layer A \code{Raster*} object or the file path to a GIS layer that should be used to set environment parameters such as cell size, extent, etc.
+#' @param file The file path to a raster that should be used to set environment parameters such as the projection, cell size, extent, etc. The \code{file} argument will automatically be imported into the mapset as \code{basename(file)}.
+#' @param ... Optional arguments for \code{raster_to_mapset()}. The main argument of interest for most users will be \code{overwrite}, which should be set to true if an object of name \code{basename(file)} already exists in the mapset.
 #' @return Nothing. Displays current environment settings.
 #' @examples 
 #' # Will only run if GRASS is running
@@ -12,40 +13,32 @@
 #' # Set environment 
 #' set_envir(dem)
 #' 
-#' # Get environment metadata
-#' gmeta()
-#' 
 #' }
 #' @export
-set_envir <- function(layer){
+set_envir <- function(file, ...){
   
   # Check if GRASS session is running
   if(!check_running()) stop("No active GRASS session. Please run the 'initGRASS' function.")
 
-  # Check whether input is filepath or is already a raster layer
-  if(!is_raster_layer(layer)){
-    r_layer <- raster(layer)
-  } else {
-    r_layer <- layer
-  }
+  # Projection must be set first from file
+  execGRASS(
+    "g.proj", 
+    flags = c("c", "quiet"),
+    parameters = list(
+      georef = file
+    )
+  )
   
-  # Retrieve projection info as proj4string
-  r_proj <- proj4string(r_layer)
-    
-  # Retrieve attributes
-  r_attr <- get_raster_attr(r_layer)
+  # Import the layer into the mapset
+  layer <- raster_to_mapset(file, ...) 
   
-  # execGRASS("g.mapset", flags = c("quiet"),
-  #           parameters = list(
-  #             mapset = "PERMANENT"))
-  
-  execGRASS("g.proj", flags = c("c", "quiet"),
-            parameters = list(
-              # georef = slot(slot(r_layer, "file"), "name")
-              proj4 = r_proj
-            ))
-  
-  execGRASS("g.region", flags = c("verbose"),
-            parameters = r_attr)
+  # Set region parameters from the layer in the mapset
+  execGRASS(
+    "g.region", 
+    flags = c("verbose"), # not sure of utility of this flag.
+    parameters = list(
+      raster = layer        
+    )
+  )
   
 }
