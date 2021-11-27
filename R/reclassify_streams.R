@@ -51,9 +51,8 @@ reclassify_streams <- function(stream, out, out_type = "binary", overwrite = FAL
     none(stream, out, overwrite)
   }
   if(out_type == "unary"){
-    ind <- !is.na(stream[])
     # Ones for stream
-     unary(stream, out, overwrite)
+    unary(stream, out, overwrite)
   }
   
   # Return nothing 
