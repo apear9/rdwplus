@@ -6,7 +6,7 @@ Authors@R: c(person("Alan", "Pearse", email = "arp320@uowmail.edu.au", role = c(
 Author: Alan Pearse [aut, cre], Grace Heron [aut], Erin Peterson [aut]
 Maintainer: Alan Pearse <arp320@uowmail.edu.au>
 Description: Compute spatially explicit land-use metrics for stream survey sites in GRASS GIS and R as an open-source implementation of IDW-PLUS (Inverse Distance Weighted Percent Land Use for Streams). The package includes functions for preprocessing digital elevation and streams data, and one function to compute all the spatially explicit land use metrics described in Peterson et al. (2011) <doi:10.1111/j.1365-2427.2010.02507.x> and previously implemented by Peterson and Pearse (2017) <doi:10.1111/1752-1688.12558> in ArcGIS-Python as IDW-PLUS. 
-Depends: R (>= 3.5.0), raster, rgrass7
+Depends: R (>= 3.5.0), rgrass7, stars
 Imports: methods, utils
 License: GPL-3
 Encoding: UTF-8
