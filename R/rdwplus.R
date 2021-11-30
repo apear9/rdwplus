@@ -4,7 +4,7 @@
 #' 
 #' @docType package
 #' @name rdwplus
-#' @import raster
+#' @import stars
 #' @import rgrass7
 #' @importFrom methods is
 #' @importFrom utils read.csv write.csv
