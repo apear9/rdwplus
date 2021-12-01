@@ -8,7 +8,6 @@
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory (in Mb) used in memory swap mode. Defaults to \code{300} Mb.
 #' @param ... Additional arguments to \code{r.stream.snap}.
-#' 
 #' @return Nothing.
 #' @export 
 snap_to_stream <- function(sites, streams, max_move, out, overwrite = FALSE, max_memory = 300, ...){
@@ -31,6 +30,28 @@ snap_to_stream <- function(sites, streams, max_move, out, overwrite = FALSE, max
         ...
       )
     )
+  
+  # Compute snapping distance for each feature
+  execGRASS(
+    "v.db.addcolumn",
+    flags = "quiet",
+    parameters = list(
+      map = sites,
+      columns = "snap_stream double precision"
+    )
+  ) # what happens when column already exists?
+  execGRASS(
+    "v.distance",
+    flags = flags,
+    parameters = list(
+      to = out,
+      from = sites,
+      from_type = "point",
+      to_type = "point",
+      upload = "dist",
+      column = "snap_stream"
+    )
+  )
   
   # Return nothing
   invisible()
