@@ -22,13 +22,12 @@ plot_GRASS <- function(x, out_x, colours, ...){
   # Load into r
   r <- read_stars(out_x)
   
-  # Compute the number of breaks
-  computed_breaks <- length(colours) + 1
-  
   # Display raster
   if(missing(colours)){
     plot(r) 
   } else {
+    # Compute the number of breaks
+    computed_breaks <- length(colours) + 1
     plot(r, col = colours, nbreaks = computed_breaks, ...)
   }
   
