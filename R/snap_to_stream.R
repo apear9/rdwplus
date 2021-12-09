@@ -37,7 +37,7 @@ snap_to_stream <- function(sites, streams, max_move, out, overwrite = FALSE, max
     flags = "quiet",
     parameters = list(
       map = sites,
-      columns = "snap_stream double precision"
+      columns = "snap_stm double precision"
     )
   ) # what happens when column already exists?
   execGRASS(
@@ -49,7 +49,7 @@ snap_to_stream <- function(sites, streams, max_move, out, overwrite = FALSE, max
       from_type = "point",
       to_type = "point",
       upload = "dist",
-      column = "snap_stream"
+      column = "snap_stm"
     )
   )
   
