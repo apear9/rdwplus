@@ -4,10 +4,12 @@
 \alias{coord_to_raster}
 \title{Turn coordinates of outlets into rasters}
 \usage{
-coord_to_raster(outlet, out, overwrite = FALSE)
+coord_to_raster(outlets, which, out, overwrite = FALSE)
 }
 \arguments{
-\item{outlet}{A single pair of Easting, Northing or long, lat coordinates as a numeric vector.}
+\item{outlets}{The name of a set of sites in the current GRASS mapset.}
+
+\item{which}{The site to convert to raster.}
 
 \item{out}{The file name of the output outlet raster in the current GRASS mapset.}
 
