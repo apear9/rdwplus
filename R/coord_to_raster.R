@@ -1,31 +1,27 @@
 #' Turn coordinates of outlets into rasters
 #' @description Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
 #' @param outlets The name of a set of sites in the current GRASS mapset.
-#' @param which The site to convert to raster.
+#' @param which A numeric identifier for the site to convert to raster.
 #' @param out The file name of the output outlet raster in the current GRASS mapset.
 #' @param overwrite Whether the output files should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @return Nothing.
+#' @details 
+#' This function is exposed to the user, and users are welcome to use if convenient for them, this function is intended for internal use in other functions. 
 #' @examples
 #' # Will only run if GRASS is running
 #' if(check_running()){
 #' # Load data set
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' sts <- system.file("extdata", "sites.shp", packages = "rdwplus")
 #' 
 #' # Set environment parameters
 #' set_envir(dem)
 #' 
-#' # Read in data
-#' raster_to_mapset(dem)
+#' # Read in sites
+#' vector_to_mapset(sts)
 #' 
-#' # Set coordinates to rasterise
-#' coord_df <-  c(1098671, 6924794)
-#' 
-#' # Convert to raster
-#' coord_to_raster(outlet = coord_df, out = "coords", overwrite = TRUE)
-#' 
-#' # Plot
-#' plot_GRASS("dem.tif", col = topo.colors(15))
-#' plot_GRASS("coords", col = "red", add = TRUE)
+#' # Convert first site to raster
+#' coord_to_raster(sts, 1, "coords", overwrite = TRUE)
 #' }
 #' @export
 coord_to_raster <- function(outlets, which, out, overwrite = FALSE){
