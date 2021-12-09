@@ -41,7 +41,7 @@ coord_to_raster <- function(outlets, which, out, overwrite = FALSE){
       input = outlets,
       output = basename(out),
       use = "cat",
-      cat = as.character(which)
+      cats = as.character(which)
     )
   )
   
