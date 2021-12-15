@@ -7,11 +7,11 @@
 get_watersheds(sites, flow_dir, out, overwrite = FALSE, lessmem = FALSE)
 }
 \arguments{
-\item{sites}{A file path to a shapefile of points or a \code{SpatialPoints*} object.}
+\item{sites}{A file path to a shapefile of points.}
 
 \item{flow_dir}{The name of a flow direction grid in the current GRASS mapset.}
 
-\item{out}{The base name of the output rasters. Watershed rasters with the name \code{basename(out)} will be imported into the GRASS mapset. If \code{write_file} is true, then a file with the name \code{out} will be written into the user's current working directory.}
+\item{out}{The names of the output watershed rasters.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 
