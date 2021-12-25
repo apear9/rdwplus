@@ -2,76 +2,32 @@
 #' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
 #' @param landuse Names of binary landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed. Binary means land use cells are coded 1 and all other cells are given a value of 0.
-#' @param sites A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.
-#' @param elevation File name of a filled (hydrologically-conditioned) digital elevation model in the current GRASS mapset.
-#' @param flow_dir A 'Deterministic 8' (D8) flow direction grid derived from \code{derive_flow}.
-#' @param flow_acc File name of a flow accumulation grid derived from \code{derive_flow} in the current GRASS mapset.
-#' @param streams File name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
+#' @param sites A vector data set of survey sites in the current GRASS mapset. 
+#' @param watersheds A vector of watershed raster names in the current GRASS mapset.
+#' @param flow_dir Name of a flow direction raster produced
+#' @param flow_acc Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.
+#' @param streams Name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
-#' @return A \code{data.frame} object, which is a table with rows corresponding to those from the \code{sites} argument plus columns for each combination of land use and metric type. 
+#' @return A \code{sf} object, which is a table with columns for each combination of land use and metric type. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @examples 
 #' # Will only run if GRASS is running
 #' if(check_running()){
-#' # Load data set
-#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-#' landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
-#' sites <- system.file("extdata", "site.shp", package = "rdwplus")
-#' stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
-#' 
-#' # Set environment parameters and import data into GRASS
-#' set_envir(dem)
-#' raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE),
-#' overwrite = TRUE)
-#' vector_to_mapset(vectors = c(sites, stream_shp), overwrite = TRUE)
-#' 
-#' # Create binary stream
-#' out_name <- paste0(tempdir(), "/streams_rast.tif")
-#' rasterise_stream("streams", out_name, overwrite = TRUE)
-#' reclassify_streams("streams_rast.tif", "streams_binary.tif", 
-#' out_type = "binary", overwrite = TRUE)
-#' 
-#' # Burn dem 
-#' burn_in(dem = "dem.tif", stream = "streams_binary.tif", 
-#' out = "dem_burn.tif", burn = 10, overwrite = TRUE)
-#' 
-#' # Fill sinks
-#' fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
-#' 
-#' # Derive flow accumulation and direction grids
-#' derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", 
-#' flow_acc = "facc.tif", overwrite = TRUE)
-#' 
-#' # Snap sites to pour points (based on flow accumulation)
-#' out_snap <- paste0(tempdir(), "/snapsite.shp")
-#' snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
-#' out = out_snap, overwrite = TRUE)
-#' 
-#' # Compute metrics
-#' lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), 
-#'                               landuse = "landuse.tif",
-#'                               sites =  out_snap, 
-#'                               elevation = "dem_fill.tif", 
-#'                               flow_dir = "fdir.tif", 
-#'                               flow_acc = "facc.tif", 
-#'                               streams = "streams_rast.tif")
-#' print(lu_metrics)
 #' }
 #' @export
 compute_metrics <- function(
-  metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
+  metrics = c("lumped", "iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
   sites,
-  elevation,
+  watersheds,
   flow_dir,
   flow_acc,
   streams,
   idwp = -1, 
-  max_memory = 300,
-  lessmem = FALSE
+  max_memory = 300
 ){
   
   # Check inputs
@@ -79,52 +35,50 @@ compute_metrics <- function(
   is_stream <- length(grep("S", metrics)) > 0
   if(no_stream & is_stream) stop("You need to provide a stream raster in order to compute either of the iFLS and HAiFLS metrics.")
   
-  # Check sites, import as shapefile if it is not one already 
-  if(!is_sppoints(sites)) sites <- shapefile(sites)
+  # Check sites, import as sf  
+  sites_tmp <- tempfile(fileext = ".shp")
+  retrieve_vector(sites, sites_tmp)
+  sites_sf <- read_sf(sites_tmp)
+  
+  # Get coordinates
+  all_coordinates <- st_coordinates(sites_sf)
+  n_sites <- nrow(all_coordinates)
   
   # Derive null streams if any metrics require it
   if(is_stream){
-    # Retrieve the streams and reclassify them
-    # streams_convert <- paste(paste0("stream", sample(0:9, 5, TRUE)), collapse = "")
-    # streams_convert <- paste0(tempdir(), "/", streams_convert, ".tif")
-    # retrieve_raster(streams, streams_convert, overwrite = TRUE)
+    
     # Generate random name to minimise risk of overwriting anything important
-    rand_name <- paste(paste0(sample(letters, 5, TRUE), sample(0:9, 5, TRUE)), collapse = "")
-    rand_name <- paste0(
-      # tempdir(), "/", 
-      rand_name, ".tif")
+    rand_name <- basename(paste0(tempfile(), ".tif"))
+    
     # Create streams raster with null in stream
-    # reclassify_streams(streams_convert, rand_name, "none", TRUE)
     reclassify_streams(streams, rand_name, "none", TRUE)
-    # rand_name <- basename(rand_name)
+    
+    # Print message
+    message(paste0(Sys.time(), ": stream retrieval"))
+  
   }
-  message(paste0(Sys.time(), ": stream retrieval "))
+
   # Initialise empty list to store results
-  # List structure:
-  # Top level -- land use types [x length(landuse)]
-  # Second level -- metrics [x length(metrics)]
   result_metrics <- vector("list", length(landuse))
   names(result_metrics) <- basename(landuse)
+  
   # Create lists for second level
   metrics_list <- vector("list", length(metrics))
   names(metrics_list) <- metrics
+  
   # Loop to insert
   for(a in 1:length(result_metrics)){
     result_metrics[[a]] <- metrics_list
   }
   
   # Main loop for metric computation per site
-  for(rowID in 1:nrow(sites@data)){
+  for(rowID in 1:n_sites){
     
     # Print dialogue to user
     message(paste0(Sys.time(), ": rowID : ", rowID))
     
-    # Compute current site's watershed
-    current_watershed <- paste0("watershed_", rowID, ".tif")
-    get_watershed(sites, rowID, flow_dir, current_watershed, FALSE, TRUE) # change watershed flag later
-    
-    # Print dialogue to user
-    message(paste0(Sys.time(), ": rowID : ", rowID, " : watershed delineated"))
+    # Get current watershed
+    current_watershed <- watersheds[rowID]
     
     # Compute lumped metric if requested
     if(any(metrics == "lumped")){
@@ -133,7 +87,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute numbers of cells in and out of landuse
-        lumped_table <- paste0(tempdir(), "/lumped_table.csv")
+        lumped_table <- tempfile(fileext = ".csv")
         zonal_table(current_watershed, landuse[lu_idx], lumped_table)
         
         # Import table
@@ -151,13 +105,12 @@ compute_metrics <- function(
         
       }
       
-      
     }
     
     # Get pour points / outlets as raster cells 
-    coords_i <- sites@coords[rowID, 1:2]
-    coords_i_out <- paste0("pour_point_", rowID)
-    coord_to_raster(coords_i, coords_i_out, TRUE)
+    # coords_i <- all_coordinates[rowID, 1:2]
+    coords_i_out <- basename(tempfile())
+    coord_to_raster(sites, rowID, coords_i_out, TRUE)
     
     # Mask to this watershed for following operations
     set_mask(basename(current_watershed))
@@ -178,7 +131,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table of statistics
-        iEDO_table <- paste0(tempdir(), "/iEDO_table.csv")
+        iEDO_table <- tempfile(fileext = ".csv")
         zonal_table("wEDO", landuse[lu_idx], iEDO_table)
         
         # Get result table
@@ -210,7 +163,10 @@ compute_metrics <- function(
         }
         
       }
-      message(paste0( Sys.time(), ": rowID : ", rowID, " : iEDO finish"))
+      
+      # Print message
+      message(paste0( Sys.time(), ": rowID : ", rowID, " : iEDO finished"))
+    
     }
     
     if(any(metrics == "iEDS")){
@@ -231,7 +187,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Get table of statistics
-        iEDS_table <- paste0(tempdir(), "/iEDS_table.csv")
+        iEDS_table <- tempfile(fileext = ".csv")
         zonal_table("wEDS", landuse[lu_idx], iEDS_table)
         
         # Get result table
@@ -263,7 +219,10 @@ compute_metrics <- function(
         }
 
       }
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : iEDS finish"))
+      
+      # Print message
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : iEDS finished"))
+      
     }
     
     # Compute iFLO weights
@@ -278,7 +237,9 @@ compute_metrics <- function(
       # Compute iFLO weights for real
       iFLO_weights_command <- paste0("wFLO = ( ", current_flow_out, " + 1)^", idwp)
       rast_calc(iFLO_weights_command)
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : FLO weights finish"))
+      
+      # Print message
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : FLO weights finished"))
       
     }
     
@@ -296,7 +257,7 @@ compute_metrics <- function(
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
       rast_calc(iFLS_weights_command)
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : FLS weights finish"))
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : FLS weights finished"))
       
     }
     
@@ -306,7 +267,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLO_table <- paste0(tempdir(), "/iFLO_table.csv")
+        iFLO_table <- tempfile(fileext = ".csv")
         zonal_table("wFLO", landuse[lu_idx], iFLO_table)
         
         # Get result table
@@ -338,7 +299,7 @@ compute_metrics <- function(
         }
         
       }
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLO finish"))
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLO finished"))
     }
     
     # Compute iFLS metric in full if needed
@@ -348,7 +309,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute table
-        iFLS_table <- paste0(tempdir(), "\\iFLS_table.csv")
+        iFLS_table <- tempfile(fileext = ".csv")
         
         zonal_table("wFLS", landuse[lu_idx], iFLS_table)
         
@@ -381,7 +342,7 @@ compute_metrics <- function(
         }
         
       }
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLS finish"))
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLS finished"))
     }
     
     # Compute HAiFLO weights if needed
@@ -394,7 +355,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLO_table <- paste0(tempdir(), "/HA_iFLO_table.csv")
+        HA_iFLO_table <- tempfile(fileext = ".csv")
         zonal_table("HA_iFLO", landuse[lu_idx], HA_iFLO_table)
         
         # Get result table
@@ -426,7 +387,7 @@ compute_metrics <- function(
         }
         
       }
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLO finish"))
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLO finished"))
     }
     
     # Compute HAiFLS weights if needed
@@ -439,7 +400,7 @@ compute_metrics <- function(
       for(lu_idx in 1:length(landuse)){
         
         # Compute zonal stats as table
-        HA_iFLS_table <- paste0(tempdir(), "/HA_iFLS_table.csv")
+        HA_iFLS_table <- tempfile(fileext = ".csv")
         zonal_table("HA_iFLS", landuse[lu_idx], HA_iFLS_table)
         
         # Get result table
@@ -471,7 +432,7 @@ compute_metrics <- function(
         }
         
       }
-      message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLS finish"))
+      message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLS finished"))
     }
     
     # Remove mask
@@ -481,8 +442,8 @@ compute_metrics <- function(
   
   # Create data frame with land use x metrics
   full_data <- matrix(
-    as.numeric(rownames(sites@data)), 
-    nrow(sites@data), 
+    as.numeric(rownames(sites_sf)), 
+    nrow(sites_sf), 
     1
   )
   colnames(full_data) <- "ID"
@@ -494,7 +455,10 @@ compute_metrics <- function(
     full_data <- cbind(full_data, temp_data)
   }
   full_data <- as.data.frame(full_data)
+  
+  # Print message
   message(paste0(Sys.time(), ": Successfully completed computing metrics"))
+  
   # Return data frame with site metrics immediately
   return(full_data)
   
