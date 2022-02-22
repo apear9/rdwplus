@@ -5,6 +5,7 @@
 #' @param out_type Either 'binary', 'unary', or 'none'. See the Description above.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @return Nothing. A file with the name \code{out} will be written to the current GRASS mapset. This raster will be in unsigned integer format.
+#' @details Do not use raster names containing dashes/hyphens. The underlying call to r.calc will crash if the raster name contains these symbols because they are misinterpreted as math symbols.
 #' @examples
 #' # Will only run if GRASS is running
 #' if(check_running()){
