@@ -6,7 +6,7 @@
 #' @param watersheds A vector of watershed raster names in the current GRASS mapset.
 #' @param flow_dir Name of a flow direction raster produced
 #' @param flow_acc Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.
-#' @param streams Name of a streams raster in the current GRASS mapset. Stream cells should have a value and non-stream cells should have a NoData value. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
+#' @param streams Name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
