@@ -3,6 +3,7 @@
 #' @param dem The name of a DEM in the current GRASS mapset.
 #' @param out_dem Name of the output DEM, which is a hydrologically corrected (sink-filled) DEM.
 #' @param out_fd Name of the output flow direction map for the sink-filled DEM.
+#' @param out_sinks Optional argument giving the name of the output sinks raster. Leave this missing to skip the output.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param ... Optional additional parameters to \code{r.fill.dir}.
 #' @return  Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
@@ -12,7 +13,7 @@
 #' 
 #' }
 #' @export
-fill_sinks <- function(dem, out_dem, out_fd, overwrite = FALSE, ...){
+fill_sinks <- function(dem, out_dem, out_fd, out_sinks, overwrite = FALSE, ...){
   
   # Check that GRASS is running
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -21,15 +22,21 @@ fill_sinks <- function(dem, out_dem, out_fd, overwrite = FALSE, ...){
   flags <- NULL
   if(overwrite) flags <- "overwrite"
   
+  # Inputs list
+  inputs <- list(
+    input = dem,
+    output = out_dem,
+    direction = out_fd,
+    ...
+  )
+  # Add sink-checking argument
+  if(!missing(out_sinks)) inputs$areas <- out_sinks
+  
+  # Execcute GRASS command
   execGRASS(
     "r.fill.dir",
     flags = flags,
-    parameters = list(
-      input = dem,
-      output = out_dem,
-      direction = out_fd,
-      ...
-    )
+    parameters = inputs
   )
   
   # Return nothing
