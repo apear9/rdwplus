@@ -1,12 +1,12 @@
 #' Compute spatially explicit watershed attributes for survey sites on streams
 #' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
-#' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.
+#' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate the lumped, iFLO, iFLS, HAiFLO, and HAiFLS metrics.
 #' @param landuse Names of binary landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed. Binary means land use cells are coded 1 and all other cells are given a value of 0.
 #' @param sites A vector data set of survey sites in the current GRASS mapset. 
 #' @param watersheds A vector of watershed raster names in the current GRASS mapset.
-#' @param flow_dir Name of a flow direction raster produced
+#' @param flow_dir Name of a flow direction raster produced by \code{derive_flow} in the current GRASS mapset.
 #' @param flow_acc Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.
-#' @param streams Name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
+#' @param streams Name of a streams raster in the current GRASS mapset. The stream raster must have NoData values in cells that do not fall along the stream line. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
@@ -116,7 +116,6 @@ compute_metrics <- function(
     set_mask(basename(current_watershed))
     
     # Compute iEDO weights
-    
     if(any(metrics == "iEDO")){
       
       # Compute distance
