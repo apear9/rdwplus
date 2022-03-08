@@ -11,7 +11,7 @@
 #' @param ... Additional arguments to \code{r.stream.snap}.
 #' @return Nothing.
 #' @export 
-snap_to_flow <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, ...){
+snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, ...){
   
   # Check if a GRASS session exists
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
