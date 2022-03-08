@@ -1,4 +1,4 @@
-compute_iFLO_weights <- function(pp, fd, out1, out2, ...){
+compute_iFLO_weights <- function(pp, fd, idwp, out1, out2, ...){
   # pp -- pour point as x-y coordinate
   # fd -- flow direction grid
   
