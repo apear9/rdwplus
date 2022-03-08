@@ -2,7 +2,8 @@
 #' @description Derive a set of stream lines from a flow accumulation raster.
 #' @param dem Name of the elevation raster in the current GRASS mapset.
 #' @param flow_acc Name of the flow accumulation raster in the current GRASS mapset.
-#' @param out File path to the output vector dataset of stream lines. Should be WITHOUT .shp extension. 
+#' @param out_vect Name of the output vector dataset of stream lines. Should be WITHOUT .shp extension. 
+#' @param out_rast Name of the output raster dataset of stream lines. File extensions should not matter.
 #' @param min_acc The minimum accumulation value (in upstream cells) that a cell needs to have in order to be classified as a stream. Defaults to \code{1000}.
 #' @param min_length The minimum length of a stream segment in cells. Defaults to \code{0}.
 #' @param overwrite A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.
@@ -43,7 +44,7 @@
 #' derive_streams(dem = "dem_fill.tif", flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
 #' }
 #' @export
-derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, overwrite = FALSE, ...){
+derive_streams <- function(dem, flow_acc, out_rast, out_vect, min_acc = 1e3, min_length = 0, overwrite = FALSE, ...){
   
   # Check for GRASS instance
   if(!check_running()) stop("There is no valid GRASS session. Program halted.")
@@ -53,7 +54,6 @@ derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, ov
   if(overwrite) flags <- c(flags, "overwrite")
   
   # Execute GRASS function
-  out_grass <- basename(out)
   execGRASS(
     "r.stream.extract",
     flags = flags,
@@ -62,7 +62,8 @@ derive_streams <- function(dem, flow_acc, out, min_acc = 1e3, min_length = 0, ov
       accumulation = flow_acc,
       stream_length = min_length,
       threshold = min_acc,
-      stream_vector = out_grass,
+      stream_vector = out_vect,
+      stream_raster = out_rast,
       ...
     )
   )

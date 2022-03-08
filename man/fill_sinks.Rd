@@ -4,7 +4,7 @@
 \alias{fill_sinks}
 \title{Fill sinks in a digital elevation model (DEM)}
 \usage{
-fill_sinks(dem, out_dem, out_fd, overwrite = FALSE, ...)
+fill_sinks(dem, out_dem, out_fd, out_sinks, overwrite = FALSE, ...)
 }
 \arguments{
 \item{dem}{The name of a DEM in the current GRASS mapset.}
@@ -12,6 +12,8 @@ fill_sinks(dem, out_dem, out_fd, overwrite = FALSE, ...)
 \item{out_dem}{Name of the output DEM, which is a hydrologically corrected (sink-filled) DEM.}
 
 \item{out_fd}{Name of the output flow direction map for the sink-filled DEM.}
+
+\item{out_sinks}{Optional argument giving the name of the output sinks raster. Leave this missing to skip the output.}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite existing files. Defaults to \code{FALSE}.}
 

@@ -7,7 +7,8 @@
 derive_streams(
   dem,
   flow_acc,
-  out,
+  out_rast,
+  out_vect,
   min_acc = 1000,
   min_length = 0,
   overwrite = FALSE,
@@ -19,7 +20,9 @@ derive_streams(
 
 \item{flow_acc}{Name of the flow accumulation raster in the current GRASS mapset.}
 
-\item{out}{File path to the output vector dataset of stream lines. Should be WITHOUT .shp extension.}
+\item{out_rast}{Name of the output raster dataset of stream lines. File extensions should not matter.}
+
+\item{out_vect}{Name of the output vector dataset of stream lines. Should be WITHOUT .shp extension.}
 
 \item{min_acc}{The minimum accumulation value (in upstream cells) that a cell needs to have in order to be classified as a stream. Defaults to \code{1000}.}
 
