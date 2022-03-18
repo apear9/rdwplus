@@ -23,7 +23,10 @@ fill_sinks(dem, out_dem, out_fd, out_sinks, overwrite = FALSE, ...)
 Nothing. A file with the name \code{out} will be created in the current GRASS mapset.
 }
 \description{
-A sink is a depression in a DEM. Water flows into these depressions but does not flow out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions. This function removes depressions (sinks) in a DEM. Note that this function calls \code{r.hydrodem}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+Remove sinks in a DEM (see the 'Details' section)
+}
+\details{
+A sink is a depression in a DEM. Water flows into these depressions but does not flow out of them. These depressions, although often real features of landscapes, are problematic for flow direction and accumulation algorithms. Therefore, it is common practice to remove these depressions.
 }
 \examples{
 # Will only run if GRASS is running

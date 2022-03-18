@@ -19,7 +19,7 @@ coord_to_raster(outlets, which, out, overwrite = FALSE)
 Nothing.
 }
 \description{
-Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
+Given a set of x-y coordinates, this function will return a raster with a single cell at those coordinates.
 }
 \details{
 This function is exposed to the user, and users are welcome to use if convenient for them, this function is intended for internal use in other functions.

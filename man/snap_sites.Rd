@@ -2,7 +2,7 @@
 % Please edit documentation in R/snap_sites.R
 \name{snap_sites}
 \alias{snap_sites}
-\title{A function to snap sites survey sites simultaneously to a stream raster and a flow accumulation raster}
+\title{A function to snap survey sites to a stream raster and a flow accumulation raster}
 \usage{
 snap_sites(
   sites,
@@ -37,4 +37,9 @@ Nothing.
 }
 \description{
 This function takes a set of survey site locations and snaps them to the highest-value cell within a flow accumulation raster, within a specified distance. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+}
+\examples{
+# Will only run if GRASS is running
+if(check_running()){
+} 
 }

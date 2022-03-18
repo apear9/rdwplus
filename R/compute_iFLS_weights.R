@@ -2,6 +2,7 @@ compute_iFLS_weights <- function(fd, stream, null_stream, idwp, out1, out2, out3
   # fd - flow direction grid
   # stream - stream grid with NoData for non-stream cells
   # null_stream - stream grid with NoData for the stream cells
+  # idwp - inverse distance weighting power
   # out1, out2, out3 - various output names
   
   # Compute flow length

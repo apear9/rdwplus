@@ -1,5 +1,5 @@
 #' A function to snap sites survey sites to a stream raster
-#' @description This function takes a set of survey site locations and makes sure that they are coincident with the point nearest the stream line within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+#' @description This function takes a set of survey site locations and makes sure that they sit exactly on the stream line or the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 #'
 #' @param sites File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.
 #' @param streams Name of a binary streams raster in the current GRASS mapset.  

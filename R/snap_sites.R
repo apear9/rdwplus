@@ -1,4 +1,4 @@
-#' A function to snap sites survey sites simultaneously to a stream raster and a flow accumulation raster
+#' A function to snap survey sites to a stream raster and a flow accumulation raster
 #' @description This function takes a set of survey site locations and snaps them to the highest-value cell within a flow accumulation raster, within a specified distance. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 #'
 #' @param sites File name for a shapefile containing the locations of the survey sites in the current GRASS mapset.
@@ -10,6 +10,10 @@
 #' @param max_memory Max memory (in) used in memory swap mode. Defaults to \code{300} Mb.
 #' @param ... Additional arguments to \code{r.stream.snap}.
 #' @return Nothing.
+#' @examples 
+#' # Will only run if GRASS is running
+#' if(check_running()){
+#' } 
 #' @export 
 snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE, max_memory = 300, ...){
   

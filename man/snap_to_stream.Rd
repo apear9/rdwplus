@@ -33,5 +33,5 @@ snap_to_stream(
 Nothing.
 }
 \description{
-This function takes a set of survey site locations and makes sure that they are coincident with the point nearest the stream line within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
+This function takes a set of survey site locations and makes sure that they sit exactly on the stream line or the point of highest flow accumulation within a specified distance. This is equivalent to snapping sites to a stream network. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 }

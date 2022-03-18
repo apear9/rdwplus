@@ -1,5 +1,5 @@
 #' Turn coordinates of outlets into rasters
-#' @description Given a set of coordinates in space (x, y), this function will return a rasterised version of that point in space.
+#' @description Given a set of x-y coordinates, this function will return a raster with a single cell at those coordinates.
 #' @param outlets The name of a set of sites in the current GRASS mapset.
 #' @param which A numeric identifier for the site to convert to raster.
 #' @param out The file name of the output outlet raster in the current GRASS mapset.
