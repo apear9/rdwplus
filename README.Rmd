@@ -80,19 +80,28 @@ set_envir(dem)
 
 ## Importing data into the mapset
 
-We have set up and configured our GRASS session, so now we need to import raster and vector data into the GRASS mapset, which is a collection of layers that GRASS operations can refer to. For rasters, for example, our landuse raster, this is done with
+We have set up and configured our GRASS session, so now we need to import raster and vector data into the GRASS mapset. A mapset is a collection of layers that GRASS operations can refer to. 
+
+In `rdwplus`, we have one function to import raster data into the mapset and another to import vector data. For rasters, we use
+
 ```{r}
 raster_to_mapset(lus, as_integer = TRUE, overwrite = TRUE)
 ```
 
-There is no need to use the `raster_to_mapset()` function for the DEM because it was passed as an argument to the `set_envir()` function, which automatically imports any raster that is passed to it. Also, take note of the argument `as_integer`. This is `FALSE` by default, but it should be set to `TRUE` whenever you are importing an integer-valued raster. If you do not, GRASS may complain that the raster is "not of type CELL" in  
+There is no need to use the `raster_to_mapset()` function for the DEM because it was passed as an argument to the `set_envir()` function, which automatically imports any raster that is passed to it. Also, take note of the argument `as_integer`. This is `FALSE` by default, but it should be set to `TRUE` whenever you are importing an integer-valued raster. This can cause issues later on if you do not take care at this step.
 
-
-For vector data, for example our shapefiles of sites and stream channels, we need to use
+For vector data, we use
 ```{r}
 vector_to_mapset(c(sts, stm), overwrite = TRUE)
 ```
-Note that the `overwrite` option simply allows the data set we're importing to overprint any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, it is `basename(filepath)`. We can use the function `vibe_check` to check if the vector and raster data are currently in the mapset.
+
+Note that the `overwrite` option simply allows the data set we're importing to overwrite any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, if the data set originally existed at `filepath`, the name of the data set in the mapset is `basename(filepath)`. 
+
+We can use the function `vibe_check()` if you need to print a list of all the data currently stored in the GRASS mapset:
+
+```{r}
+vibe_check()
+```
 
 ## Data preprocessing
 
