@@ -5,6 +5,7 @@
 #' @return Nothing. Displays current environment settings.
 #' @examples 
 #' # Will only run if GRASS is running
+#' # You should load rdwplus and initialise GRASS with initGRASS
 #' if(check_running()){
 #' 
 #' # Load data set

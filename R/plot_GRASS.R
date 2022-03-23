@@ -5,6 +5,22 @@
 #' @param out_x Optional. If supplied, the function makes a call to \code{\link{retrieve_raster}} and writes out the raster to the file path \code{out_x}. Otherwise the function will write the layer to \code{tempdir}.
 #' @param ... Additional arguments to \code{plot.stars}.
 #' @return Nothing.
+#' @examples 
+#' # Will only run if GRASS is running
+#' # You should load rdwplus and initialise GRASS via the initGRASS function
+#' if(check_running()){
+#' 
+#' # Load data set
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' 
+#' # Set environment 
+#' set_envir(dem)
+#' 
+#' # Plot
+#' plot_GRASS("dem.tif") # argument must match name of data set in the mapset
+#' plot_GRASS("dem.tif", heat.colors(10)) # with different colour scale
+#' 
+#' }
 #' @export
 plot_GRASS <- function(x, colours, out_x, ...){
   

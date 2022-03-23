@@ -10,7 +10,7 @@ vibe_check()
 Nothing.
 }
 \description{
-This function takes no inputs. It prints a list of maps in the current GRASS mapset, as well as the parameters of the current computation region.
+This function takes no inputs. It prints a list of data sets in the current GRASS mapset, as well as the parameters of the current computation region.
 }
 \examples{
 if(check_running()) vibe_check()

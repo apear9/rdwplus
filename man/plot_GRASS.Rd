@@ -21,3 +21,20 @@ Nothing.
 \description{
 Given the name of a raster in the current GRASS mapset, this function will plot it as a \code{stars} object.
 }
+\examples{
+# Will only run if GRASS is running
+# You should load rdwplus and initialise GRASS via the initGRASS function
+if(check_running()){
+
+# Load data set
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+
+# Set environment 
+set_envir(dem)
+
+# Plot
+plot_GRASS("dem.tif") # argument must match name of data set in the mapset
+plot_GRASS("dem.tif", heat.colors(10)) # with different colour scale
+
+}
+}

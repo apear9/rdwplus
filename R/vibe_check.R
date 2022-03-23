@@ -1,5 +1,5 @@
 #' A function to summarise the computation region, vectors and rasters in the mapset.
-#' @description This function takes no inputs. It prints a list of maps in the current GRASS mapset, as well as the parameters of the current computation region.
+#' @description This function takes no inputs. It prints a list of data sets in the current GRASS mapset, as well as the parameters of the current computation region.
 #' @return Nothing.
 #' @examples 
 #' if(check_running()) vibe_check()

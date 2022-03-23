@@ -4,34 +4,16 @@
 \alias{convert_to_integer}
 \title{Convert a raster to integer format}
 \usage{
-convert_to_integer(x)
+convert_to_integer(x, out)
 }
 \arguments{
 \item{x}{A raster layer in the current GRASS mapset.}
+
+\item{out}{Name of the output raster. Avoid names with hyphens.}
 }
 \value{
-Nothing. A raster with the same name as \code{x} (it may overwrite it) but without the file extension, if one exists.
+Nothing. A raster with the name \code{out} will be added to the current GRASS mapset.
 }
 \description{
 Given a raster in float, double or any other format, this function will convert it to integer format. This can be important because it is often an unstated requirement of GRASS modules such as the one for zonal statistics.
-}
-\examples{
-# Will only run if GRASS is running
-if(check_running()){
-# Load data set
-dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
-
-# Set environment parameters
-set_envir(dem)
-raster_to_mapset(rasters = dem)
-vector_to_mapset(vectors = stream_shp)
- 
-# Rasterise the streams
-out_name <- paste0(tempdir(), "/streams_rast.tif")
-rasterise_stream("streams", out_name, overwrite = TRUE)
-
-# Convert to integer
-convert_to_integer("streams_rast.tif")
-}
 }
