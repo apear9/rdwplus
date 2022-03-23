@@ -43,7 +43,6 @@ stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
 
 # Set environment parameters and import data to GRASS
 set_envir(dem)
-raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
 vector_to_mapset(vectors = c(stream_shp))
 
 # Create binary stream

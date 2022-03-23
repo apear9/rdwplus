@@ -18,7 +18,7 @@
 #' 
 #' # Compare
 #' plot_GRASS("dem.tif")
-#' plot_GRASS("int_dem.tif)
+#' plot_GRASS("int_dem.tif")
 #' 
 #' }
 #' @export

@@ -29,5 +29,22 @@ Do not use raster names containing dashes/hyphens. The underlying call to \code{
 \examples{
 # Will only run if GRASS is running
 if(check_running()){
+# Retrieve paths to data sets
+dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
+sts <- system.file("extdata", "site.shp", package = "rdwplus")
+stm <- system.file("extdata", "streams.shp", package = "rdwplus")
+
+# Set environment 
+set_envir(dem)
+
+# Get other data sets (stream layer, sites, land use, etc.)
+raster_to_mapset(lus)
+vector_to_mapset(c(stm, sts))
+
+# Reclassify streams
+out_stream <- paste0(tempdir(), "/streams.tif")
+rasterise_stream("streams", out_stream, TRUE)
+reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
 }
 }

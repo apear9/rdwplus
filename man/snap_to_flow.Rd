@@ -35,3 +35,6 @@ Nothing.
 \description{
 This function takes a set of survey site locations and snaps them to the highest-value cell within a flow accumulation raster, within a specified distance. Note that this function calls \code{r.stream.snap}, which is a GRASS GIS add-on. It can be installed through the GRASS GUI.
 }
+\details{
+This is an old function. It still works, but users are recommended to use \code{\link{snap_sites}}. The \code{\link{snap_sites}} takes both the stream raster and flow accumulation raster as inputs.
+}

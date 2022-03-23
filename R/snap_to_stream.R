@@ -8,6 +8,7 @@
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory (in Mb) used in memory swap mode. Defaults to \code{300} Mb.
 #' @param ... Additional arguments to \code{r.stream.snap}.
+#' @details This is an old function. It still works, but users are recommended to use \code{\link{snap_sites}}. The \code{\link{snap_sites}} takes both the stream raster and flow accumulation raster as inputs.
 #' @return Nothing.
 #' @export 
 snap_to_stream <- function(sites, streams, max_move, out, overwrite = FALSE, max_memory = 300, ...){
