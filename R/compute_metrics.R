@@ -1,13 +1,14 @@
 #' Compute spatially explicit watershed attributes for survey sites on streams
 #' @description Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 #' @param metrics A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate the lumped, iFLO, iFLS, HAiFLO, and HAiFLS metrics.
-#' @param landuse Names of landuse or landcover rasters in the current GRASS mapset. These can be continuous (e.g., % cover or NDVI) or binary, with a value of 1 for cells with a particular land use category and a value of 0 otherwise.
+#' @param landuse Names of landuse or landcover rasters in the current GRASS mapset. These can be continuous (e.g., % cover or NDVI) or binary, with a value of 1 for cells with a particular land use category and a value of 0 otherwise. 
 #' @param sites A vector data set of survey sites in the current GRASS mapset. 
 #' @param watersheds A vector of watershed raster names in the current GRASS mapset.
 #' @param flow_dir Name of a flow direction raster produced by \code{derive_flow} in the current GRASS mapset.
 #' @param flow_acc Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.
 #' @param streams Name of a streams raster in the current GRASS mapset. The stream raster must have NoData values in cells that do not fall along the stream line. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
+#' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return A \code{sf} object, which is a table with columns for each combination of land use and metric type. 
@@ -76,8 +77,12 @@ compute_metrics <- function(
   flow_acc,
   streams,
   idwp = -1, 
+  percentage = TRUE,
   max_memory = 300
 ){
+  
+  # Clear mask if function throws error... this is the cause of the NaN issue
+  on.exit(clear_mask())
   
   # Check inputs
   no_stream <- missing(streams)
@@ -137,20 +142,24 @@ compute_metrics <- function(
         
         # Compute numbers of cells in and out of landuse
         lumped_table <- tempfile(fileext = ".csv")
-        zonal_table(current_watershed, landuse[lu_idx], lumped_table)
+        # zonal_table(current_watershed, landuse[lu_idx], lumped_table)
+        zonal_table(landuse[lu_idx], current_watershed, lumped_table)
         
         # Import table
         lumped_table <- read.csv(lumped_table)
         
-        # Compute statistics
-        counts <- lumped_table$non_null_cells
-        zone <- lumped_table$zone
-        zonw <- which(zone == 1)
-        if(length(zone) > 1){
-          result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[zonw]/sum(counts)
-        } else {
-          100 * zone # zone is either zero or 1, so this works 
-        }
+        # # Compute statistics
+        # counts <- lumped_table$non_null_cells
+        # zone <- lumped_table$zone
+        # zonw <- which(zone == 1)
+        # if(length(zone) > 1){
+        #   result_metrics[[lu_idx]]$lumped[rowID] <- 100 * counts[zonw]/sum(counts)
+        # } else {
+        #   100 * zone # zone is either zero or 1, so this works 
+        # }
+        
+        # Compute statistic as average
+        result_metrics[[lu_idx]]$lumped[rowID] <- lumped_table$mean
         
       }
       
@@ -174,40 +183,49 @@ compute_metrics <- function(
       iEDO_weights_command <- paste0("wEDO = ( ", iEDO_distance, " + 1)^", idwp)
       rast_calc(iEDO_weights_command)
       
+      # Compute weight * land use
+      iEDO_numerator_command <- paste0("iEDO_numerator = wEDO * ", landuse[lu_idx])
+      rast_calc(iEDO_numerator_command)
+      
       # Compute iEDO metric by looping over land use rasters
       for(lu_idx in 1:length(landuse)){
         
         # Compute table of statistics
         iEDO_table <- tempfile(fileext = ".csv")
-        zonal_table("wEDO", landuse[lu_idx], iEDO_table)
+        iEDO_numerator_table <- tempfile(fileext = ".csv")
+        zonal_table("wEDO", watersheds[rowID], iEDO_table)
+        zonal_table("iEDO_numerator", watersheds[rowID], iEDO_numerator_table)
         
         # Get result table
         iEDO_table <- read.csv(iEDO_table)
+        iEDO_numerator_table <- read.csv(iEDO_numerator_table)
         
         # Extract out statistics
-        sums <- iEDO_table$sum
-        zone <- iEDO_table$zone
+        denom <- iEDO_table$sum
+        numer <- iEDO_numerator_table$sum
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
+        # # row index of zone 1
+        # zoneID <- which(zone == 1) 
+        # 
+        # # Insert iEDO metric for this row
+        # if(length(zone) == 2){
+        #   
+        #   # Neither 0 nor 100%
+        #   result_metrics[[lu_idx]]$iEDO[rowID] <-100* sums[zoneID]/sum(sums)
+        #   
+        # } else if(length(which(zone == 0) != 0)){
+        #   
+        #   # Only 0% LU (always top row)
+        #   result_metrics[[lu_idx]]$iEDO[rowID] <- 0
+        #   
+        # } else {
+        #   
+        #   # Only 100% LU
+        #   result_metrics[[lu_idx]]$iEDO[rowID] <-100
+        #   
+        # }
         
-        # Insert iEDO metric for this row
-        if(length(zone) == 2){
-          
-          # Neither 0 nor 100%
-          result_metrics[[lu_idx]]$iEDO[rowID] <-100* sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iEDO[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$iEDO[rowID] <-100
-          
-        }
+        result_metrics[[lu_idx]]$iEDO[rowID] <- numer/denom
         
       }
       
@@ -230,41 +248,50 @@ compute_metrics <- function(
       iEDS_weights_command <- paste0("wEDS = (iEDS_distanc2 + 1)^", idwp)
       rast_calc(iEDS_weights_command)
       
+      # Compute weight * landuse
+      iEDS_numerator_command <- paste0("iEDS_numerator = wEDS * ", landuse[lu_idx])
+      rast_calc(iEDS_numerator_command)
+      
       # Compute iEDS metric by looping over landuse rasters
       for(lu_idx in 1:length(landuse)){
         
         # Get table of statistics
         iEDS_table <- tempfile(fileext = ".csv")
-        zonal_table("wEDS", landuse[lu_idx], iEDS_table)
+        iEDS_numerator_table <- tempfile(fileext = ".csv")
+        zonal_table("wEDS", watersheds[rowID], iEDS_table)
+        zonal_table("iEDS_numerator", watersheds[rowID], iEDS_table)
         
         # Get result table
         iEDS_table <- read.csv(iEDS_table)
+        iEDS_numerator_table <- read.csv(iEDS_numerator_table)
         
         # Extract out statistics
-        sums <- iEDS_table$sum
-        zone <- iEDS_table$zone
+        denom <- iEDS_table$sum
+        numer <- iEDS_numerator_table$sum
+        # 
+        # # row index of zone 1
+        # zoneID <- which(zone == 1) 
+        # 
+        # # Insert iEDS metric for this row
+        # if(length(zone) == 2){
+        #   
+        #   # Mix of LU
+        #   result_metrics[[lu_idx]]$iEDS[rowID] <-100*sums[zoneID]/sum(sums)
+        #   
+        # } else if(length(which(zone == 0) != 0)){
+        #   
+        #   # Only 0% LU (always top row)
+        #   result_metrics[[lu_idx]]$iEDS[rowID] <- 0
+        #   
+        # } else {
+        #   
+        #   # Only 100% LU
+        #   result_metrics[[lu_idx]]$iEDS[rowID] <-100
+        #   
+        # }
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
+        result_metrics[[lu_idx]]$iEDS[rowID] <- numer/denom
         
-        # Insert iEDS metric for this row
-        if(length(zone) == 2){
-          
-          # Mix of LU
-          result_metrics[[lu_idx]]$iEDS[rowID] <-100*sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iEDS[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$iEDS[rowID] <-100
-          
-        }
-
       }
       
       # Print message
@@ -313,40 +340,51 @@ compute_metrics <- function(
       
       for(lu_idx in 1:length(landuse)){
         
+        # Get iFLO * landuse
+        iFLO_numerator_command <- paste0("iFLO_numerator = wFLO * ", landuse[lu_idx])
+        rast_calc(iFLO_numerator_command)
+        
         # Compute table
         iFLO_table <- tempfile(fileext = ".csv")
-        zonal_table("wFLO", landuse[lu_idx], iFLO_table)
+        iFLO_numerator_table <- tempfile(fileext = ".csv")
+        zonal_table("wFLO", watersheds[rowID], iFLO_table)
+        zonal_table("iFLO_numerator", watersheds[rowID], iFLO_numerator_table)
         
         # Get result table
         iFLO_table <- read.csv(iFLO_table)
+        iFLO_numerator_table <- read.csv(iFLO_numerator_table)
         
         # Extract out statistics
-        sums <- iFLO_table$sum
-        zone <- iFLO_table$zone
+        denom <- iFLO_table$sum
+        numer <- iFLO_numerator_table$sum
+# 
+#         # row index of zone 1
+#         zoneID <- which(zone == 1)
+# 
+#         # Insert iFLO metric for this row
+#         if(length(zone) == 2){
+# 
+#           # Mix of LU
+#           result_metrics[[lu_idx]]$iFLO[rowID] <-100* sums[zoneID]/sum(sums)
+# 
+#         } else if(length(which(zone == 0) != 0)){
+# 
+#           # Only 0% LU (always top row)
+#           result_metrics[[lu_idx]]$iFLO[rowID] <- 0
+# 
+#         } else {
+# 
+#           # Only 100% LU
+#           result_metrics[[lu_idx]]$iFLO[rowID] <-100
+# 
+#         }
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
-        
-        # Insert iFLO metric for this row
-        if(length(zone) == 2){
-          
-          # Mix of LU
-          result_metrics[[lu_idx]]$iFLO[rowID] <-100* sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iFLO[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$iFLO[rowID] <-100
-          
-        }
+        result_metrics[[lu_idx]]$iFLO[rowID] <- numer/denom
         
       }
+      
       message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLO finished"))
+      
     }
     
     # Compute iFLS metric in full if needed
@@ -355,41 +393,52 @@ compute_metrics <- function(
       # Loop over land use rasters to compute metrics
       for(lu_idx in 1:length(landuse)){
         
+        # Get iFLS * landuse
+        iFLS_numerator_command <- paste0("iFLS_numerator = wFLS * ", landuse[lu_idx])
+        rast_calc(iFLS_numerator_command)
+        
         # Compute table
         iFLS_table <- tempfile(fileext = ".csv")
+        iFLS_numerator_table  <- tempfile(fileext = ".csv")
         
-        zonal_table("wFLS", landuse[lu_idx], iFLS_table)
+        zonal_table("wFLS", watersheds[rowID], iFLS_table)
+        zonal_table("iFLS_numerator", watersheds[rowID], iFLS_numerator_table)
         
         # Get result table
         iFLS_table <- read.csv(iFLS_table)
+        iFLS_numerator_table <- read.csv(iFLS_numerator_table)
         
         # Extract out statistics
-        sums <- iFLS_table$sum
-        zone <- iFLS_table$zone
+        denom <- iFLS_table$sum
+        numer <- iFLS_numerator_table$sum
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
+        # # row index of zone 1
+        # zoneID <- which(zone == 1) 
+        # 
+        # # Insert iFLS metric for this row
+        # if(length(zone) == 2){
+        #   
+        #   # Mix of LU
+        #   result_metrics[[lu_idx]]$iFLS[rowID] <-100* sums[zoneID]/sum(sums)
+        #   
+        # } else if(length(which(zone == 0) != 0)){
+        #   
+        #   # Only 0% LU (always top row)
+        #   result_metrics[[lu_idx]]$iFLS[rowID] <- 0
+        #   
+        # } else {
+        #   
+        #   # Only 100% LU
+        #   result_metrics[[lu_idx]]$iFLS[rowID] <- 100
+        #   
+        # }
         
-        # Insert iFLS metric for this row
-        if(length(zone) == 2){
-          
-          # Mix of LU
-          result_metrics[[lu_idx]]$iFLS[rowID] <-100* sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$iFLS[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$iFLS[rowID] <- 100
-          
-        }
+        result_metrics[[lu_idx]]$iFLS[rowID] <- numer/denom
         
       }
+      
       message(paste0(Sys.time(), ": rowID : ", rowID, " : iFLS finished"))
+      
     }
     
     # Compute HAiFLO weights if needed
@@ -401,40 +450,50 @@ compute_metrics <- function(
       # Loop through land use rasters to compute HAiFLO metrics
       for(lu_idx in 1:length(landuse)){
         
+        # Compute HAiFLO * landuse
+        rast_calc(paste0("HA_iFLO_numerator = HA_iFLO * ", landuse[lu_idx]))
+        
         # Compute zonal stats as table
         HA_iFLO_table <- tempfile(fileext = ".csv")
-        zonal_table("HA_iFLO", landuse[lu_idx], HA_iFLO_table)
+        HA_iFLO_numerator_table <- tempfile(fileext = ".csv")
+        zonal_table("HA_iFLO", watersheds[rowID], HA_iFLO_table)
+        zonal_table("HA_iFLO_numerator", watersheds[rowID], HA_iFLO_numerator_table)
         
         # Get result table
         HA_iFLO_table <- read.csv(HA_iFLO_table)
+        HA_iFLO_numerator_table <- read.csv(HA_iFLO_numerator_table)
         
         # Extract out statistics
-        sums <- HA_iFLO_table$sum
-        zone <- HA_iFLO_table$zone
+        denom <- HA_iFLO_table$sum
+        numer <- HA_iFLO_numerator_table$sum
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
+        # # row index of zone 1
+        # zoneID <- which(zone == 1) 
+        # 
+        # # Insert HAiFLO metric for this row
+        # if(length(zone) == 2){
+        #   
+        #   # Mix of LU
+        #   result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*sums[zoneID]/sum(sums)
+        #   
+        # } else if(length(which(zone == 0) != 0)){
+        #   
+        #   # Only 0% LU (always top row)
+        #   result_metrics[[lu_idx]]$HAiFLO[rowID] <- 0
+        #   
+        # } else {
+        #   
+        #   # Only 100% LU
+        #   result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100
+        #   
+        # }
         
-        # Insert HAiFLO metric for this row
-        if(length(zone) == 2){
-          
-          # Mix of LU
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <-100*sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$HAiFLO[rowID] <- 100
-          
-        }
+        result_metrics[[lu_idx]]$HAiFLO[rowID] <- numer/denom
         
       }
+      
       message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLO finished"))
+    
     }
     
     # Compute HAiFLS weights if needed
@@ -446,38 +505,47 @@ compute_metrics <- function(
       # Loop through land use rasters to compute HAiFLS metrics
       for(lu_idx in 1:length(landuse)){
         
+        # Compyte HA_iFLS * landuse
+        rast_calc(paste0("HA_iFLS_numerator = HA_iFLS * ", landuse[lu_idx]))
+        
         # Compute zonal stats as table
         HA_iFLS_table <- tempfile(fileext = ".csv")
-        zonal_table("HA_iFLS", landuse[lu_idx], HA_iFLS_table)
+        HA_iFLS_numerator_table <- tempfile(fileext = ".csv")
+        zonal_table("HA_iFLS", watersheds[rowID], HA_iFLS_table)
+        zonal_table("HA_iFLS_numerator", watersheds[rowID], HA_iFLS_numerator_table)
         
         # Get result table
         HA_iFLS_table <- read.csv(HA_iFLS_table)
+        HA_iFLS_numerator_table <- read.csv(HA_iFLS_numerator_table)
         
         # Extract out statistics
-        sums <- HA_iFLS_table$sum
-        zone <- HA_iFLS_table$zone
+        denom <- HA_iFLS_table$sum
+        numer <- HA_iFLS_numerator_table$sum
         
-        # row index of zone 1
-        zoneID <- which(zone == 1) 
+        # # row index of zone 1
+        # zoneID <- which(zone == 1) 
+        # 
+        # # Insert HAiFLS metric for this row
+        # if(length(zone) == 2){
+        #   
+        #   # Mix of LU
+        #   result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*sums[zoneID]/sum(sums)
+        #   
+        # } else if(length(which(zone == 0) != 0)){
+        #   
+        #   # Only 0% LU (always top row)
+        #   result_metrics[[lu_idx]]$HAiFLS[rowID] <- 0
+        #   
+        # } else {
+        #   
+        #   # Only 100% LU
+        #   result_metrics[[lu_idx]]$HAiFLS[rowID] <-100
+        #   
+        # }
         
-        # Insert HAiFLS metric for this row
-        if(length(zone) == 2){
-          
-          # Mix of LU
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100*sums[zoneID]/sum(sums)
-          
-        } else if(length(which(zone == 0) != 0)){
-          
-          # Only 0% LU (always top row)
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <- 0
-          
-        } else {
-          
-          # Only 100% LU
-          result_metrics[[lu_idx]]$HAiFLS[rowID] <-100
-          
-        }
-        
+        # Compute metric
+        result_metrics[[lu_idx]]$HAiFLS[rowID] <- numer/denom
+
       }
       message(paste0(Sys.time(), ": rowID : ", rowID, " : HAiFLS finished"))
     }
@@ -502,6 +570,7 @@ compute_metrics <- function(
     full_data <- cbind(full_data, temp_data)
   }
   full_data <- as.data.frame(full_data)
+  if(percentage) full_data[,2:ncol(full_data)] <- 100 * full_data[,2:ncol(full_data)]
   
   # Print message
   message(paste0(Sys.time(), ": Successfully completed computing metrics"))

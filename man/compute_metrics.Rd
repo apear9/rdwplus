@@ -13,6 +13,7 @@ compute_metrics(
   flow_acc,
   streams,
   idwp = -1,
+  percentage = TRUE,
   max_memory = 300
 )
 }
@@ -32,6 +33,8 @@ compute_metrics(
 \item{streams}{Name of a streams raster in the current GRASS mapset. The stream raster must have NoData values in cells that do not fall along the stream line. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
 
 \item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
+
+\item{percentage}{A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
