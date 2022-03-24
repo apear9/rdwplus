@@ -74,8 +74,7 @@ check_running()
 We can then set up the GRASS environment, which involves setting the extent, spatial resolution, coordinate system, etc., of the current GRASS mapset. This is done by giving the function `set_envir()` a file path to a raster. The projection, extent, cell size, etc., of this raster will be used.  
 
 ```{r}
-# Give this function a filepath for a raster
-set_envir(dem)
+set_envir(dem) # give this function a filepath for a raster
 ```
 
 ## Importing data into the mapset
@@ -85,25 +84,32 @@ We have set up and configured our GRASS session, so now we need to import raster
 In `rdwplus`, we have one function to import raster data into the mapset and another to import vector data. For rasters, we use
 
 ```{r}
-raster_to_mapset(lus, as_integer = TRUE, overwrite = TRUE)
+raster_to_mapset(
+  lus, # vector of input file paths
+  as_integer = TRUE, # whether to force the raster to be integer
+  overwrite = TRUE
+)
 ```
 
 There is no need to use the `raster_to_mapset()` function for the DEM because it was passed as an argument to the `set_envir()` function, which automatically imports any raster that is passed to it. Also, take note of the argument `as_integer`. This is `FALSE` by default, but it should be set to `TRUE` whenever you are importing an integer-valued raster. This can cause issues later on if you do not take care at this step.
 
 For vector data, we use
 ```{r}
-vector_to_mapset(c(sts, stm), overwrite = TRUE)
+vector_to_mapset(
+  c(sts, stm), # vector of inputs (give file paths)
+  overwrite = TRUE
+)
 ```
 
 Note that the `overwrite` option simply allows the data set we're importing to overwrite any existing layers with the same name in the current GRASS mapset. Note also that the name of the file in the GRASS mapset is not the same as the full file path. Instead, if the data set originally existed at `filepath`, the name of the data set in the mapset is `basename(filepath)`. 
 
-We can use the function `vibe_check()` if you need to print a list of all the data currently stored in the GRASS mapset:
+The function `vibe_check()` will print a list of all the data currently stored in the GRASS mapset if we need a reminder:
 
 ```{r}
-vibe_check()
+vibe_check() # no arguments
 ```
 
-## Data preprocessing
+## Data pre-processing
 
 ### The streams
 
@@ -115,9 +121,16 @@ If you start with a shapefile of stream edges (as opposed to deriving a streams 
 The rasterisation and reclassification step can be performed in two separate lines of code:
 
 ```{r}
-out_stream <- paste0(tempdir(), "/streams.tif")
-rasterise_stream("streams", out_stream, TRUE)
-reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
+rasterise_stream(
+  streams = "streams", # input of vector stream lines
+  out = "streams.tif", # name of output raster
+  TRUE
+)
+reclassify_streams(
+  "streams.tif", # input raster
+  "streams01.tif", # output raster
+  overwrite = TRUE
+)
 ```
 
 ### The digital elevation model
@@ -126,64 +139,121 @@ As alluded to above, if your streams were not derived from the digital elevation
 
 ```{r}
 # Drainage reinforcement
-de2 <- raster_to_mapset(dem, overwrite = TRUE)
-burn_in(de2, "streams01.tif", "burndem.tif", overwrite = TRUE)
+burn_in(
+  dem = "dem.tif", 
+  stream = "streams01.tif", # should be in 0-1 format, 0 for non-stream cells, 1 for stream cells,
+  out = "burndem.tif", 
+  overwrite = TRUE
+)
 ```
 
-The DEM must then be hydrologically corrected. This is a process of removing 'sinks'; small depressions in the DEM where flowing water gets trapped and stops flowing toward the streams. Of course, sinks are actually natural features of the landscape. However, our metrics cannot deal with them. Therefore, we remove them using the `fill_sinks` function:
+The DEM must then be hydrologically corrected. This is a process of removing 'sinks', which are small depressions in the DEM where flowing water gets trapped and stops flowing toward the streams. Of course, sinks are natural features of the landscape. However, our metrics (and many other GIS workflows) cannot deal with them. Therefore, we remove them using the `fill_sinks` function:
 
 ```{r}
 # Fill dem
-fill_sinks("burndem.tif", "filldem.tif", flags = "a", overwrite = TRUE)
+fill_sinks(
+  dem = "burndem.tif", 
+  out_dem = "filldem.tif", 
+  out_fd = "fd1.tif", # flow-direction grid that cannot be used in subsequent steps but is required by GRASS
+  overwrite = T
+)
 ```
 
 Once the DEM has been hydrologically conditioned, we can use it to derive valid flow direction and flow accumulation rasters. These are inputs for the `compute_metrics` function so it is essential that the `derive_flow` function is run to get these rasters.
 
 ```{r}
 # Derive flow direction and accumulation rasters
-derive_flow("filldem.tif", "flowdir.tif", "flowacc.tif", overwrite = TRUE)
+derive_flow(
+  dem = "filldem.tif", 
+  flow_dir = "flowdir.tif", # uses d8 by default
+  flow_acc = "flowacc.tif", 
+  overwrite = TRUE
+)
 ```
 
-If you're curious to see what these look like:
+We can plot any raster in the GRASS mapset using the `plot_GRASS()` function. We can use it to plot the DEM, flow direction and flow accumulation grids:
 
 ```{r}
 # Filled DEM 
-plot_GRASS("filldem.tif", col = topo.colors(15))
+plot_GRASS("filldem.tif", colours = topo.colors(15))
 # Flow Direction
-plot_GRASS("flowdir.tif", col = topo.colors(15))
+plot_GRASS("flowdir.tif", colours = topo.colors(6)) # grid has fewer than 8 directions
 # Flow Accumulation
-plot_GRASS("flowacc.tif", col = topo.colors(15))
+plot_GRASS("flowacc.tif", topo.colors(6))
+```
+
+Although we already have a streams raster, several GRASS functions work best when we re-derive a new streams raster from the flow accumulation grid from the `derive_flow()` function. Therefore, we should use the `derive_streams()` function:
+
+```{r}
+derive_streams(
+  dem = "filldem.tif",
+  flow_acc = "flowacc.tif",
+  out_rast = "derived_streams.tif", # raster output
+  out_vect = "derived_streams", # GRASS forces us to output a vector of stream lines, too
+  min_acc = 200, # minimum accumulation of cells required for a 'stream'... may need trial and error
+  overwrite = TRUE
+)
+```
+
+The new streams look like this:
+
+```{r}
+plot_GRASS("derived_streams.tif")
 ```
 
 ### The sites
 
-The land use metrics we calculate with `rdwplus` relate to percentages of effective landuse within watersheds. The sites are treated as the outlets (the point of lowest elevation) for the stream watersheds, and enable the delineation of these regions. In order to obtain the correct watershed, we need to ensure the sites are snapped to the stream line; a region of high flow accumulation. If the sites are not snapped to the flow accumulation grid, then degenerate watersheds can result. These degenerate watersheds tend to have only a few raster cells in them.
+The land use metrics we calculate with `rdwplus` relate to percentages of effective landuse within watersheds. The sites are treated as the outlets (the point of lowest elevation) for the stream watersheds. In order to obtain the correct watershed, we need to ensure the sites are snapped to the stream line and the flow accumulation grid. If the sites are not snapped to the flow accumulation grid, then the resulting watersheds may be degenerate. For example, you could end up with a tiny watershed consisting only of a few cells.
 
-Here is the code for snapping sites to the flow accumulation grid:
+The `rdwplus` function for snapping sites is called `snap_sites()`. We need to give it both the derived streams and flow accumulation grid for snapping purposes. 
 
 ```{r}
-# Snap sites to flow accumulation grid
-out_snap <- paste0(tempdir(), "/snapsite.shp")
-snap_sites("site", "flowacc.tif", 2, out_snap, TRUE)
+snap_sites(
+  sites = "site", # input sites vector
+  stream = "derived_streams.tif", 
+  flow_acc = "flowacc.tif", 
+  max_move = 3, # max movement for snapping, expressed in cells instead of map units
+  out = "snapsite", # output sites vector
+  overwrite = TRUE
+)
 ```
 
-Note that in this case, no snapping is needed as the point in the shapefile already falls along a raster cell with high flow accumulation. 
+You may need to do some trial-and-error to determine the best value for `max_move`.
+
+## Watershed delineation
+
+One last pre-processing step is to derive the watersheds around our sites. We force users to derive the watersheds separately from computing the metrics because 
+
+1. This allows users to check the watersheds before committing to potentially time-consuming calculations, and
+2. This may save time if users save the watershed rasters and later decide that they need to compute more metrics for different land use rasters at a later date. 
+
+Watershed delineation is done using the `get_watersheds()` function. 
+
+```{r}
+get_watersheds(
+  sites = "snapsite", # use the snapped sites here
+  flow_dir = "flowdir.tif", 
+  out = "wshed.tif", # in general, this should be a vector of output names with the same length as the number of sites
+  overwrite = TRUE
+)
+```
 
 ## Compute watershed attributes
 
-Once the preprocessing steps have been completed, we can use the `compute_metrics` function to derive the spatially explicit land use metrics for our survey sites.  
+Once the pre-processing steps have been completed, we can use the `compute_metrics()` function to derive the spatially explicit land use metrics for our survey sites.  
 
 ```{r}
 # Compute metrics
 compute_metrics(
-  c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
-  "landuse.tif", # needs to be integer 
-  sts, 
-  "dem.tif",
-  "flowdir.tif",
-  "flowacc.tif", 
-  "streams.tif", # needs to be integer
-  -1
+  metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"), # this is the full list of options
+  landuse = "landuse.tif", # this can be a vector
+  sites = "snapsite", # use the snapped sites   
+  watersheds ="wshed.tif", # provide a vector of names (one per site) 
+  flow_dir = "flowdir.tif",
+  flow_acc - "flowacc.tif", 
+  streams = "derived_streams.tif", # use the derived streams 
+  idwp = -1, # inverse distance weighting power, -1 is standard.
+  percentage = TRUE # set to TRUE if the land use raster is discrete
 )
 ```
 
@@ -195,7 +265,7 @@ compute_metrics(
 
 ## References
 
-GRASS Development Team. (2019). Geographic Resources Analysis Support System (GRASS) Software, Version 7.6. Open Source Geospatial Foundation. https://grass.osgeo.org
+GRASS Development Team. (2019). Geographic Resources Analysis Support System (GRASS) Software, Version 7.8. Open Source Geospatial Foundation. https://grass.osgeo.org
 
 Peterson, E.E. and Pearse, A.R. (2017). IDW-PLUS: an ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. *Journal of the American Water Resources Association*, *53*(5), 1241-1249. doi: 10.1111/1752-1688.12558
 
