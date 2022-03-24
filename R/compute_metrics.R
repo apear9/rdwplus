@@ -183,12 +183,12 @@ compute_metrics <- function(
       iEDO_weights_command <- paste0("wEDO = ( ", iEDO_distance, " + 1)^", idwp)
       rast_calc(iEDO_weights_command)
       
-      # Compute weight * land use
-      iEDO_numerator_command <- paste0("iEDO_numerator = wEDO * ", landuse[lu_idx])
-      rast_calc(iEDO_numerator_command)
-      
       # Compute iEDO metric by looping over land use rasters
       for(lu_idx in 1:length(landuse)){
+        
+        # Compute weight * land use
+        iEDO_numerator_command <- paste0("iEDO_numerator = wEDO * ", landuse[lu_idx])
+        rast_calc(iEDO_numerator_command)
         
         # Compute table of statistics
         iEDO_table <- tempfile(fileext = ".csv")
@@ -248,18 +248,18 @@ compute_metrics <- function(
       iEDS_weights_command <- paste0("wEDS = (iEDS_distanc2 + 1)^", idwp)
       rast_calc(iEDS_weights_command)
       
-      # Compute weight * landuse
-      iEDS_numerator_command <- paste0("iEDS_numerator = wEDS * ", landuse[lu_idx])
-      rast_calc(iEDS_numerator_command)
-      
       # Compute iEDS metric by looping over landuse rasters
       for(lu_idx in 1:length(landuse)){
+        
+        # Compute weight * landuse
+        iEDS_numerator_command <- paste0("iEDS_numerator = wEDS * ", landuse[lu_idx])
+        rast_calc(iEDS_numerator_command)
         
         # Get table of statistics
         iEDS_table <- tempfile(fileext = ".csv")
         iEDS_numerator_table <- tempfile(fileext = ".csv")
         zonal_table("wEDS", watersheds[rowID], iEDS_table)
-        zonal_table("iEDS_numerator", watersheds[rowID], iEDS_table)
+        zonal_table("iEDS_numerator", watersheds[rowID], iEDS_numerator_table)
         
         # Get result table
         iEDS_table <- read.csv(iEDS_table)
