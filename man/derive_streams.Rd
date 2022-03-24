@@ -7,7 +7,8 @@
 derive_streams(
   dem,
   flow_acc,
-  out,
+  out_rast,
+  out_vect,
   min_acc = 1000,
   min_length = 0,
   overwrite = FALSE,
@@ -15,13 +16,15 @@ derive_streams(
 )
 }
 \arguments{
-\item{dem}{Name of the elevation raster in the current GRASS mapset.}
+\item{dem}{Name of an elevation raster in the current GRASS mapset.}
 
-\item{flow_acc}{Name of the flow accumulation raster in the current GRASS mapset.}
+\item{flow_acc}{Name of a flow accumulation raster in the current GRASS mapset.}
 
-\item{out}{File path to the output vector dataset of stream lines. Should be WITHOUT .shp extension.}
+\item{out_rast}{Name of the output raster dataset of stream lines. File extensions should not matter.}
 
-\item{min_acc}{The minimum accumulation value (in upstream cells) that a cell needs to have in order to be classified as a stream. Defaults to \code{1000}.}
+\item{out_vect}{Name of the output vector dataset of stream lines. Should be WITHOUT .shp extension.}
+
+\item{min_acc}{The minimum accumulation value that a cell needs to be classified as a stream. Defaults to \code{1000}.}
 
 \item{min_length}{The minimum length of a stream segment in cells. Defaults to \code{0}.}
 
@@ -33,41 +36,11 @@ derive_streams(
 Nothing. A vector dataset with the name \code{basename(out)} will appear in the current GRASS mapset.
 }
 \description{
-Derive a set of stream lines from a flow accumulation raster.
+Derive a raster and a vector layer of stream lines from a flow accumulation raster.
 }
 \examples{
  
 # Will only run if GRASS is running
 if(check_running()){
-
-# Load data set
-dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
-
-# Set environment parameters
-set_envir(dem)
-
-# Set 
-raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
-vector_to_mapset(vectors = c(stream_shp))
-
-# Create binary stream
-rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
-reclassify_streams("streams_rast.tif", "streams_binary.tif",
- out_type = "binary", overwrite = TRUE)
-
-# Burn dem 
-burn_in(dem = "dem.tif", stream = "streams_binary.tif", 
-out = "dem_burn.tif", burn = 10, overwrite = TRUE)
-
-# Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
-
-# Derive flow accumulation and direction grids
-derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",  
-flow_acc = "facc.tif", overwrite = TRUE)
-
-# Derive streams 
-derive_streams(dem = "dem_fill.tif", flow_acc = "facc.tif", out = "stream_lines", overwrite = TRUE)
 }
 }

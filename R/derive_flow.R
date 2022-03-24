@@ -3,7 +3,8 @@
 #' @param dem A digital elevation model that has been hydrologically corrected.
 #' @param flow_dir The name of the output flow direction file in the current GRASS mapset.
 #' @param flow_acc The name of the output flow accumulation file in the current GRASS mapset.
-#' @param overwrite Whether any of the outputs should be allowed to overwrite existing files.
+#' @param d8  A logical indicating whether D8 flow direction should be used. If \code{FALSE}, multiple flow direction is allowed. Defaults to \code{TRUE}.
+#' @param overwrite A logical indicating whether any of the outputs should be allowed to overwrite existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param ... Additional arguments to \code{r.watershed}. 
 #' @return Nothing. Files are written in the current GRASS mapset.
@@ -15,7 +16,6 @@
 #' 
 #' # Set environment parameters and import data to GRASS
 #' set_envir(dem)
-#' raster_to_mapset(rasters = c(dem), as_integer = c(FALSE))
 #' vector_to_mapset(vectors = c(stream_shp))
 #' 
 #' # Create binary stream
@@ -42,14 +42,17 @@
 #' plot_GRASS("facc.tif", col = topo.colors(15))
 #' }
 #' @export
-derive_flow <- function(dem, flow_dir, flow_acc, overwrite = FALSE, max_memory = 300, ...){
+derive_flow <- function(dem, flow_dir, flow_acc, d8 = TRUE, overwrite = FALSE, max_memory = 300, ...){
   
   # Check that grass is running
   running <- check_running()
   if(!running) stop("No active GRASS session. Program halted.")
   
   # Use the following flags 
-  flags <- "s" 
+  flags <- c("a") # forces all flow accumulations to be positive
+  if(d8){
+    flags <- c(flags, "s")
+  }
   if(overwrite){
     flags <- c(flags, "overwrite")
   }

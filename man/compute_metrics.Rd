@@ -5,91 +5,99 @@
 \title{Compute spatially explicit watershed attributes for survey sites on streams}
 \usage{
 compute_metrics(
-  metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"),
+  metrics = c("lumped", "iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
   sites,
-  elevation,
+  watersheds,
   flow_dir,
   flow_acc,
   streams,
   idwp = -1,
-  max_memory = 300,
-  lessmem = FALSE
+  percentage = TRUE,
+  max_memory = 300
 )
 }
 \arguments{
-\item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate all except for lumped, iEDO and iEDS.}
+\item{metrics}{A character vector. This vector specifies which metric(s) should be calculated. Your options are lumped, iFLO, iFLS, iEDO, iEDS, HAiFLO and HAiFLS. The default is to calculate the lumped, iFLO, iFLS, HAiFLO, and HAiFLS metrics.}
 
-\item{landuse}{Names of binary landuse or landcover rasters in the current GRASS mapset for which spatially explicit watershed metrics should be computed. Binary means land use cells are coded 1 and all other cells are given a value of 0.}
+\item{landuse}{Names of landuse or landcover rasters in the current GRASS mapset. These can be continuous (e.g., percentage cover or NDVI) or binary, with a value of 1 for cells with a particular land use category and a value of 0 otherwise.}
 
-\item{sites}{A shapefile of sites; either a file path to the shapefile or a \code{SpatialPoints*} object.}
+\item{sites}{A vector data set of survey sites in the current GRASS mapset.}
 
-\item{elevation}{File name of a filled (hydrologically-conditioned) digital elevation model in the current GRASS mapset.}
+\item{watersheds}{A vector of watershed raster names in the current GRASS mapset.}
 
-\item{flow_dir}{A 'Deterministic 8' (D8) flow direction grid derived from \code{derive_flow}.}
+\item{flow_dir}{Name of a flow direction raster produced by \code{derive_flow} in the current GRASS mapset.}
 
-\item{flow_acc}{File name of a flow accumulation grid derived from \code{derive_flow} in the current GRASS mapset.}
+\item{flow_acc}{Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.}
 
-\item{streams}{File name of a streams raster in the current GRASS mapset. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
+\item{streams}{Name of a streams raster in the current GRASS mapset. The stream raster must have NoData values in cells that do not fall along the stream line. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.}
 
 \item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
+
+\item{percentage}{A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
 \item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
-A \code{data.frame} object, which is a table with rows corresponding to those from the \code{sites} argument plus columns for each combination of land use and metric type.
+A \code{sf} object, which is a table with columns for each combination of land use and metric type.
 }
 \description{
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).
 }
 \examples{
 # Will only run if GRASS is running
+# You should load rdwplus and initialise GRASS via the initGRASS function
 if(check_running()){
-# Load data set
+# Retrieve paths to data sets
 dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-landuse <- system.file("extdata", "landuse.tif", package = "rdwplus")
-sites <- system.file("extdata", "site.shp", package = "rdwplus")
-stream_shp <- system.file("extdata", "streams.shp", package = "rdwplus")
+lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
+sts <- system.file("extdata", "site.shp", package = "rdwplus")
+stm <- system.file("extdata", "streams.shp", package = "rdwplus")
 
-# Set environment parameters and import data into GRASS
+# Set environment 
 set_envir(dem)
-raster_to_mapset(rasters = c(dem, landuse), as_integer = c(FALSE, TRUE),
-overwrite = TRUE)
-vector_to_mapset(vectors = c(sites, stream_shp), overwrite = TRUE)
 
-# Create binary stream
-out_name <- paste0(tempdir(), "/streams_rast.tif")
-rasterise_stream("streams", out_name, overwrite = TRUE)
-reclassify_streams("streams_rast.tif", "streams_binary.tif", 
-out_type = "binary", overwrite = TRUE)
+# Get other data sets (stream layer, sites, land use, etc.)
+raster_to_mapset(lus)
+vector_to_mapset(c(stm, sts))
 
-# Burn dem 
-burn_in(dem = "dem.tif", stream = "streams_binary.tif", 
-out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+# Reclassify streams
+out_stream <- paste0(tempdir(), "/streams.tif")
+rasterise_stream("streams", out_stream, TRUE)
+reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
 
-# Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+# Burn in the streams to the DEM
+burn_in("dem.tif", "streams01.tif", "burndem.tif", overwrite = TRUE)
 
-# Derive flow accumulation and direction grids
-derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif", 
-flow_acc = "facc.tif", overwrite = TRUE)
+# Fill dem
+fill_sinks("burndem.tif", "filldem.tif", "fd1.tif", "sinks.tif", overwrite = TRUE)
 
-# Snap sites to pour points (based on flow accumulation)
-out_snap <- paste0(tempdir(), "/snapsite.shp")
-snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
-out = out_snap, overwrite = TRUE)
+# Derive flow direction and accumulation grids
+derive_flow("dem.tif", "fd.tif", "fa.tif", overwrite = T)
 
-# Compute metrics
-lu_metrics <- compute_metrics(metrics = c("iFLO", "iFLS", "HAiFLO", "HAiFLS"), 
-                              landuse = "landuse.tif",
-                              sites =  out_snap, 
-                              elevation = "dem_fill.tif", 
-                              flow_dir = "fdir.tif", 
-                              flow_acc = "facc.tif", 
-                              streams = "streams_rast.tif")
-print(lu_metrics)
+# Derive a new stream raster from the FA grid
+derive_streams("dem.tif", "fa.tif", "new_stm.tif", "new_stm", min_acc = 200, overwrite = T)
+
+# Snap sites to streams and flow accumulation
+snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
+
+# Get watersheds
+get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
+
+# Compute metrics for this site
+compute_metrics(
+ metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
+ landuse = "landuse.tif", 
+ sites = "snapsite",
+ watersheds = "wshed.tif",
+ flow_dir = "fd.tif",
+ flow_acc = "fa.tif",
+ streams = "new_stm.tif", 
+ idwp = -1
+)
+
 }
 }
 \references{
