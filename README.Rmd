@@ -250,7 +250,7 @@ compute_metrics(
   sites = "snapsite", # use the snapped sites   
   watersheds ="wshed.tif", # provide a vector of names (one per site) 
   flow_dir = "flowdir.tif",
-  flow_acc - "flowacc.tif", 
+  flow_acc = "flowacc.tif", 
   streams = "derived_streams.tif", # use the derived streams 
   idwp = -1, # inverse distance weighting power, -1 is standard.
   percentage = TRUE # set to TRUE if the land use raster is discrete
