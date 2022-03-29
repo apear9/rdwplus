@@ -9,6 +9,7 @@
 #' @param streams Name of a streams raster in the current GRASS mapset. The stream raster must have NoData values in cells that do not fall along the stream line. Optional if you are not asking for the iFLS, iEDS, and/or HAiFLS metrics.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
+#' @param remove_streams A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return A \code{sf} object, which is a table with columns for each combination of land use and metric type. 
@@ -78,6 +79,7 @@ compute_metrics <- function(
   streams,
   idwp = -1, 
   percentage = TRUE,
+  remove_streams = TRUE,
   max_memory = 300
 ){
   
@@ -99,7 +101,7 @@ compute_metrics <- function(
   n_sites <- nrow(all_coordinates)
   
   # Derive null streams if any metrics require it
-  if(is_stream){
+  if(is_stream & remove_streams){
     
     # Generate random name to minimise risk of overwriting anything important
     rand_name <- basename(paste0(tempfile(), ".tif"))
@@ -108,7 +110,7 @@ compute_metrics <- function(
     reclassify_streams(streams, rand_name, "none", TRUE)
     
     # Print message
-    message(paste0(Sys.time(), ": stream retrieval"))
+    message(paste0(Sys.time(), ": stream reclassification"))
   
   }
 
@@ -241,11 +243,13 @@ compute_metrics <- function(
       get_distance(streams, iEDS_distance, TRUE)
       
       # Take out the stream line
-      subtract_streams_command <- paste0("iEDS_distanc2 = ", iEDS_distance, " * ", rand_name)
-      rast_calc(subtract_streams_command)
+      if(remove_streams){
+        subtract_streams_command <- paste0("iEDS_distance = ", iEDS_distance, " * ", rand_name)
+        rast_calc(subtract_streams_command)
+      } 
       
       # Compute inverse distance weight
-      iEDS_weights_command <- paste0("wEDS = (iEDS_distanc2 + 1)^", idwp)
+      iEDS_weights_command <- paste0("wEDS = (iEDS_distance + 1)^", idwp)
       rast_calc(iEDS_weights_command)
       
       # Compute iEDS metric by looping over landuse rasters
@@ -325,8 +329,10 @@ compute_metrics <- function(
       
       # Compute flow length
       get_flow_length(str_rast = streams, flow_dir = flow_dir, out = current_flow_str, to_outlet = FALSE, overwrite = TRUE, max_memory = max_memory)
-      subtract_streams_command <- paste0("current_flow_str2 = ", current_flow_str, " * ", rand_name)
-      rast_calc(subtract_streams_command)
+      if(remove_streams){
+        subtract_streams_command <- paste0(current_flow_str, " = ", current_flow_str, " * ", rand_name)
+        rast_calc(subtract_streams_command)
+      }
       
       # Compute iFLS weights for real
       iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
