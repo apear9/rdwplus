@@ -14,6 +14,7 @@ compute_metrics(
   streams,
   idwp = -1,
   percentage = TRUE,
+  remove_streams = TRUE,
   max_memory = 300
 )
 }
@@ -35,6 +36,8 @@ compute_metrics(
 \item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
 
 \item{percentage}{A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.}
+
+\item{remove_streams}{A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
 
