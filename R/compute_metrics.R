@@ -335,7 +335,7 @@ compute_metrics <- function(
       }
       
       # Compute iFLS weights for real
-      iFLS_weights_command <- paste0("wFLS = (current_flow_str2 + 1)^", idwp)
+      iFLS_weights_command <- paste0("wFLS = (", current_flow_str, " + 1)^", idwp)
       rast_calc(iFLS_weights_command)
       message(paste0(Sys.time(), ": rowID : ", rowID, " : FLS weights finished"))
       
