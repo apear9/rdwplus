@@ -64,7 +64,9 @@ snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE
   out_new  <- paste0(tempdir(), "/", out, ".shp")
   retrieve_vector(c(sites, out), c(out_orig, out_new), overwrite = T)
   out_orig_sf <- read_sf(out_orig)
+  out_orig_sf <- out_orig_sf[, -grep("^cat$", names(out_orig_sf))]# maybe not safe?
   out_new_sf  <- read_sf(out_new)
+  out_new_sf  <- out_new_sf[, -grep("^cat$", names(out_new_sf))]
   out_new_sf <- cbind(out_new_sf, st_drop_geometry(out_orig_sf))
   
   # Export again and send to mapset
