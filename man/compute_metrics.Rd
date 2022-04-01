@@ -44,7 +44,7 @@ compute_metrics(
 \item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
-A \code{sf} object, which is a table with columns for each combination of land use and metric type.
+A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics.
 }
 \description{
 Workhorse function for \code{rdwplus}. This function computes the spatially explicit landuse metrics in IDW-Plus (Peterson and Pearse, 2017).

@@ -12,7 +12,7 @@
 #' @param remove_streams A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
-#' @return A \code{sf} object, which is a table with columns for each combination of land use and metric type. 
+#' @return A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
 #' @examples 
@@ -567,7 +567,7 @@ compute_metrics <- function(
     nrow(sites_sf), 
     1
   )
-  colnames(full_data) <- "ID"
+  colnames(full_data) <- "rowID"
   for(lu_idx in 1:length(landuse)){
     temp_data <- do.call(cbind, result_metrics[[lu_idx]])
     column_nm <- colnames(temp_data)
@@ -577,6 +577,9 @@ compute_metrics <- function(
   }
   full_data <- as.data.frame(full_data)
   if(percentage) full_data[,2:ncol(full_data)] <- 100 * full_data[,2:ncol(full_data)]
+  
+  # Return as sf object
+  full_data <- cbind(sites_sf, full_data)
   
   # Print message
   message(paste0(Sys.time(), ": Successfully completed computing metrics"))
