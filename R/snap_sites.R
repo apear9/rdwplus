@@ -58,6 +58,19 @@ snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE
       column = "snap_flow"
     )
   )  
+  
+  # Retrieve data sets in temporary files, join the attribute tables in R
+  out_orig <- paste0(tempdir(), "/", sites, ".shp")
+  out_new  <- paste0(tempdir(), "/", out, ".shp")
+  retrieve_vector(c(sites, out), c(out_orig, out_new), overwrite = T)
+  out_orig_sf <- read_sf(out_orig)
+  out_new_sf  <- read_sf(out_new)
+  out_new_sf <- cbind(out_new_sf, st_drop_geometry(out_orig_sf))
+  
+  # Export again and send to mapset
+  write_sf(out_new_sf, out_new)
+  vector_to_mapset(out_new, overwrite = T)
+  
   # Return nothing
   invisible()
   
