@@ -5,7 +5,7 @@
 #' @param stream Name of a stream raster in the current GRASS mapset. This can either be formatted to have NoData in non-stream cells or 0s in non-stream cells. 
 #' @param flow_acc Name of a flow accumulation raster in the current GRASS mapset. 
 #' @param max_move The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.
-#' @param out Name of the output in the current GRASS mapset 
+#' @param out Name of the output in the current GRASS mapset. Note that this function will add a column called \code{snap_dist} to the attribute table of the input sites, which indicates how far each site was snapped.
 #' @param overwrite Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.
 #' @param max_memory Max memory (in) used in memory swap mode. Defaults to \code{300} Mb.
 #' @param ... Additional arguments to \code{r.stream.snap}.
@@ -43,7 +43,7 @@ snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE
     flags = "quiet",
     parameters = list(
       map = sites,
-      columns = "snap_flow double precision"
+      columns = "snap_dist double precision"
     )
   )
   execGRASS(
@@ -55,7 +55,7 @@ snap_sites <- function(sites, stream, flow_acc, max_move, out, overwrite = FALSE
       from_type = "point",
       to_type = "point",
       upload = "dist",
-      column = "snap_flow"
+      column = "snap_dist"
     )
   )  
   

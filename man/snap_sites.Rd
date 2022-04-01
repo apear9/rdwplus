@@ -24,7 +24,7 @@ snap_sites(
 
 \item{max_move}{The maximum distance in cells that any site can be moved to snap it to the flow accumulation grid.}
 
-\item{out}{Name of the output in the current GRASS mapset}
+\item{out}{Name of the output in the current GRASS mapset. Note that this function will add a column called \code{snap_dist} to the attribute table of the input sites, which indicates how far each site was snapped.}
 
 \item{overwrite}{Whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 
