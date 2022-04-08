@@ -11,6 +11,11 @@ implementation uses R as the scripting language, with calls to modules
 and tools from GRASS GIS (GRASS Development Team, 2019) to do the heavy
 lifting.
 
+## Software versions
+
+This version of `rdwplus` was tested with R version 4.1.0 and GRASS
+versions 7.6.1 and 7.8.6.
+
 ## Installation
 
 At present, `rdwplus` is available on GitHub only. Install the package
@@ -75,8 +80,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/User/AppData/Local/Temp/Rtmpoppvei 
-    ## location    file5e4478394794 
+    ## gisdbase    C:/Users/User/AppData/Local/Temp/Rtmp8sN2gA 
+    ## location    file45e456ad3d0f 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -115,7 +120,10 @@ import raster and vector data into the GRASS mapset. A mapset is a
 collection of layers that GRASS operations can refer to.
 
 In `rdwplus`, we have one function to import raster data into the mapset
-and another to import vector data. For rasters, we use
+and another to import vector data. We assume that all spatial data
+imported to the mapset have the same projection. We further assume that
+all rasters have the same extent, cell size, and cell alignment. For
+rasters, we use the following function:
 
 ``` r
 raster_to_mapset(
@@ -145,6 +153,11 @@ vector_to_mapset(
 ```
 
     ## [1] "site.shp"    "streams.shp"
+
+The two vector data sets above (“site.shp” and “streams.shp”) contain a
+set of survey sites and a set of stream lines, respectively. The data
+set “site.shp” only contains a single survey site, but it could contain
+multiple sites with potentially overlapping or nested watersheds.
 
 Note that the `overwrite` option simply allows the data set we’re
 importing to overwrite any existing layers with the same name in the
@@ -190,6 +203,10 @@ reclassify_streams(
 )
 ```
 
+The `rasterise_stream` function creates a raster out of the stream
+lines, which has the same extent and spatial resolution as the “dem.tif”
+raster that was passed to `set_envir()`.
+
 ### The digital elevation model
 
 As alluded to above, if your streams were not derived from the digital
@@ -206,8 +223,9 @@ burn_in(
 )
 ```
 
-The DEM must then be hydrologically corrected. This is a process of
-removing ‘sinks’, which are small depressions in the DEM where flowing
+The DEM must be hydrologically corrected, regardless of whether or not
+the streams lines have been burned in to the DEM. This is a process of
+removing ‘sinks,’ which are small depressions in the DEM where flowing
 water gets trapped and stops flowing toward the streams. Of course,
 sinks are natural features of the landscape. However, our metrics (and
 many other GIS workflows) cannot deal with them. Therefore, we remove
@@ -263,10 +281,18 @@ plot_GRASS("flowacc.tif", topo.colors(6))
 
 ![](README_files/figure-gfm/unnamed-chunk-14-3.png)<!-- -->
 
-Although we already have a streams raster, several GRASS functions work
-best when we re-derive a new streams raster from the flow accumulation
-grid from the `derive_flow()` function. Therefore, we should use the
-`derive_streams()` function:
+Several GRASS functions take a streams raster as input. Importantly,
+this includes the one responsible for snapping survey sites to the
+stream network. We have a streams raster already, but we should not use
+it as an input to the GRASS functions. This is because our streams
+raster was not delineated in GRASS using the hydrologically corrected
+DEM in the example data set, which means that the stream lines in
+“streams.tif” may not follow the flow accumulation paths in
+“flowacc.tif.” When the flow accumulation and streams rasters do not
+line up, problems may arise when delineating the watersheds for sites
+snapped to the stream network. To avoid problems, we re-create a stream
+raster from the flow accumulation raster and use it to snap sites to the
+correct flow accumulation path and stream.
 
 ``` r
 derive_streams(
@@ -279,6 +305,14 @@ derive_streams(
 )
 ```
 
+Note that the minimum accumulation of cells required to delineate a
+stream (i.e., the argument `min_acc`) is subjective. It will vary
+depending on climate, spatial resolution of the data, and the purpose of
+the study. We suggest delineating streams using different thresholds and
+then inspecting the outputs, perhaps comparing them to base layers such
+as Open Street Map and Google Maps, to identify what setting is most
+suitable.
+
 The new streams look like this:
 
 ``` r
@@ -289,18 +323,21 @@ plot_GRASS("derived_streams.tif")
 
 ### The sites
 
-The land use metrics we calculate with `rdwplus` relate to percentages
-of effective landuse within watersheds. The sites are treated as the
-outlets (the point of lowest elevation) for the stream watersheds. In
-order to obtain the correct watershed, we need to ensure the sites are
-snapped to the stream line and the flow accumulation grid. If the sites
-are not snapped to the flow accumulation grid, then the resulting
-watersheds may be degenerate. For example, you could end up with a tiny
-watershed consisting only of a few cells.
+The land use metrics produced in `rdwplus` represent percentages or
+proportions of effective landuse within watersheds. A watershed is an
+area of land that channels rainfall and snowmelt into streams and
+eventually to the outlet (i.e., most downstream location in the
+watershed). When watersheds are delineated for suvey sites, the site
+location is equivalent to the outlet. As mentioned previously, sites
+must be snapped to the correct stream and flow accumulation pathway to
+ensure that watersheds are delineated properly.
 
 The `rdwplus` function for snapping sites is called `snap_sites()`. We
 need to give it both the derived streams and flow accumulation grid for
-snapping purposes.
+snapping purposes. Note that users will need the `r.stream.snap` GRASS
+add-on to use this function. Please see the following YouTube guide for
+instructions on how to install GRASS add-ons:
+<https://youtu.be/pFHHsAeLqyM>
 
 ``` r
 snap_sites(
@@ -318,7 +355,7 @@ You may need to do some trial-and-error to determine the best value for
 
 ## Watershed delineation
 
-One last pre-processing step is to derive the watersheds around our
+One last pre-processing step is to derive the watersheds upstream of the
 sites. We force users to derive the watersheds separately from computing
 the metrics because
 
@@ -343,11 +380,13 @@ get_watersheds(
 
 Once the pre-processing steps have been completed, we can use the
 `compute_metrics()` function to derive the spatially explicit land use
-metrics for our survey sites.
+metrics for our survey sites. Note that users need the
+`r.stream.distance` GRASS add-on for any spatially explicit metrics
+based on flow-length (iFLO, iFLS, HAiFLO, HAiFLS).
 
 ``` r
 # Compute metrics
-compute_metrics(
+result <- compute_metrics(
   metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"), # this is the full list of options
   landuse = "landuse.tif", # this can be a vector
   sites = "snapsite", # use the snapped sites   
@@ -358,12 +397,21 @@ compute_metrics(
   idwp = -1, # inverse distance weighting power, -1 is standard.
   percentage = TRUE # set to TRUE if the land use raster is discrete
 )
+# Show result
+result # an sf object
 ```
 
-    ##   ID lumped_landuse iFLO_landuse iEDO_landuse HAiFLO_landuse iFLS_landuse
-    ## 1  1       2.059486     1.178223     1.097731    0.005056261     1.276942
-    ##   iEDS_landuse HAiFLS_landuse
-    ## 1     1.360758      0.8884033
+    ## Simple feature collection with 1 feature and 12 fields
+    ## Geometry type: POINT
+    ## Dimension:     XY
+    ## Bounding box:  xmin: 1098672 ymin: 6924794 xmax: 1098672 ymax: 6924794
+    ## Projected CRS: WGS 84 / UTM zone 55S
+    ##   cat OBJECTID SiteID snap_dist rowID lumped_landuse iFLO_landuse iEDO_landuse
+    ## 1   1        2      2 0.8796476     1       2.059486     1.178223     1.097731
+    ##   HAiFLO_landuse iFLS_landuse iEDS_landuse HAiFLS_landuse
+    ## 1    0.005056261     1.276942     1.360758      0.8884033
+    ##                  geometry
+    ## 1 POINT (1098672 6924794)
 
 ## Contributors
 
