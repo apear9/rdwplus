@@ -258,6 +258,11 @@ result <- compute_metrics(
   metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"), # this is the full list of options
   landuse = "landuse.tif", # this can be a vector
   sites = "snapsite", # use the snapped sites   
+  out_fields = c(
+    "lu_lumped", 
+    "lu_iFLO", "lu_iEDO", "lu_HAiFLO", 
+    "lu_iFLS", "lu_iEDS", "lu_HAiFLS"
+  ), # a vector names for the output columns
   watersheds ="wshed.tif", # provide a vector of names (one per site) 
   flow_dir = "flowdir.tif",
   flow_acc = "flowacc.tif", 

@@ -80,8 +80,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/User/AppData/Local/Temp/Rtmp8sN2gA 
-    ## location    file45e456ad3d0f 
+    ## gisdbase    C:/Users/User/AppData/Local/Temp/RtmpSQ8rgJ 
+    ## location    file5f8063f645e8 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -390,6 +390,11 @@ result <- compute_metrics(
   metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"), # this is the full list of options
   landuse = "landuse.tif", # this can be a vector
   sites = "snapsite", # use the snapped sites   
+  out_fields = c(
+    "lu_lumped", 
+    "lu_iFLO", "lu_iEDO", "lu_HAiFLO", 
+    "lu_iFLS", "lu_iEDS", "lu_HAiFLS"
+  ), # a vector names for the output columns
   watersheds ="wshed.tif", # provide a vector of names (one per site) 
   flow_dir = "flowdir.tif",
   flow_acc = "flowacc.tif", 
@@ -406,12 +411,10 @@ result # an sf object
     ## Dimension:     XY
     ## Bounding box:  xmin: 1098672 ymin: 6924794 xmax: 1098672 ymax: 6924794
     ## Projected CRS: WGS 84 / UTM zone 55S
-    ##   cat OBJECTID SiteID snap_dist rowID lumped_landuse iFLO_landuse iEDO_landuse
-    ## 1   1        2      2 0.8796476     1       2.059486     1.178223     1.097731
-    ##   HAiFLO_landuse iFLS_landuse iEDS_landuse HAiFLS_landuse
-    ## 1    0.005056261     1.276942     1.360758      0.8884033
-    ##                  geometry
-    ## 1 POINT (1098672 6924794)
+    ##   cat OBJECTID SiteID snap_dist rowID lu_lumped  lu_iFLO  lu_iEDO   lu_HAiFLO
+    ## 1   1        2      2 0.8796476     1  2.059486 1.178223 1.097731 0.005056261
+    ##    lu_iFLS  lu_iEDS lu_HAiFLS                geometry
+    ## 1 1.276942 1.360758 0.8884033 POINT (1098672 6924794)
 
 ## Contributors
 
