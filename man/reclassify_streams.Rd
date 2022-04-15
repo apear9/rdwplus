@@ -11,7 +11,7 @@ reclassify_streams(stream, out, out_type = "binary", overwrite = FALSE)
 
 \item{out}{The output file.}
 
-\item{out_type}{Either 'binary', 'unary', or 'none'. See the Description above.}
+\item{out_type}{Either 'zeros_to_nodata', 'binary', 'unary', or 'none'. See Details below}
 
 \item{overwrite}{A logical indicating whether the output should be allowed to overwrite any existing files. Defaults to \code{FALSE}.}
 }
