@@ -8,6 +8,7 @@ compute_metrics(
   metrics = c("lumped", "iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
   sites,
+  out_fields,
   watersheds,
   flow_dir,
   flow_acc,
@@ -23,7 +24,9 @@ compute_metrics(
 
 \item{landuse}{Names of landuse or landcover rasters in the current GRASS mapset. These can be continuous (e.g., percentage cover or NDVI) or binary, with a value of 1 for cells with a particular land use category and a value of 0 otherwise.}
 
-\item{sites}{A vector data set of survey sites in the current GRASS mapset.}
+\item{sites}{A set of survey sites in the current GRASS mapset.}
+
+\item{out_fields}{A character vector of output field names to store the metrics. Note that \code{length(out_fields)} must be the same as \code{length(landuse) * length(metrics)}.}
 
 \item{watersheds}{A vector of watershed raster names in the current GRASS mapset.}
 
