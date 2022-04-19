@@ -5,7 +5,8 @@
 \title{Compute iFLO weights}
 \usage{
 compute_iFLO_weights(
-  pp,
+  pour_point,
+  watershed,
   null_streams,
   fd,
   out_flow_length,
@@ -17,7 +18,9 @@ compute_iFLO_weights(
 )
 }
 \arguments{
-\item{pp}{Pour point raster containing a single pour point (i.e., the outlet).}
+\item{pour_point}{Pour point raster containing a single pour point (i.e., the outlet).}
+
+\item{watershed}{Watershed raster to use as a mask for the flow-path calculations.}
 
 \item{null_streams}{A streams raster with NoData for the stream cells and 1s everywhere else}
 
