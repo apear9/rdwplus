@@ -10,7 +10,6 @@ compute_iFLO_weights(
   null_streams,
   fd,
   out_flow_length,
-  out_no_stream,
   out_iFLO,
   out_iFLO_no_stream,
   idwp = -1,
@@ -28,8 +27,6 @@ compute_iFLO_weights(
 \item{fd}{A flow direction raster.}
 
 \item{out_flow_length}{Name of the output flow length raster.}
-
-\item{out_no_stream}{Name of the output flow length raster with streams removed (ignored if \code{remove_streams = FALSE}).}
 
 \item{out_iFLO}{Name of the output weights raster.}
 

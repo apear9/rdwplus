@@ -5,14 +5,13 @@
 #' @param null_streams A streams raster with NoData for the stream cells and 1s everywhere else
 #' @param fd A flow direction raster.
 #' @param out_flow_length Name of the output flow length raster.
-#' @param out_no_stream Name of the output flow length raster with streams removed (ignored if \code{remove_streams = FALSE}).
 #' @param out_iFLO Name of the output weights raster.
 #' @param out_iFLO_no_stream Name of the output weights raster excluding cells on the stream line (ignored inf \code{remove_streams = FALSE}). 
 #' @param idwp An inverse distance weighting power. This should be negative. The value \code{idwp = -1} is the default.
 #' @param remove_streams A logical indicating whether cells corresponding to the stream line should be removed from the weights raster. Defaults to \code{FALSE}.
 #' @return Nothing.
 #' @export
-compute_iFLO_weights <- function(pour_point, watershed, null_streams, fd, out_flow_length, out_no_stream, out_iFLO, out_iFLO_no_stream, idwp = -1, remove_streams = FALSE, ...){
+compute_iFLO_weights <- function(pour_point, watershed, null_streams, fd, out_flow_length, out_iFLO, out_iFLO_no_stream, idwp = -1, remove_streams = FALSE, ...){
 
   # Set mask
   set_mask(watershed)
