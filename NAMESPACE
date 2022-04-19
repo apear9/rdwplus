@@ -3,6 +3,7 @@
 export(burn_in)
 export(check_running)
 export(compute_metrics)
+export(compute_metrics_precomputed)
 export(convert_to_integer)
 export(coord_to_raster)
 export(derive_flow)

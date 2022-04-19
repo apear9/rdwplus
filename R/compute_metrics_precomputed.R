@@ -7,6 +7,12 @@
 #' @param watersheds A vector of watershed raster names in the current GRASS mapset.
 #' @param flow_dir Name of a flow direction raster produced by \code{derive_flow} in the current GRASS mapset.
 #' @param flow_acc Name of a flow accumulation raster produced by \code{derive_flow} in the current GRASS mapset.
+#' @param iEDO_weights A vector of names of iEDO weight rasters in the GRASS mapset.
+#' @param iFLO_weights A vector of names of iFLO weight rasters in the GRASS mapset.
+#' @param HAiFLO_weights A vector of names of HAiFLO weight rasters in the GRASS mapset.
+#' @param iEDS_weights A vector of names of iEDS weight rasters in the GRASS mapset.
+#' @param iFLS_weights A vector of names of iFLS weight rasters in the GRASS mapset.
+#' @param HAiFLS_weights A vector of names of HAiFLS weight rasters in the GRASS mapset.
 #' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
@@ -68,7 +74,7 @@
 #'
 #' }
 #' @export
-compute_metrics <- function(
+compute_metrics_precomputed <- function(
   metrics = c("lumped", "iFLO", "iFLS", "HAiFLO", "HAiFLS"),
   landuse,
   sites,
