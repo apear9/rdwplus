@@ -8,7 +8,7 @@ compute_iFLO_weights(
   pour_point,
   watershed,
   null_streams,
-  fd,
+  flow_dir,
   out_flow_length,
   out_iFLO,
   out_iFLO_no_stream,
@@ -24,7 +24,7 @@ compute_iFLO_weights(
 
 \item{null_streams}{A streams raster with NoData for the stream cells and 1s everywhere else}
 
-\item{fd}{A flow direction raster.}
+\item{flow_dir}{A flow direction raster.}
 
 \item{out_flow_length}{Name of the output flow length raster.}
 
