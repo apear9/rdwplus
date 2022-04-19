@@ -7,11 +7,12 @@
 #' @param out_flow_length Name of the output flow length raster.
 #' @param out_no_stream Name of the output flow length raster with streams removed (ignored if \code{remove_streams = FALSE}).
 #' @param out_iFLO Name of the output weights raster.
+#' @param out_iFLO_no_stream Name of the output weights raster excluding cells on the stream line (ignored inf \code{remove_streams = FALSE}). 
 #' @param idwp An inverse distance weighting power. This should be negative. The value \code{idwp = -1} is the default.
 #' @param remove_streams A logical indicating whether cells corresponding to the stream line should be removed from the weights raster. Defaults to \code{FALSE}.
 #' @return Nothing.
 #' @export
-compute_iFLO_weights <- function(pour_point, watershed, null_streams, fd, out_flow_length, out_no_stream, out_iFLO, idwp = -1, remove_streams = FALSE, ...){
+compute_iFLO_weights <- function(pour_point, watershed, null_streams, fd, out_flow_length, out_no_stream, out_iFLO, out_iFLO_no_stream, idwp = -1, remove_streams = FALSE, ...){
 
   # Set mask
   set_mask(watershed)
@@ -21,19 +22,19 @@ compute_iFLO_weights <- function(pour_point, watershed, null_streams, fd, out_fl
     
   # Flow lengths
   get_flow_length(str_rast = pour_point, flow_dir = flow_dir, out = out_flow_length, to_outlet = TRUE, ...)
-  
-  # Remove outlet cell if necessary
-  if(remove_streams){
-    subtract_streams_command <- paste0(out_no_stream, " = ", out_flow_length, " * ", null_streams)
-    rast_calc(subtract_streams_command)
-  } else {
-    out_no_stream <- out_flow_length
-  }
-  
+
   # iFLO weights
-  iFLO_weights_command <- paste0(out_iFLO, " = ( ", out_no_stream, " + 1)^", idwp)
-  
-  # Output line
+  iFLO_weights_command <- paste0(out_iFLO, " = ( ", out_flow_length, " + 1)^", idwp)
   rast_calc(iFLO_weights_command)
+    
+  # Remove stream cells if necessary
+  if(remove_streams){
+    subtract_streams_command <- paste0(out_iFLO_no_stream, " = ", out_iFLO, " * ", null_streams)
+    rast_calc(subtract_streams_command)
+  } 
+  
+  # No output
+  invisible()
+
   
 }
