@@ -21,7 +21,7 @@ compute_iFLO_weights <- function(pour_point, watershed, null_streams, flow_dir, 
   on.exit(clear_mask())
   
   # Get cell resolution
-  cell_res <- as.numeric(get_region_parms()$ewres)
+  resolution <- as.numeric(get_region_parms()$ewres)
     
   # Flow lengths
   get_flow_length(str_rast = pour_point, flow_dir = flow_dir, out = out_flow_length, to_outlet = TRUE, ...)

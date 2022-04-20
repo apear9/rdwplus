@@ -26,7 +26,7 @@ compute_iFLS_weights <- function(streams, null_streams, flow_dir, out_flow_lengt
   }
   
   # Get cell resolution
-  cell_res <- as.numeric(get_region_parms()$ewres)
+  resolution <- as.numeric(get_region_parms()$ewres)
   
   # Flow lengths
   get_flow_length(str_rast = streams, flow_dir = flow_dir, out = out_flow_length, to_outlet = FALSE, ...)
