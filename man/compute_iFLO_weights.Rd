@@ -35,6 +35,8 @@ compute_iFLO_weights(
 \item{idwp}{An inverse distance weighting power. This should be negative. The value \code{idwp = -1} is the default.}
 
 \item{remove_streams}{A logical indicating whether cells corresponding to the stream line should be removed from the weights raster. Defaults to \code{FALSE}.}
+
+\item{...}{Optional extra arguments to \code{get_flow_length()}.}
 }
 \value{
 Nothing.

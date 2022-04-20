@@ -9,6 +9,7 @@
 #' @param out_iFLO_no_stream Name of the output weights raster excluding cells on the stream line (ignored inf \code{remove_streams = FALSE}). 
 #' @param idwp An inverse distance weighting power. This should be negative. The value \code{idwp = -1} is the default.
 #' @param remove_streams A logical indicating whether cells corresponding to the stream line should be removed from the weights raster. Defaults to \code{FALSE}.
+#' @param ... Optional extra arguments to \code{get_flow_length()}.
 #' @return Nothing.
 #' @export
 compute_iFLO_weights <- function(pour_point, watershed, null_streams, flow_dir, out_flow_length, out_iFLO, out_iFLO_no_stream, idwp = -1, remove_streams = FALSE, ...){
