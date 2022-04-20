@@ -19,22 +19,24 @@ compute_iFLO_weights <- function(pour_point, watershed, null_streams, flow_dir, 
   
   # Clear mask on exit
   on.exit(clear_mask())
+  
+  # Get cell resolution
+  cell_res <- as.numeric(get_region_parms()$ewres)
     
   # Flow lengths
   get_flow_length(str_rast = pour_point, flow_dir = flow_dir, out = out_flow_length, to_outlet = TRUE, ...)
 
+  # Remove stream cells if necessary
+  if(remove_streams){
+    subtract_streams_command <- paste0(out_iFLO_no_stream, " = (", out_flow_length, " * ", null_streams, " + 1 - ", resolution, ")^", idwp)
+    rast_calc(subtract_streams_command)
+  } 
+  
   # iFLO weights
   iFLO_weights_command <- paste0(out_iFLO, " = ( ", out_flow_length, " + 1)^", idwp)
   rast_calc(iFLO_weights_command)
     
-  # Remove stream cells if necessary
-  if(remove_streams){
-    subtract_streams_command <- paste0(out_iFLO_no_stream, " = ", out_iFLO, " * ", null_streams)
-    rast_calc(subtract_streams_command)
-  } 
-  
   # No output
   invisible()
 
-  
 }
