@@ -13,7 +13,6 @@
 #' @param iEDS_weights A vector of names of iEDS weight rasters in the GRASS mapset.
 #' @param iFLS_weights A vector of names of iFLS weight rasters in the GRASS mapset.
 #' @param HAiFLS_weights A vector of names of HAiFLS weight rasters in the GRASS mapset.
-#' @param idwp The inverse distance weighting parameter. Default is \code{-1}.
 #' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
 #' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
@@ -88,7 +87,6 @@ compute_metrics_precomputed <- function(
   iEDS_weights,
   iFLS_weights,
   HAiFLS_weights,
-  idwp = -1, 
   percentage = TRUE,
   max_memory = 300
 ){
@@ -215,7 +213,7 @@ compute_metrics_precomputed <- function(
       # rast_calc(iEDO_weights_command)
       
       # Get weight for current iteration
-      iEDO_weight <- iEDO_weights[i]
+      iEDO_weight <- iEDO_weights[rowID]
       
       # Compute iEDO metric by looping over land use rasters
       for(lu_idx in 1:length(landuse)){
@@ -264,7 +262,7 @@ compute_metrics_precomputed <- function(
       # iEDS_weights_command <- paste0("wEDS = (iEDS_distance + 1)^", idwp)
       # rast_calc(iEDS_weights_command)
       
-      iEDS_weight <- iEDS_weights[i]
+      iEDS_weight <- iEDS_weights[rowID]
       
       # Compute iEDS metric by looping over landuse rasters
       for(lu_idx in 1:length(landuse)){
@@ -339,7 +337,7 @@ compute_metrics_precomputed <- function(
     if(any(metrics == "iFLO")){
       
       # Get current iFLO weight
-      iFLO_weight <- iFLO_weights[i]
+      iFLO_weight <- iFLO_weights[rowID]
       
       # Loop over land use rasters
       for(lu_idx in 1:length(landuse)){
@@ -375,7 +373,7 @@ compute_metrics_precomputed <- function(
     if(any(metrics == "iFLS")){
       
       # Get current weight raster
-      iFLS_weight <- iFLS_weights[i]
+      iFLS_weight <- iFLS_weights[rowID]
       
       # Loop over land use rasters to compute metrics
       for(lu_idx in 1:length(landuse)){
@@ -412,7 +410,7 @@ compute_metrics_precomputed <- function(
     if(any(metrics == "HAiFLO")){
       
       # Get current HAiFLO weight
-      HAiFLO_weight <- HAiFLO_weights[i]
+      HAiFLO_weight <- HAiFLO_weights[rowID]
       
       # Loop through land use rasters to compute HAiFLO metrics
       for(lu_idx in 1:length(landuse)){
@@ -447,7 +445,7 @@ compute_metrics_precomputed <- function(
     if(any(metrics == "HAiFLS")){
       
       # Get current HAiFLS weight
-      HAiFLS_weight <- HAiFLS_weights[i]
+      HAiFLS_weight <- HAiFLS_weights[rowID]
       
       # Loop through land use rasters to compute HAiFLS metrics
       for(lu_idx in 1:length(landuse)){

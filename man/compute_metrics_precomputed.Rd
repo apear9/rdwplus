@@ -18,7 +18,6 @@ compute_metrics_precomputed(
   iEDS_weights,
   iFLS_weights,
   HAiFLS_weights,
-  idwp = -1,
   percentage = TRUE,
   max_memory = 300
 )
@@ -49,8 +48,6 @@ compute_metrics_precomputed(
 \item{iFLS_weights}{A vector of names of iFLS weight rasters in the GRASS mapset.}
 
 \item{HAiFLS_weights}{A vector of names of HAiFLS weight rasters in the GRASS mapset.}
-
-\item{idwp}{The inverse distance weighting parameter. Default is \code{-1}.}
 
 \item{percentage}{A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.}
 
