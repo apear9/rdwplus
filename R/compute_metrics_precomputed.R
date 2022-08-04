@@ -489,9 +489,10 @@ compute_metrics_precomputed <- function(
   for(lu_idx in 1:length(landuse)){
     temp_data <- do.call(cbind, result_metrics[[lu_idx]])
     column_nm <- colnames(temp_data)
-    colnames(temp_data) <- out_fields
+    # colnames(temp_data) <- out_fields
     full_data <- cbind(full_data, temp_data)
   }
+  colnames(full_data)[2:ncol(full_data)] <- out_fields
   full_data <- as.data.frame(full_data)
   if(percentage) full_data[,2:ncol(full_data)] <- 100 * full_data[,2:ncol(full_data)]
   
