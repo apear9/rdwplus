@@ -5,7 +5,7 @@
 #' @docType package
 #' @name rdwplus
 #' @importFrom stars read_stars
-#' @importFrom sf read_sf st_coordinates st_drop_geometry
+#' @importFrom sf read_sf st_coordinates st_drop_geometry write_sf
 #' @importFrom stringr str_split
 #' @import rgrass
 #' @importFrom methods is
