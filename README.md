@@ -66,7 +66,7 @@ by running
 
 ``` r
 # Path to GRASS
-my_grass <- "C:/Program Files/GRASS GIS 7.8"
+my_grass <- "C:/Program Files/GRASS GIS 8.2"
 # If you don't know where the GRASS installation sits on your
 # computer, use the following.
 # Note this may yield more than one directory, hence the [1]
@@ -80,8 +80,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/User/AppData/Local/Temp/RtmpSQ8rgJ 
-    ## location    file5f8063f645e8 
+    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpWeiNvl 
+    ## location    file18807ca82ddc 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -418,9 +418,9 @@ result # an sf object
 
 ## Contributors
 
--   [Alan Pearse](https://github.com/apear9)
--   [Grace Heron](https://github.com/GraceHeron)
--   [Erin Peterson](https://github.com/pet221)
+- [Alan Pearse](https://github.com/apear9)
+- [Grace Heron](https://github.com/GraceHeron)
+- [Erin Peterson](https://github.com/pet221)
 
 ## References
 
