@@ -12,7 +12,6 @@
 #' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
 #' @param remove_streams A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
-#' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  

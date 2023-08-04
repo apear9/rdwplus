@@ -52,8 +52,6 @@ compute_metrics_precomputed(
 \item{percentage}{A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
-
-\item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
 A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics.

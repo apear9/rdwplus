@@ -12,6 +12,8 @@ set_mask(x, inverse = FALSE, overwrite = TRUE, ...)
 \item{inverse}{Whether the inverse of the raster should be used as the mask. Defaults to \code{FALSE}.}
 
 \item{overwrite}{Whether the existing mask should be overwritten. Defaults to \code{TRUE}.}
+
+\item{...}{Optional. Additional parameters for r.mask.}
 }
 \value{
 Nothing.

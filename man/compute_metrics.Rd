@@ -43,8 +43,6 @@ compute_metrics(
 \item{remove_streams}{A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
-
-\item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
 A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics.
