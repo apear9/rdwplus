@@ -1,3 +1,20 @@
+# CRAN submission 0X-08-2023
+
+This is an update. This is the first submission of the updated package.
+
+## Test environments
+
+* local Windows install, R4.2.1
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* Fedora Linux, R-devel, clang, gfortran
+
+## R CMD check results
+
+There were no ERRORs or WARNINGs.
+
+Besides the NOTE "Maintainer: 'Alan Pearse <apearse9@gmail.com>'", there were no NOTEs.
+
+
 # CRAN submission 03-12-2019
 
 THIS IS A RESUBMISSION. 
