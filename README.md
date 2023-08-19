@@ -13,20 +13,23 @@ lifting.
 
 ## Software versions
 
-This version of `rdwplus` was tested with R version 4.1.0 and GRASS
-versions 7.6.1 and 7.8.6.
+This version of `rdwplus` was tested with R version 4.2.1 and GRASS 8.2.
 
 ## Installation
 
-At present, `rdwplus` is available on GitHub only. Install the package
-`rdwplus` by using the command
-`devtools::install_github("apear9/rdwplus")`. Note that the package
-`devtools` must be installed in order for this command to run.
+The package `rdwplus` is on CRAN. It can be installed using the command
+`install.packages("rdwplus)`.
 
-Note that `rdwplus` calls GRASS GIS, so the user may also have to
-install GRASS GIS. The software is available at
+The `rdwplus` package is also available on GitHub. The GitHub version is
+the development version. The GitHub version is used for this short
+tutorial. Install the development version of `rdwplus` by using the
+command `devtools::install_github("apear9/rdwplus")`. Note that the
+package `devtools` must be installed in order for this command to run.
+
+GRASS GIS also needs to be installed. The software is available at
 <https://grass.osgeo.org/download/> or, for Windows users, as part of
-the OSGeo4W bundle at <https://trac.osgeo.org/osgeo4w/>.
+the OSGeo4W bundle at <https://trac.osgeo.org/osgeo4w/>. Please install
+GRASS 8.2 or later.
 
 ## Using rdwplus
 
@@ -80,8 +83,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpWeiNvl 
-    ## location    file18807ca82ddc 
+    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpMvohJl 
+    ## location    file784c6478304 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
