@@ -1,6 +1,7 @@
-# CRAN submission 0X-08-2023
+# CRAN submission 19-08-2023
 
-This is an update. This is the first submission of the updated package.
+This is an update. The purpose of this update is to change the main dependency from rgrass7 (being deprecated) to rgrass and also to remove any dependency on raster. 
+This is the first submission of the updated package.
 
 ## Test environments
 
