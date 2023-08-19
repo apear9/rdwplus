@@ -5,7 +5,12 @@ This is the first submission of the updated package.
 
 ## Test environments
 
+Install was tested using the rhub pacakge and the `check_for_cran()` function.
+
+The test environments listed below were used:
+
 * local Windows install, R4.2.1
+* Windows Server 2022, R-devel, 64 bit
 * Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * Fedora Linux, R-devel, clang, gfortran
 
@@ -13,8 +18,43 @@ This is the first submission of the updated package.
 
 There were no ERRORs or WARNINGs.
 
-Besides the NOTE "Maintainer: 'Alan Pearse <apearse9@gmail.com>'", there were no NOTEs.
+There were some NOTEs. 
 
+The following NOTE appeared on all test environments:
+
+```
+Maintainer: 'Alan Pearse <arp320@uowmail.edu.au>'
+
+New maintainer:
+  Alan Pearse <arp320@uowmail.edu.au>
+Old maintainer(s):
+  Alan Pearse <apearse9@gmail.com>
+```
+
+This is fine: the maintainer is the same person but the email has been updated to reflect a new institutional affiliation.
+
+On Windows Server 2022, R-devel, 64 bit, there were two additional NOTEs. The first is an empty note that is most likely ignorable:
+
+```
+* checking for detritus in the temp directory ... NOTE
+```
+
+The second is also most likely ignorable (see [R-hub issue #503](https://github.com/r-hub/rhub/issues/503)):
+
+```
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+```
+
+The following NOTE also appears on Fedora Linux, R-devel, clang, gfortran, and 	Ubuntu Linux 20.04.1 LTS, R-release, GCC:
+
+```
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found
+```
+
+This is another issue that has been raised on the GitHub repo for rhub (see [R-hub issue #548](https://github.com/r-hub/rhub/issues/548)). It is most likely ignorable.
 
 # CRAN submission 03-12-2019
 
