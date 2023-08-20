@@ -101,7 +101,6 @@ compute_metrics(
   streams = "new_stm.tif",
   idwp = -1
 )
-
 }
 }
 \references{

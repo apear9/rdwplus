@@ -20,40 +20,40 @@
 #' # You should load rdwplus and initialise GRASS via the initGRASS function
 #' if(check_running()){
 #' # Retrieve paths to data sets
-#'dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-#'lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
-#'sts <- system.file("extdata", "site.shp", package = "rdwplus")
-#'stm <- system.file("extdata", "streams.shp", package = "rdwplus")
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
+#' sts <- system.file("extdata", "site.shp", package = "rdwplus")
+#' stm <- system.file("extdata", "streams.shp", package = "rdwplus")
 #'
 #' # Set environment 
-#'set_envir(dem)
+#' set_envir(dem)
 #'
-#'# Get other data sets (stream layer, sites, land use, etc.)
-#'raster_to_mapset(lus)
-#'vector_to_mapset(c(stm, sts))
+#' # Get other data sets (stream layer, sites, land use, etc.)
+#' raster_to_mapset(lus)
+#' vector_to_mapset(c(stm, sts))
 #'
-#'# Reclassify streams
-#'out_stream <- paste0(tempdir(), "/streams.tif")
-#'rasterise_stream("streams", out_stream, TRUE)
-#'reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
+#' # Reclassify streams
+#' out_stream <- paste0(tempdir(), "/streams.tif")
+#' rasterise_stream("streams", out_stream, TRUE)
+#' reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
 #'
-#'# Burn in the streams to the DEM
-#'burn_in("dem.tif", "streams01.tif", "burndem.tif", overwrite = TRUE)
+#' # Burn in the streams to the DEM
+#' burn_in("dem.tif", "streams01.tif", "burndem.tif", overwrite = TRUE)
 #'
-#'# Fill dem
-#'fill_sinks("burndem.tif", "filldem.tif", "fd1.tif", "sinks.tif", overwrite = TRUE)
+#' # Fill dem
+#' fill_sinks("burndem.tif", "filldem.tif", "fd1.tif", "sinks.tif", overwrite = TRUE)
 #'
-#'# Derive flow direction and accumulation grids
-#'derive_flow("dem.tif", "fd.tif", "fa.tif", overwrite = T)
+#' # Derive flow direction and accumulation grids
+#' derive_flow("dem.tif", "fd.tif", "fa.tif", overwrite = T)
 #'
-#'# Derive a new stream raster from the FA grid
-#'derive_streams("dem.tif", "fa.tif", "new_stm.tif", "new_stm", min_acc = 200, overwrite = T)
+#' # Derive a new stream raster from the FA grid
+#' derive_streams("dem.tif", "fa.tif", "new_stm.tif", "new_stm", min_acc = 200, overwrite = T)
 #'
-#'# Snap sites to streams and flow accumulation
-#'snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
+#' # Snap sites to streams and flow accumulation
+#' snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
 #'
-#'# Get watersheds
-#'get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
+#' # Get watersheds
+#' get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
 #'
 #' compute_metrics(
 #'   metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
@@ -66,7 +66,6 @@
 #'   streams = "new_stm.tif",
 #'   idwp = -1
 #' )
-#'
 #' }
 #' @export
 compute_metrics <- function(
