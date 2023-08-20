@@ -22,7 +22,7 @@
 #' # Will only run if GRASS is running
 #' # You should load rdwplus and initialise GRASS via the initGRASS function
 #' if(check_running()){
-#' Retrieve paths to data sets
+#' # Retrieve paths to data sets
 #' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
 #' lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
 #' sts <- system.file("extdata", "site.shp", package = "rdwplus")
