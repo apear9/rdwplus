@@ -4,6 +4,7 @@
 #' @param out File path for the result to be written.
 #' @param overwrite A logical indicating whether the outputs of this function should be allowed to overwrite existing files.
 #' @return Nothing. A file with the name \code{basename(out)} will be created in the current GRASS mapset. 
+#' @export
 get_distance <- function(target, out, overwrite = FALSE){
   
   # Check grass is running

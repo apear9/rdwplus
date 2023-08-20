@@ -55,17 +55,17 @@
 #'# Get watersheds
 #'get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
 #'
-#'# Compute metrics for this site
-#'compute_metrics(
-#'  metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
-#'  landuse = "landuse.tif", 
-#'  sites = "snapsite",
-#'  watersheds = "wshed.tif",
-#'  flow_dir = "fd.tif",
-#'  flow_acc = "fa.tif",
-#'  streams = "new_stm.tif", 
-#'  idwp = -1
-#')
+#' compute_metrics(
+#'   metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
+#'   landuse = "landuse.tif",
+#'   sites = "snapsite",
+#'   out_fields = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
+#'   watersheds = "wshed.tif",
+#'   flow_dir = "fd.tif",
+#'   flow_acc = "fa.tif",
+#'   streams = "new_stm.tif",
+#'   idwp = -1
+#' )
 #'
 #' }
 #' @export
