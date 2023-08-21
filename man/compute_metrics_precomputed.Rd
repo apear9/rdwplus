@@ -106,10 +106,29 @@ get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
 coord_to_raster("snapsite", which = 1, out = "pour_point")
 
 # Get iFLO weights
-compute_iFLO_weights("pour_point", "wshed.tif", "null_stm.tif", "fd.tif", "fl_outlet.tif", "iFLO_weights.tif", idwp = -1, remove_streams = FALSE)
+compute_iFLO_weights(
+"pour_point", 
+"wshed.tif", 
+"null_stm.tif", 
+"fd.tif", 
+"fl_outlet.tif", 
+"iFLO_weights.tif", 
+idwp = -1, 
+remove_streams = FALSE
+)
 
 # Get iFLS weights
-compute_iFLS_weights("new_stm.tif", "null_stm.tif", "fd.tif", "fl_streams.tif", "iFLS_weights.tif", idwp = -1, watershed = "wshed.tif", remove_streams = FALSE, overwrite = T)
+compute_iFLS_weights(
+"new_stm.tif", 
+"null_stm.tif", 
+"fd.tif", 
+"fl_streams.tif", 
+"iFLS_weights.tif", 
+idwp = -1, 
+watershed = "wshed.tif", 
+remove_streams = FALSE, 
+overwrite = T
+)
 
 # Compute metrics for this site
 compute_metrics_precomputed(

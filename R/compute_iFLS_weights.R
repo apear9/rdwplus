@@ -53,7 +53,17 @@
 #' get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
 #' 
 #' # Get iFLS weights
-#' compute_iFLS_weights("new_stm.tif", "null_stm.tif", "fd.tif", "fl_streams.tif", "iFLS_weights.tif", idwp = -1, watershed = "wshed.tif", remove_streams = FALSE, overwrite = T)
+#' compute_iFLS_weights(
+#' "new_stm.tif", 
+#' "null_stm.tif", 
+#' "fd.tif", 
+#' "fl_streams.tif", 
+#' "iFLS_weights.tif", 
+#' idwp = -1, 
+#' watershed = "wshed.tif", 
+#' remove_streams = FALSE, 
+#' overwrite = T
+#' )
 #' plot_GRASS("iFLS_weights.tif", col = topo.colors(12))
 #' }
 #' @export

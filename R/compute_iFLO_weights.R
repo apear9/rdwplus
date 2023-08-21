@@ -56,7 +56,16 @@
 #' coord_to_raster("snapsite", which = 1, out = "pour_point")
 #' 
 #' # Get iFLO weights
-#' compute_iFLO_weights("pour_point", "wshed.tif", "null_stm.tif", "fd.tif", "fl_outlet.tif", "iFLO_weights.tif", idwp = -1, remove_streams = FALSE)
+#' compute_iFLO_weights(
+#' "pour_point", 
+#' "wshed.tif", 
+#' "null_stm.tif", 
+#' "fd.tif", 
+#' "fl_outlet.tif", 
+#' "iFLO_weights.tif", 
+#' idwp = -1, 
+#' remove_streams = FALSE
+#' )
 #' plot_GRASS("iFLO_weights.tif", col = topo.colors(12))
 #' }
 #' @export
