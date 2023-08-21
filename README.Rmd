@@ -17,7 +17,7 @@ The package `rdwplus` is an open source implementation of IDW-PLUS (inverse dist
 
 ## Software versions
 
-This version of `rdwplus` was tested with R version 4.2.1 and GRASS 8.2.
+This version of `rdwplus` was tested with R version 4.3.1 and GRASS 8.2.
 
 ## Installation
 

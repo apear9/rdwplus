@@ -13,7 +13,7 @@ lifting.
 
 ## Software versions
 
-This version of `rdwplus` was tested with R version 4.2.1 and GRASS 8.2.
+This version of `rdwplus` was tested with R version 4.3.1 and GRASS 8.2.
 
 ## Installation
 
@@ -83,8 +83,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpMvohJl 
-    ## location    file784c6478304 
+    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpEbRADd 
+    ## location    file18a82d667b39 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
