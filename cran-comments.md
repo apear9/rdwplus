@@ -1,4 +1,4 @@
-# CRAN submission 20-08-2023
+# CRAN submission 21-08-2023
 
 This is an update. The purpose of this update is to change the main dependency from rgrass7 to rgrass, to resolve a documentation issue flowing on from a change to `roxygen2`, and also to remove any dependency on raster. 
 This is the first submission of the updated package.
