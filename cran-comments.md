@@ -85,17 +85,18 @@ Old maintainer(s):
 
 This is fine: the maintainer is the same person but the email has been updated to reflect a new institutional affiliation.
 
-On Windows Server 2022, R-devel, 64 bit, there were two additional NOTEs. The first is an empty note that is most likely ignorable:
+On Windows Server 2022, R-devel, 64 bit, there were three additional NOTEs. The first is ignorable according to [R-hub issue #560](https://github.com/r-hub/rhub/issues/560):
 
 ```
-* checking for detritus in the temp directory ... NOTE
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  ''NULL''
 ```
 
 The second is also most likely ignorable (see [R-hub issue #503](https://github.com/r-hub/rhub/issues/503)):
 
 ```
-* checking for non-standard things in the check directory ... NOTE
-Found the following files/directories:
+* checking for detritus in the temp directory ... NOTE
   'lastMiKTeXException'
 ```
 
