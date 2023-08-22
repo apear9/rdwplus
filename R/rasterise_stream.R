@@ -18,8 +18,7 @@
 #' vector_to_mapset(vectors = stream_shp)
 #' 
 #' # Create rasterised stream
-#' out_name <- paste0(tempdir(), "/streams_rast.tif")
-#' rasterise_stream("streams", out_name, overwrite = TRUE)
+#' rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 #' 
 #' # Plot
 #' plot_GRASS("streams_rast.tif", col = topo.colors(2))
