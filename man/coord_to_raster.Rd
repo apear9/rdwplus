@@ -38,6 +38,6 @@ set_envir(dem)
 vector_to_mapset(sts)
 
 # Convert first site to raster
-coord_to_raster(sts, 1, "coords", overwrite = TRUE)
+coord_to_raster("site", 1, "coords", overwrite = TRUE)
 }
 }

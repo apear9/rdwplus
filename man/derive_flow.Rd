@@ -56,7 +56,7 @@ burn_in(dem = "dem.tif", stream = "streams_binary.tif", out = "dem_burn.tif",
  burn = 10, overwrite = TRUE)
 
 # Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+fill_sinks(dem = "dem_burn.tif", out_dem =  "dem_fill.tif", out_fd = "fd1.tif", overwrite = TRUE)
 
 # Derive flow accumulation and direction grids
 derive_flow(dem = "dem_fill.tif", 
@@ -65,7 +65,7 @@ flow_acc = "facc.tif",
 overwrite = TRUE)
 
 # Plot
-plot_GRASS("fdir.tif", col = topo.colors(15))
-plot_GRASS("facc.tif", col = topo.colors(15))
+plot_GRASS("fdir.tif", col = topo.colors(6))
+plot_GRASS("facc.tif", col = topo.colors(6))
 }
 }

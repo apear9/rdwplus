@@ -38,7 +38,7 @@ vector_to_mapset(vectors = stream_shp)
 rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
 
 # Plot
-plot_GRASS("streams_rast.tif", col = topo.colors(2))
+plot_GRASS("streams_rast.tif")
 
 }
 }
