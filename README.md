@@ -13,20 +13,23 @@ lifting.
 
 ## Software versions
 
-This version of `rdwplus` was tested with R version 4.1.0 and GRASS
-versions 7.6.1 and 7.8.6.
+This version of `rdwplus` was tested with R version 4.3.1 and GRASS 8.2.
 
 ## Installation
 
-At present, `rdwplus` is available on GitHub only. Install the package
-`rdwplus` by using the command
-`devtools::install_github("apear9/rdwplus")`. Note that the package
-`devtools` must be installed in order for this command to run.
+The package `rdwplus` is on CRAN. It can be installed using the command
+`install.packages("rdwplus)`.
 
-Note that `rdwplus` calls GRASS GIS, so the user may also have to
-install GRASS GIS. The software is available at
+The `rdwplus` package is also available on GitHub. The GitHub version is
+the development version. The GitHub version is used for this short
+tutorial. Install the development version of `rdwplus` by using the
+command `devtools::install_github("apear9/rdwplus")`. Note that the
+package `devtools` must be installed in order for this command to run.
+
+GRASS GIS also needs to be installed. The software is available at
 <https://grass.osgeo.org/download/> or, for Windows users, as part of
-the OSGeo4W bundle at <https://trac.osgeo.org/osgeo4w/>.
+the OSGeo4W bundle at <https://trac.osgeo.org/osgeo4w/>. Please install
+GRASS 8.2 or later.
 
 ## Using rdwplus
 
@@ -66,7 +69,7 @@ by running
 
 ``` r
 # Path to GRASS
-my_grass <- "C:/Program Files/GRASS GIS 7.8"
+my_grass <- "C:/Program Files/GRASS GIS 8.2"
 # If you don't know where the GRASS installation sits on your
 # computer, use the following.
 # Note this may yield more than one directory, hence the [1]
@@ -80,8 +83,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/User/AppData/Local/Temp/RtmpSQ8rgJ 
-    ## location    file5f8063f645e8 
+    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpEbRADd 
+    ## location    file18a82d667b39 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
@@ -418,9 +421,9 @@ result # an sf object
 
 ## Contributors
 
--   [Alan Pearse](https://github.com/apear9)
--   [Grace Heron](https://github.com/GraceHeron)
--   [Erin Peterson](https://github.com/pet221)
+- [Alan Pearse](https://github.com/apear9)
+- [Grace Heron](https://github.com/GraceHeron)
+- [Erin Peterson](https://github.com/pet221)
 
 ## References
 

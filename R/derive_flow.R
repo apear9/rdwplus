@@ -29,7 +29,7 @@
 #'  burn = 10, overwrite = TRUE)
 #' 
 #' # Fill sinks
-#' fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+#' fill_sinks(dem = "dem_burn.tif", out_dem =  "dem_fill.tif", out_fd = "fd1.tif", overwrite = TRUE)
 #' 
 #' # Derive flow accumulation and direction grids
 #' derive_flow(dem = "dem_fill.tif", 
@@ -38,8 +38,8 @@
 #' overwrite = TRUE)
 #' 
 #' # Plot
-#' plot_GRASS("fdir.tif", col = topo.colors(15))
-#' plot_GRASS("facc.tif", col = topo.colors(15))
+#' plot_GRASS("fdir.tif", col = topo.colors(6))
+#' plot_GRASS("facc.tif", col = topo.colors(6))
 #' }
 #' @export
 derive_flow <- function(dem, flow_dir, flow_acc, d8 = TRUE, overwrite = FALSE, max_memory = 300, ...){

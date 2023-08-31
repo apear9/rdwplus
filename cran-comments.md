@@ -1,3 +1,114 @@
+# CRAN submission 23-08-2023
+
+This is an update. The purpose of this update is to change the main dependency from rgrass7 to rgrass, to resolve a documentation issue flowing on from a change to `roxygen2`, and also to remove any dependency on raster. 
+This is the first submission of the updated package.
+
+# Addressing correspondence from CRAN
+
+Please note the following emails we have received from CRAN and our responses to the emails:
+
+Regarding the documentation issue, we received the following email on 19 August, 2023. We have addressed this by making the change suggested.
+
+"
+Dear maintainer,
+
+You have file 'rdwplus/man/rdwplus.Rd' with \docType{package}, likely
+intended as a package overview help file, but without the appropriate
+PKGNAME-package \alias as per "Documenting packages" in R-exts.
+
+This seems to be the consequence of the breaking change
+
+  Using @docType package no longer automatically adds a -package alias.
+  Instead document _PACKAGE to get all the defaults for package
+  documentation.
+
+in roxygen2 7.0.0 (2019-11-12) having gone unnoticed, see
+<https://github.com/r-lib/roxygen2/issues/1491>.
+
+As explained in the issue, to get the desired PKGNAME-package \alias
+back, you should either change to the new approach and document the new
+special sentinel
+
+  "_PACKAGE"
+
+or manually add
+
+  @aliases rdwplus-package
+
+if remaining with the old approach.
+
+Please fix in your master sources as appropriate, and submit a fixed
+version of your package within the next few months.
+
+Best,
+-k
+"
+
+Regarding the deprecation of `rgrass7`, we received the following email on 24 May, 2023. We have removed the dependency on `rgrass7` and switched over to using `rgrass`. 
+
+"Dear maintainer,
+
+rdwplus will be affected when rgrass7 retires in October 2023, as a consequence of the retirement of rgdal (see https://r-spatial.org/r/2023/05/15/evolution4.html and reports linked from there). rgrass is the replacement for rgrass7, sso please update rdwplus to use it instead. Note that since September 2022, raster has used terra in place of rgdal to access GDAL functionality, as does rgrass.
+
+Best wishes,
+
+Roger
+"
+
+## Test environments
+
+Install was tested using the rhub pacakge and the `check_for_cran()` function.
+
+The test environments listed below were used:
+
+* local Windows install, R4.3.1
+* Windows Server 2022, R-devel, 64 bit
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* Fedora Linux, R-devel, clang, gfortran
+
+## R CMD check results
+
+There were no ERRORs or WARNINGs.
+
+There were some NOTEs. 
+
+The following NOTE appeared on all test environments:
+
+```
+Maintainer: 'Alan Pearse <arp320@uowmail.edu.au>'
+
+New maintainer:
+  Alan Pearse <arp320@uowmail.edu.au>
+Old maintainer(s):
+  Alan Pearse <apearse9@gmail.com>
+```
+
+This is fine: the maintainer is the same person but the email has been updated to reflect a new institutional affiliation.
+
+On Windows Server 2022, R-devel, 64 bit, there were three additional NOTEs. The first is ignorable according to [R-hub issue #560](https://github.com/r-hub/rhub/issues/560):
+
+```
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  ''NULL''
+```
+
+The second is also most likely ignorable (see [R-hub issue #503](https://github.com/r-hub/rhub/issues/503)):
+
+```
+* checking for detritus in the temp directory ... NOTE
+  'lastMiKTeXException'
+```
+
+The following NOTE also appears on Fedora Linux, R-devel, clang, gfortran, and 	Ubuntu Linux 20.04.1 LTS, R-release, GCC:
+
+```
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found
+```
+
+This is another issue that has been raised on the GitHub repo for rhub (see [R-hub issue #548](https://github.com/r-hub/rhub/issues/548)). It is most likely ignorable.
+
 # CRAN submission 03-12-2019
 
 THIS IS A RESUBMISSION. 

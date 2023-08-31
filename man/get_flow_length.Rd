@@ -47,42 +47,34 @@ vector_to_mapset(vectors = c(sites, stream_shp))
 
 # Create binary stream
 rasterise_stream("streams", "streams_rast.tif", overwrite = TRUE)
-reclassify_streams("streams_rast.tif", "streams_binary.tif", 
-out_type = "binary", overwrite = TRUE)
 
-# Burn dem 
+# Burn dem
 burn_in(dem = "dem.tif", stream = "streams_binary.tif",
- out = "dem_burn.tif", burn = 10, overwrite = TRUE)
+        out = "dem_burn.tif", burn = 10, overwrite = TRUE)
 
 # Fill sinks
-fill_sinks(dem = "dem_burn.tif", out = "dem_fill.tif", size = 1, overwrite = TRUE)
+fill_sinks(dem = "dem_burn.tif", out_dem = "dem_fill.tif", out_fd = "fd1.tif", overwrite = TRUE)
 
 # Derive flow accumulation and direction grids
 derive_flow(dem = "dem_fill.tif", flow_dir = "fdir.tif",
- flow_acc = "facc.tif", overwrite = TRUE)
+            flow_acc = "facc.tif", overwrite = TRUE)
 
-# Snap sites to pour points (based on flow accumulation)
-snap_sites(sites = "site", flow_acc = "facc.tif", max_move = 2, 
-out = "snapsite.shp", overwrite = TRUE)
+# Derive watershed
+get_watersheds(sites = "site", flow_dir = "fdir.tif", out = "wshed.tif", overwrite = T)
 
-# Get pour points / outlets as raster cells 
-rowID <- 1
-site_coords <- readVECT("site")
-coords_i <- site_coords@coords[rowID, 1:2]
-coords_i_out <- paste0("pour_point_", rowID)
-coord_to_raster(coords_i, coords_i_out, TRUE)
+# Set mask
+set_mask("wshed.tif")
 
-# Name for flow length raster
-current_flow_out <- paste0("flowlenOut_", rowID, ".tif")
+# Get flow length
+get_flow_length(
+  str_rast = "streams_rast.tif",
+  flow_dir = "fdir.tif",
+  out = "flowlength.tif",
+  to_outlet = TRUE,
+  overwrite = TRUE
+)
 
-# Create it
-get_flow_length(str_rast = coords_i_out, 
-flow_dir = "fdir.tif", 
-out = current_flow_out, 
-to_outlet = TRUE, 
-overwrite = TRUE)
-
-# Plot 
-plot_GRASS(current_flow_out, col = topo.colors(15))
+# Plot
+plot_GRASS("flowlength.tif", col = topo.colors(15))
 }
 }

@@ -43,8 +43,6 @@ compute_metrics(
 \item{remove_streams}{A logical indicating whether cells falling on the stream line should be removed from iEDS, iFLS, and HAiFLS metrics. Defaults to \code{TRUE}, which is in line with the behaviour of IDWPLUS.}
 
 \item{max_memory}{Max memory used in memory swap mode (MB). Defaults to \code{300}.}
-
-\item{lessmem}{A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}.}
 }
 \value{
 A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics.
@@ -92,18 +90,17 @@ snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
 # Get watersheds
 get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
 
-# Compute metrics for this site
 compute_metrics(
- metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
- landuse = "landuse.tif", 
- sites = "snapsite",
- watersheds = "wshed.tif",
- flow_dir = "fd.tif",
- flow_acc = "fa.tif",
- streams = "new_stm.tif", 
- idwp = -1
+  metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
+  landuse = "landuse.tif",
+  sites = "snapsite",
+  out_fields = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
+  watersheds = "wshed.tif",
+  flow_dir = "fd.tif",
+  flow_acc = "fa.tif",
+  streams = "new_stm.tif",
+  idwp = -1
 )
-
 }
 }
 \references{

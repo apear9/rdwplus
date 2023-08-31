@@ -15,7 +15,6 @@
 #' @param HAiFLS_weights A vector of names of HAiFLS weight rasters in the GRASS mapset.
 #' @param percentage A logical indicating whether the result should be expressed as a percentage. Defaults to \code{TRUE}. Set to \code{FALSE} if the landuse/landcover raster is continuous.
 #' @param max_memory Max memory used in memory swap mode (MB). Defaults to \code{300}.
-#' @param lessmem A logical indicating whether to use the less memory modified watershed module. Defaults to \code{FALSE}. 
 #' @return A \code{sf} object of the snapped survey sites that also contains the computed landscape metrics. 
 #' @references 
 #' Peterson, E.E. & Pearse, A.R. (2017). IDW-Plus: An ArcGIS toolset for calculating spatially explicit watershed attributes for survey sites. \emph{JAWRA}, \emph{53}(5), 1241-1249.  
@@ -24,53 +23,84 @@
 #' # You should load rdwplus and initialise GRASS via the initGRASS function
 #' if(check_running()){
 #' # Retrieve paths to data sets
-#'dem <- system.file("extdata", "dem.tif", package = "rdwplus")
-#'lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
-#'sts <- system.file("extdata", "site.shp", package = "rdwplus")
-#'stm <- system.file("extdata", "streams.shp", package = "rdwplus")
-#'
-#' # Set environment 
-#'set_envir(dem)
-#'
-#'# Get other data sets (stream layer, sites, land use, etc.)
-#'raster_to_mapset(lus)
-#'vector_to_mapset(c(stm, sts))
-#'
-#'# Reclassify streams
-#'out_stream <- paste0(tempdir(), "/streams.tif")
-#'rasterise_stream("streams", out_stream, TRUE)
-#'reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
-#'
-#'# Burn in the streams to the DEM
-#'burn_in("dem.tif", "streams01.tif", "burndem.tif", overwrite = TRUE)
-#'
-#'# Fill dem
-#'fill_sinks("burndem.tif", "filldem.tif", "fd1.tif", "sinks.tif", overwrite = TRUE)
-#'
-#'# Derive flow direction and accumulation grids
-#'derive_flow("dem.tif", "fd.tif", "fa.tif", overwrite = T)
-#'
-#'# Derive a new stream raster from the FA grid
-#'derive_streams("dem.tif", "fa.tif", "new_stm.tif", "new_stm", min_acc = 200, overwrite = T)
-#'
-#'# Snap sites to streams and flow accumulation
-#'snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
-#'
-#'# Get watersheds
-#'get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
-#'
-#'# Compute metrics for this site
-#'compute_metrics(
-#'  metrics = c("lumped", "iFLO", "iEDO", "HAiFLO", "iFLS", "iEDS", "HAiFLS"),
-#'  landuse = "landuse.tif", 
-#'  sites = "snapsite",
-#'  watersheds = "wshed.tif",
-#'  flow_dir = "fd.tif",
-#'  flow_acc = "fa.tif",
-#'  streams = "new_stm.tif", 
-#'  idwp = -1
-#')
-#'
+#' dem <- system.file("extdata", "dem.tif", package = "rdwplus")
+#' lus <- system.file("extdata", "landuse.tif", package = "rdwplus")
+#' sts <- system.file("extdata", "site.shp", package = "rdwplus")
+#' stm <- system.file("extdata", "streams.shp", package = "rdwplus")
+#' 
+#' # Set environment
+#' set_envir(dem)
+#' 
+#' # Get other data sets (stream layer, sites, land use, etc.)
+#' raster_to_mapset(lus)
+#' vector_to_mapset(c(stm, sts))
+#' 
+#' # Reclassify streams
+#' out_stream <- paste0(tempdir(), "/streams.tif")
+#' rasterise_stream("streams", out_stream, TRUE)
+#' reclassify_streams("streams.tif", "streams01.tif", overwrite = TRUE)
+#' 
+#' # Burn in the streams to the DEM
+#' burn_in("dem.tif", "streams01.tif", "burndem.tif", overwrite = TRUE)
+#' 
+#' # Fill dem
+#' fill_sinks("burndem.tif", "filldem.tif", "fd1.tif", "sinks.tif", overwrite = TRUE)
+#' 
+#' # Derive flow direction and accumulation grids
+#' derive_flow("dem.tif", "fd.tif", "fa.tif", overwrite = T)
+#' 
+#' # Derive a new stream raster from the FA grid
+#' derive_streams("dem.tif", "fa.tif", "new_stm.tif", "new_stm", min_acc = 200, overwrite = T)
+#' 
+#' # Recode streams
+#' reclassify_streams("new_stm.tif", "null_stm.tif", "none")
+#' 
+#' # Snap sites to streams and flow accumulation
+#' snap_sites("site", "new_stm.tif", "fa.tif", 2, "snapsite", T)
+#' 
+#' # Get watersheds
+#' get_watersheds("snapsite", "fd.tif", "wshed.tif", T)
+#' 
+#' #  Get pour points
+#' coord_to_raster("snapsite", which = 1, out = "pour_point")
+#' 
+#' # Get iFLO weights
+#' compute_iFLO_weights(
+#' "pour_point", 
+#' "wshed.tif", 
+#' "null_stm.tif", 
+#' "fd.tif", 
+#' "fl_outlet.tif", 
+#' "iFLO_weights.tif", 
+#' idwp = -1, 
+#' remove_streams = FALSE
+#' )
+#' 
+#' # Get iFLS weights
+#' compute_iFLS_weights(
+#' "new_stm.tif", 
+#' "null_stm.tif", 
+#' "fd.tif", 
+#' "fl_streams.tif", 
+#' "iFLS_weights.tif", 
+#' idwp = -1, 
+#' watershed = "wshed.tif", 
+#' remove_streams = FALSE, 
+#' overwrite = T
+#' )
+#' 
+#' # Compute metrics for this site
+#' compute_metrics_precomputed(
+#'   metrics = c("iFLO", "iFLS"),
+#'   landuse = "landuse.tif",
+#'   sites = "snapsite",
+#'   out_fields = c("iFLO", "iFLS"),
+#'   watersheds = "wshed.tif",
+#'   iFLO_weights = "iFLO_weights.tif",
+#'   iFLS_weights = "iFLS_weights.tif",
+#'   flow_dir = "fd.tif",
+#'   flow_acc = "fa.tif"
+#' )
 #' }
 #' @export
 compute_metrics_precomputed <- function(
