@@ -13,7 +13,7 @@ lifting.
 
 ## Software versions
 
-This version of `rdwplus` was tested with R version 4.3.1 and GRASS 8.2.
+This version of `rdwplus` was tested with R version 4.4.2 and GRASS 8.2.
 
 ## Installation
 
@@ -42,9 +42,9 @@ library(rdwplus)
 ## A preliminary note
 
 This markdown document has been generated in such a way that warnings
-and messages from GRASS were suppressed. Therefore, you may see the
-console print some angry-looking messages when you run this code. Do not
-worry unless GRASS reports an error.
+and messages from GRASS were suppressed. You may see the console print
+some angry-looking messages when you run this code. Do not worry unless
+GRASS reports an error.
 
 ## Retrieving the example data
 
@@ -83,8 +83,8 @@ function `initGRASS` can be called to set up the GRASS session.
 initGRASS(my_grass, mapset = "PERMANENT", override = TRUE)
 ```
 
-    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpEbRADd 
-    ## location    file18a82d667b39 
+    ## gisdbase    C:/Users/aryou/AppData/Local/Temp/RtmpSUJQuO 
+    ## location    file6ccc3b8920ad 
     ## mapset      PERMANENT 
     ## rows        1 
     ## columns     1 
