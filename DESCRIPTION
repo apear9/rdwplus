@@ -1,6 +1,6 @@
 Package: rdwplus
 Date: 2025-02-06
-Title: An Implementation of IDW-PLUS
+Title: Inverse Distance Weighted Percent Land Use for Streams
 Version: 1.0.1
 Authors@R: c(person("Alan", "Pearse", email = "alan.pearse@unimelb.edu.au", role = c("aut", "cre")), person("Grace", "Heron", email = "g.heron@qut.edu.au", role = c("aut")), person("Erin", "Peterson", email = "erin@peterson-consulting.com", role = c("aut")))
 Author: Alan Pearse [aut, cre], Grace Heron [aut], Erin Peterson [aut]
