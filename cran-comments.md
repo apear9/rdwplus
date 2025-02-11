@@ -1,9 +1,69 @@
+# CRAN submission 12-02-2025
+
+This is an update to change the maintainer's email address to reflect a new institutional affiliation. The 'title' field in the DESCRIPTION file has also been changed to be more informative. 
+
+## Test environments
+
+Install was tested using the rhub package. The following test environments were used:
+
+* local Windows install, R-4.4.2
+* Option 16 from `rhub_platforms()`: gcc13 Fedora Linux 38, R-devel
+* Option 25 from `rhub_platforms()`: ubuntu-gcc12 Ubuntu Linux 20.04.5 LTS, R-devel
+* Option 27 from `rhub_platforms()`: ubuntu-release Ubuntu Linux 20.04.5 LTS, R-4.4.2
+
+I also used the following MacOS options from rhub: 
+* Option 3 from `rhub_platforms()`: macos macOS Ventura 13.7.2, R-devel
+* Option 4 from `rhub_platforms()`: macos-arm64 MacOS macOS Sonoma 14.7.2, R-devel
+
+The MacOS platforms successfully installed the package with only a single NOTE (see below), but the following error was thrown during the set-up process:
+
+```
+Run r-hub/actions/setup-r@v1
+No such keg: /usr/local/Cellar/pkg-config@0.29.2
+```
+
+This is not an issue with the rdwplus package. The CRAN checks were successful with only one NOTE (see below).
+
+Tests were run twice using Option 5 from `rhub_platforms()` (Windows Server 2022 x64, R-devel), but the tests timed out on both occasions. 
+This issue did not arise during any of the other tests, including the one conducted on a local Windows machine running R 4.4.2. 
+It is reasonable to suspect that this issue is not due to the package.
+
+## R CMD check results
+
+There were no ERRORs or WARNINGs.
+
+There were some NOTEs. 
+
+The following NOTE appeared during the local Windows installation:
+
+```
+Maintainer: 'Alan Pearse <alan.pearse@unimelb.edu.au>'
+
+New maintainer:
+  Alan Pearse <alan.pearse@unimelb.edu.au>
+Old maintainer(s):
+  Alan Pearse <arp320@uowmail.edu.au>
+```
+
+This is fine: the maintainer is the same person but the email has been updated to reflect a new institutional affiliation.
+
+The following NOTE appeared on all rhub platforms:
+
+```
+Found the following hidden files and directories:
+  .github
+These were most likely included in error. See section 'Package
+structure' in the 'Writing R Extensions' manual.
+```
+
+This note is likely ignorable. It appears to be an artefact of rhub. The .github folder is not included in the version submitted to CRAN. 
+
 # CRAN submission 23-08-2023
 
 This is an update. The purpose of this update is to change the main dependency from rgrass7 to rgrass, to resolve a documentation issue flowing on from a change to `roxygen2`, and also to remove any dependency on raster. 
 This is the first submission of the updated package.
 
-# Addressing correspondence from CRAN
+## Addressing correspondence from CRAN
 
 Please note the following emails we have received from CRAN and our responses to the emails:
 
@@ -57,7 +117,7 @@ Roger
 
 ## Test environments
 
-Install was tested using the rhub pacakge and the `check_for_cran()` function.
+Install was tested using the rhub package and the `check_for_cran()` function.
 
 The test environments listed below were used:
 
