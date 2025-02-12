@@ -9,13 +9,11 @@ This is an update to rdwplus. The update contains two small changes:
 Install was tested using the rhub package. The following test environments were used:
 
 * local Windows install, R-4.4.2
+* Option 3 from `rhub_platforms()`: macos macOS Ventura 13.7.2, R-devel
+* Option 4 from `rhub_platforms()`: macos-arm64 MacOS macOS Sonoma 14.7.2, R-devel
 * Option 16 from `rhub_platforms()`: gcc13 Fedora Linux 38, R-devel
 * Option 25 from `rhub_platforms()`: ubuntu-gcc12 Ubuntu Linux 20.04.5 LTS, R-devel
 * Option 27 from `rhub_platforms()`: ubuntu-release Ubuntu Linux 20.04.5 LTS, R-4.4.2
-
-I also used the following MacOS options from rhub: 
-* Option 3 from `rhub_platforms()`: macos macOS Ventura 13.7.2, R-devel
-* Option 4 from `rhub_platforms()`: macos-arm64 MacOS macOS Sonoma 14.7.2, R-devel
 
 The MacOS platforms successfully installed the package with only a single NOTE (see below), but the following error was thrown during the set-up process:
 
