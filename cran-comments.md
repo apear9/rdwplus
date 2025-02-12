@@ -28,7 +28,7 @@ This is not an issue with the rdwplus package. The CRAN checks were successful w
 
 Tests were run twice using Option 5 from `rhub_platforms()` (Windows Server 2022 x64, R-devel), but the tests timed out on both occasions. 
 This issue did not arise during any of the other tests, including the one conducted on a local Windows machine running R 4.4.2. 
-It is reasonable to suspect that this issue is not due to the package.
+It appears rdwplus is not responsible for this issue.
 
 ## R CMD check results
 
