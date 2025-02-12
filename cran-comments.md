@@ -1,6 +1,8 @@
 # CRAN submission 12-02-2025
 
-This is an update to change the maintainer's email address to reflect a new institutional affiliation. The 'title' field in the DESCRIPTION file has also been changed to be more informative. 
+This is an update to rdwplus. The update contains two small changes:
+* The maintainer's email address has been changed to reflect a new institutional affiliation. 
+* The 'title' field in the DESCRIPTION file has been changed to be more informative ("An Implementation of IDW-PLUS" -> "Inverse Distance Weighted Percent Land Use for Streams"). 
 
 ## Test environments
 
